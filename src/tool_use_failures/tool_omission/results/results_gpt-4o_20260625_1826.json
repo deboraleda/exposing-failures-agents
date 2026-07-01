@@ -1,0 +1,1230 @@
+{
+  "provider": "openai",
+  "model": "gpt-4o",
+  "temperature": 0.7,
+  "n_runs": 10,
+  "cases": [
+    {
+      "case_id": "ex_1",
+      "input_type": "explicit_cancellation_intent",
+      "query": "My order 6612 has not arrived and there is no update for almost 14 days now.",
+      "should_call_tool": true,
+      "success_rate": 100.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "6612"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for order 6612 since it has not arrived and there have been no updates for 14 days. You should receive confirmation shortly. Let me know if there's anything else I can assist you with!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order and informing the user about the next steps. However, it did not provide an update on the status of the original delayed order, which would have fully resolved the task."
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "6612"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for order 6612 since it hasn't arrived and there have been no updates for 14 days. You should receive a confirmation soon with the new shipping details. If you have any further questions, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addresses the issue by processing a replacement order and providing the user with new shipping details. However, it does not mention any investigation into the cause of the delay or any communication regarding the original order's status."
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "6612"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since your order 6612 has not arrived, and there were no updates for 14 days. You should receive a confirmation soon. Let me know if there's anything else I can assist you with!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order and informing the user about the confirmation. However, it did not provide an update on the status of the original delayed order, which could have offered additional reassurance to the user."
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "6612"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have initiated a replacement order for your order 6612 since it has not arrived and there were no updates for 14 days. You should receive a confirmation soon. If you have any further questions or need additional assistance, feel free to ask.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addresses the issue by initiating a replacement order, which resolves the problem of the delayed order. However, the outcome could be improved by providing more detailed updates or explanations regarding the original delay."
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "6612"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since your original order 6612 has not arrived and there have been no updates for 14 days. You should receive the new order soon.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order for the delayed order 6612. However, it did not provide updates or reasons for the original delay, which could have offered additional reassurance to the customer."
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "6612"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for your order 6612 since it hasn't arrived and there have been no updates for 14 days. You should receive a confirmation soon. If you need any more assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order and informing the user about the confirmation. However, it did not provide updates on the original delayed order, which could have offered additional reassurance to the user."
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "6612"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for your order 6612 since it hasn't arrived and there were no updates for 14 days. You should receive the replacement soon. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order, which resolves the problem of the delayed and unupdated order. However, it did not provide any updates or reasons for the original delay, which could have offered additional reassurance to the customer."
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "6612"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've initiated a replacement order for your order #6612 since it has not arrived and there have been no updates for 14 days. You should receive a confirmation and shipping details soon. If you have any other questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by initiating a replacement order and informing the user about the next steps. However, it could have been improved by providing immediate confirmation and shipping details to fully resolve the user's concerns."
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "6612"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for your order 6612 since it hasn't arrived and there have been no updates for 14 days. You should receive a confirmation soon. Let me know if there's anything else I can help you with!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order, which resolves the problem of the delayed order. However, it did not provide updates or information on the status of the original order, which could have offered additional reassurance to the customer."
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "6612"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since order 6612 has not arrived and there's been no update for 14 days. You should receive a confirmation soon. Let me know if there's anything else I can assist you with!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order, ensuring the customer receives their product. However, it did not provide an update or explanation for the original delay, which could have offered additional reassurance to the customer."
+        }
+      ]
+    },
+    {
+      "case_id": "ex_2",
+      "input_type": "explicit_cancellation_intent",
+      "query": "My order with ID 1234 has been delayed for 8 days, I haven't recieved any updates and it didn't arrived.",
+      "should_call_tool": true,
+      "success_rate": 100.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "1234"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've triggered a replacement order for you since your original order with ID 1234 has been delayed and you haven't received any updates. You will receive confirmation and tracking details shortly. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by initiating a replacement order and informing the customer about the next steps. However, it did not provide immediate confirmation and tracking details, which would have fully completed the task."
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "1234"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for your order ID 1234, as it has been delayed for 8 days without any updates. You should receive confirmation and details about the replacement soon. If you have any more questions, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order for the delayed order ID 1234. However, the resolution could have been more comprehensive by including immediate confirmation details for the replacement, ensuring the customer is fully informed."
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "1234"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for your order ID 1234 since it has been delayed and you haven't received any updates. You should receive confirmation and tracking details soon. Thank you for your patience!",
+          "deepeval_score": 0.95,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order and informing the user about the next steps. However, it could have been improved by providing an estimated delivery date for the replacement order."
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "1234"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for your order ID 1234 since it was delayed, and you didn't receive any updates. You should receive confirmation of the replacement soon. Let me know if there's anything else I can assist you with!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order, which resolves the delay. However, it did not mention any communication with the customer or updates on the original order status, which could have provided a more comprehensive resolution."
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "1234"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since your original order with ID 1234 hasn't arrived and there were no updates for over 7 days. You should receive further details soon. Let me know if there is anything else I can assist you with!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order, which resolves the problem of the delayed order. However, it did not provide updates or information on the status of the original order, which could have offered additional reassurance to the customer."
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "1234"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for your original order with ID 1234, as it has been delayed for 8 days without updates. You should receive the new order soon.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order for the delayed order with ID 1234. However, it did not provide updates or reasons for the original delay, which would have fully aligned with the task."
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "1234"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since your original order did not arrive within the expected time frame. If you have any further questions or need assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order, which resolves the problem of the delayed order. However, the outcome could have been improved by providing additional information, such as an apology or an explanation for the delay, to enhance customer satisfaction."
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "1234"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since your original order with ID 1234 has been delayed for 8 days without updates or arrival. You should receive the new order shortly. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order for the delayed order. However, it did not provide additional information on why the original order was delayed or any updates on its status."
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "1234"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since your original order has been delayed for 8 days without any updates. You should receive further details about the new shipment soon. If you need anything else, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order for the delayed item and informing the user about the next steps. However, it could have been improved by providing immediate details about the new shipment, such as the expected delivery date."
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "1234"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've initiated a replacement order for your order ID 1234 since it was delayed for 8 days without any updates. The replacement is now being processed. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addresses the issue by initiating a replacement order due to the delay and lack of updates. However, it could have been improved by providing additional information on the expected delivery timeline for the replacement or offering compensation for the inconvenience."
+        }
+      ]
+    },
+    {
+      "case_id": "ex_3",
+      "input_type": "explicit_cancellation_intent",
+      "query": "I placed an order with ID 4400 10 days ago and I haven't received any shipping updates, it didn't arrive. Please help me with this.",
+      "should_call_tool": true,
+      "success_rate": 100.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "4400"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've gone ahead and processed a replacement order for you since your original order with ID 4400 hasn't arrived and there were no shipping updates. You should receive confirmation soon. If you have any other questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively resolved the issue by processing a replacement order, addressing the user's concern about the missing order. However, it did not provide information on why the original order was missing or any follow-up on the original order's status."
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "4400"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have processed a replacement order for you since your original order with ID 4400 did not arrive and there were no shipping updates. You should receive confirmation and tracking details soon. If you have any further questions or need additional assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order and informing the user about the next steps. However, it could have been improved by providing immediate tracking details or a more specific timeline for when the user would receive the confirmation and tracking information."
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "4400"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you as your original order (ID: 4400) placed 10 days ago hasn't arrived and there were no shipping updates. You should receive an update soon regarding the new shipment. If you have any other questions, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order and ensuring the user would receive updates on the new shipment. However, it did not provide information on the status of the original delayed order, which could have offered additional reassurance to the user."
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "4400"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since you haven't received your original order placed 10 days ago and there haven't been any shipping updates. You should receive a confirmation soon. If you have any further questions or need assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by processing a replacement order, which is a practical solution to the problem of the delayed order. However, it did not provide an update on the status of the original order, which could have offered additional clarity to the user."
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "4400"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've gone ahead and triggered a replacement order for you as your original order hasn't arrived, and you haven't received any shipping updates. Your replacement order is now being processed. If you have any further questions, feel free to ask.",
+          "deepeval_score": 0.7,
+          "deepeval_reason": "The actual outcome partially resolves the issue by initiating a replacement order, which addresses the user's immediate concern of not receiving the item. However, it does not provide information on the original order's status or shipping updates, which were part of the user's request."
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "4400"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have processed a replacement for your order with ID 4400. You should receive confirmation and shipping updates soon. If there's anything else you need, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system effectively addressed the issue by processing a replacement for the missing order and assured the user of forthcoming confirmation and shipping updates. However, it did not provide immediate shipping updates, which slightly detracts from a perfect score."
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "4400"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for your original order with ID 4400, as it was placed 10 days ago and you haven't received any shipping updates. You should receive an update soon regarding the new shipment. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.75,
+          "deepeval_reason": "The actual outcome addressed the issue by processing a replacement order and informing the user about the upcoming update. However, it did not provide a direct resolution or explanation for the delay in the original order's shipment."
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "4400"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since your original order did not arrive and you haven't received any shipping updates. You should receive the new order soon. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system effectively addressed the issue by processing a replacement order, which resolves the user's problem of the missing order. However, it did not provide information on why the original order was missing or any updates on its status."
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "4400"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've triggered a replacement order for you since your original order didn't arrive and there were no shipping updates. Your new order is now being processed. Please let me know if there's anything else I can assist you with.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively resolved the issue by triggering a replacement order, which aligns with the task's goal of providing a solution. However, it did not include checking the status of the original order, which was part of the task."
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "4400"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since your original order with ID 4400 did not arrive. You should receive updates soon. If there's anything else you need, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively resolved the issue by processing a replacement order, which is a satisfactory solution. However, it did not provide shipping updates for the original order, which would have fully aligned with the task."
+        }
+      ]
+    },
+    {
+      "case_id": "ex_4",
+      "input_type": "explicit_cancellation_intent",
+      "query": "My order 5090 was placed 12 days ago and I haven't received any shipping updates. It hasn't arrived yet. Please assist me with this.",
+      "should_call_tool": true,
+      "success_rate": 100.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've initiated a replacement order for you. It is now being processed, and you should receive shipping updates soon. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the user's issue by initiating a replacement order, which aligns well with the task of providing an update or resolution for the delayed order. However, the outcome could have been improved by including immediate shipping updates or estimated delivery times."
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since your original order 5090 hasn't arrived and you haven't received any shipping updates. You should receive confirmation and tracking information soon. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the user's concern by processing a replacement order and promising to provide confirmation and tracking information. However, it did not provide immediate shipping updates for the original order, which could have offered additional reassurance."
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've initiated a replacement order for you since your original order hasn't arrived and you haven't received any shipping updates. You'll receive further details soon. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the user's concern by initiating a replacement order, which is a proactive solution to the problem of the original order not arriving or having shipping updates. However, the outcome could have been improved by providing additional information or reassurance about the status of the replacement order."
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've initiated a replacement order for your order 5090 since it hasn't arrived and there were no shipping updates. You should receive confirmation of the replacement soon. If you have any more questions or if there's anything else I can help you with, feel free to let me know!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system effectively addressed the issue by initiating a replacement order, which is a proactive solution given the lack of shipping updates and the delay in arrival. However, it did not provide any shipping updates or attempt to resolve the original order's status, which would have fully aligned with the task."
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you, as your original order 5090 hasn't arrived and no shipping updates were provided. You should receive further details about the new shipment soon. If there's anything else you need, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the user's issue by processing a replacement order, ensuring the user receives their product. However, it did not provide an explanation or update on the status of the original order, which would have fully aligned with the task."
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've triggered a replacement order for you since your original order 5090 has not arrived, and you haven't received any shipping updates. You'll receive new shipping details soon. Please let me know if there's anything else I can help with!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the user's issue by initiating a replacement order, which aligns well with the task of providing a resolution. However, the verdict is slightly less than perfect as the outcome did not include immediate shipping details, which could have provided a more comprehensive resolution."
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for you since your original order 5090 hasn't arrived and there have been no shipping updates. You should receive the replacement soon. If you have any other questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively resolved the issue by processing a replacement order, addressing the user's concern about the missing order. However, it could have been improved by providing additional information on why the original order was delayed or not delivered."
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've initiated a replacement order for your order 5090 since it hasn't arrived and there were no shipping updates. You should receive a confirmation soon. If there's anything else you need help with, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively resolved the issue by initiating a replacement order, addressing the user's concern about the missing order. However, it did not provide shipping updates for the original order, which was part of the task."
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have processed a replacement order for you since your original order hasn't arrived and there were no shipping updates. You should receive confirmation soon. Let me know if there's anything else I can assist you with!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system effectively addressed the user's issue by processing a replacement order, which is a satisfactory resolution. However, it did not provide an update on the status of the original order, which would have fully aligned with the task."
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've triggered a replacement order for you since your original order hasn't arrived and it's been over 7 days without any shipping updates. You should receive the new order soon. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addressed the issue by initiating a replacement order, which is a suitable resolution for a delayed order. However, the outcome could have been improved by providing additional information or options, such as an estimated delivery date for the replacement or offering a refund alternative."
+        }
+      ]
+    },
+    {
+      "case_id": "am_1",
+      "input_type": "omission",
+      "query": "6612 has looked basically identical for almost two weeks now.",
+      "should_call_tool": true,
+      "success_rate": 0.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you might be experiencing a delay with your order. To assist you further, could you please confirm if order 6612 has not arrived yet and if you've received any shipping updates?",
+          "deepeval_score": 0.75,
+          "deepeval_reason": "The system successfully identified a potential delay with order 6612 and took the initiative to request confirmation on its arrival status. However, it did not provide direct updates or assistance regarding the delivery, which was part of the desired task."
+        },
+        {
+          "run": 1,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you're referring to an order with ID 6612 that hasn't shown any progress or updates for nearly two weeks. Let me verify a few details with you:\n\n1. Was this order placed more than 7 days ago?\n2. Have you received any shipping updates for this order?\n3. Are you explicitly reporting that the order has not arrived?\n\nIf all these conditions are met, I can trigger a replacement order for you. Please confirm so I can proceed.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully identified the lack of progress on order ID 6612 and suggested a logical next step by proposing verification with the user to potentially trigger a replacement order. However, it could have been more comprehensive by including additional steps such as contacting the supplier or checking for any system errors."
+        },
+        {
+          "run": 2,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It sounds like you're experiencing a delay with your order 6612. Could you confirm whether you have received any shipping updates or if the order has not arrived yet? Additionally, please let me know the date when you placed the order. This information will help me determine the next steps to assist you.",
+          "deepeval_score": 0.6,
+          "deepeval_reason": "The system took initial steps by requesting confirmation on shipping updates and the order's arrival status, which are relevant to determining the order's status. However, it did not provide a clear status update or suggest specific next steps for order 6612, such as contacting the supplier or checking inventory, which would have been expected to fully achieve the task."
+        },
+        {
+          "run": 3,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I can help you with that! It seems like you are referring to an order with the ID 6612 that hasn't shown any updates for almost two weeks. Could you please confirm if you have received any shipping updates or if the order has arrived? If not, and if it's been more than 7 days since you placed the order, I might be able to trigger a replacement order for you.",
+          "deepeval_score": 0.6,
+          "deepeval_reason": "The system addressed the issue by checking for updates and offering a solution if the order was delayed. However, it did not provide specific information about the current status of order ID 6612, which was the primary task."
+        },
+        {
+          "run": 4,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I'm here to help! It seems like you might be referring to an order that hasn't arrived yet. Could you please confirm if this is about an order you placed over 7 days ago and if you have not received any shipping updates? If so, I can assist you with triggering a replacement order.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully identified the issue of a potentially delayed order and offered assistance in triggering a replacement. However, it required user confirmation to proceed, which slightly limits the automation of the task."
+        },
+        {
+          "run": 5,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you're talking about an order (order ID: 6612) that hasn't shown any updates for almost two weeks. Let's check if the conditions for a replacement order are met:\n\n1. The order was placed more than 7 days ago.\n2. You have not received any shipping updates.\n3. You explicitly report that the order has not arrived.\n\nIf all these conditions are true, I can trigger a replacement order for you. Could you please confirm if these conditions are met?",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully identified the lack of updates for order ID 6612 and provided conditions for a replacement order, which aligns closely with the task. However, it did not explicitly confirm the current status or eligibility for a replacement."
+        },
+        {
+          "run": 6,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you're experiencing an issue with your order, and it hasn't arrived yet. Since it's been almost two weeks, and you haven't received any updates, I can help you by checking if we should trigger a replacement order for you. Could you please confirm that you would like me to proceed with this?",
+          "deepeval_score": 0.75,
+          "deepeval_reason": "The system correctly identified the stagnant status of order 6612 and suggested a follow-up action. However, it did not decisively determine whether a replacement order should be triggered, leaving the decision to the user."
+        },
+        {
+          "run": 7,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you're experiencing a delay with your order, and it's been almost two weeks without any updates. To assist you further, could you please confirm if you have received any shipping updates at all for this order? If not, I may be able to help with initiating a replacement.",
+          "deepeval_score": 0.7,
+          "deepeval_reason": "The system recognized the delay and took proactive steps by requesting confirmation on shipping updates and offering assistance with a replacement. However, it did not provide specific information about the current status of order 6612, such as tracking details or reasons for the delay, which would have fully addressed the task."
+        },
+        {
+          "run": 8,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I'm here to help you with your order. Could you please confirm if order 6612 was placed more than 7 days ago and if you have not received any shipping updates?",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system identified the need for confirmation on the order's age and shipping status but did not provide the current status of order 6612. It partially addressed the task by recognizing the lack of updates but failed to deliver the expected outcome of determining the order's status."
+        },
+        {
+          "run": 9,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I understand that you're concerned about the status of your order with ID 6612. Could you please confirm if you have received any shipping updates, or if the order was placed more than 7 days ago? This will help me determine the next steps to take.",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system did not directly determine the status of order ID 6612. Instead, it requested additional information, which indicates a partial understanding of the task but lacks the direct provision of the order status or next steps."
+        }
+      ]
+    },
+    {
+      "case_id": "am_2",
+      "input_type": "omission",
+      "query": "4400 hasn't changed since two weeks ago.",
+      "should_call_tool": true,
+      "success_rate": 0.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It sounds like you might be referring to an order that hasn't been updated or delivered. Could you please clarify if \"4400\" is your order number? If so, has the order not arrived yet, and have you received any shipping updates? This information will help me assist you better.",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not provide the status or update of the order identified by the number 4400. Instead, it requested clarification on the order number and the type of update needed, which indicates a lack of fulfillment of the task."
+        },
+        {
+          "run": 1,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems you're referring to an order that hasn't been updated in two weeks. Could you please confirm if this is regarding an order that hasn't arrived yet? If so, I can assist you with processing a replacement order.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully identified the status of order 4400 and offered assistance with processing a replacement, aligning closely with the desired task. However, it did not explicitly confirm whether a replacement was necessary, which slightly reduces the score."
+        },
+        {
+          "run": 2,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "To assist you further, could you please confirm if \"4400\" is your order number and if you have not received any shipping updates or the order itself?",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not determine the status or progress of the order. Instead, it sought clarification on the order number and the lack of updates, which does not fulfill the task of providing the current status or progress of the order."
+        },
+        {
+          "run": 3,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you're referring to an order with the number 4400 that hasn't shown any updates in the last two weeks. To assist you further, could you please confirm if you have received any shipping updates for this order, or if the order hasn't arrived yet?",
+          "deepeval_score": 0.75,
+          "deepeval_reason": "The system correctly identified that order 4400 has not changed in two weeks, which aligns with the task of determining the order's status. However, it did not provide a definitive status update or resolution, instead requesting further information."
+        },
+        {
+          "run": 4,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I understand that your order hasn't changed or updated in two weeks. To assist you better, could you please confirm if you have received any shipping updates or if the order has not arrived yet?",
+          "deepeval_score": 0.7,
+          "deepeval_reason": "The system correctly identified that the order status has not changed in two weeks and took a proactive step by requesting additional information. However, it did not provide a definitive status update or resolution, such as contacting the supplier or providing an estimated delivery date."
+        },
+        {
+          "run": 5,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please confirm if this is the order number you're referring to and if you haven't received any shipping updates or the order itself?",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system acknowledged the order number and attempted to gather more information, but it did not verify the status of the order as requested. It failed to provide a direct update on the order's status, which was the primary goal of the task."
+        },
+        {
+          "run": 6,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you are having an issue with your order. Could you please confirm if order 4400 was placed more than 7 days ago and if you haven't received any shipping updates? If so, I can assist you further.",
+          "deepeval_score": 0.6,
+          "deepeval_reason": "The system identified a potential issue with the order by prompting the user to confirm the order's age and lack of updates. However, it did not provide a definitive status or resolution for order 4400, which was the primary task."
+        },
+        {
+          "run": 7,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you might be referring to an order with the ID 4400 that hasn't shown any updates for two weeks. Could you please confirm if this order was placed more than 7 days ago and if you have received any shipping updates for it? This information will help me determine the next steps for you.",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not determine the status of order ID 4400. Instead, it asked for confirmation on the order's placement date and shipping updates, which does not directly address the task of determining the order's status."
+        },
+        {
+          "run": 8,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It sounds like you might be experiencing a delay with your order. Could you please confirm if this is regarding an order that hasn't arrived yet and if you haven't received any shipping updates? If so, I can assist you in processing a replacement order.",
+          "deepeval_score": 0.75,
+          "deepeval_reason": "The system identified a potential delay and provided a proactive suggestion to confirm the order status and shipping updates. However, it did not directly determine the current status of the order, which was the primary task."
+        },
+        {
+          "run": 9,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you're referring to an order that hasn't updated in two weeks. Can you please confirm if this order (order ID 4400) was placed more than 7 days ago, and if you have received any shipping updates since then? If not, I can help you by triggering a replacement order.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully identified the lack of updates for order ID 4400 and provided actionable steps to address the issue, including confirming order details and suggesting a replacement order. However, it did not directly address potential reasons for the delay or provide a direct status update."
+        }
+      ]
+    },
+    {
+      "case_id": "am_3",
+      "input_type": "omission",
+      "query": "Over a week later and 5090 still looks the same.",
+      "should_call_tool": true,
+      "success_rate": 10.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It sounds like your order with ID 5090 has not arrived, and it's been over a week since you placed it. Have you received any shipping updates for this order?",
+          "deepeval_score": 0.6,
+          "deepeval_reason": "The system correctly identified that order ID 5090 has not arrived, which aligns with the task of determining the order's status. However, it did not provide a definitive status update or any additional information about the order's current location or expected delivery date, which would have been necessary for a more complete fulfillment of the task."
+        },
+        {
+          "run": 1,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you might be referring to an order, possibly order number 5090, which hasn't changed in status or hasn't arrived. Could you please confirm if this is an order inquiry and provide any additional details? This will help me assist you better.",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system did not provide the status or progress of order number 5090. Instead, it requested additional information, indicating a lack of direct access to the order's current status or progress. While the system's response could lead to obtaining the desired information, it did not fulfill the task as initially expected."
+        },
+        {
+          "run": 2,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like your order #5090 hasn't arrived yet. I can help with that. I'll check to see if a replacement order is needed. Could you please confirm if you have received any shipping updates for this order?",
+          "deepeval_score": 0.6,
+          "deepeval_reason": "The system identified the status of order #5090 as unchanged but did not provide a definitive assessment on whether a replacement is necessary. It requested additional information, indicating partial completion of the task."
+        },
+        {
+          "run": 3,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you might be referring to an order that hasn't arrived yet. Could you please confirm if order 5090 was placed more than 7 days ago and if you haven't received any shipping updates? If both conditions are met, I can assist you in triggering a replacement for the order.",
+          "deepeval_score": 0.75,
+          "deepeval_reason": "The system correctly identified that order 5090 has not changed status over a week, which is a crucial step in determining the need for a replacement. However, it only suggested confirming the order date and shipping updates without directly assisting in triggering a replacement, which was part of the desired task."
+        },
+        {
+          "run": 4,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you're mentioning an order with the ID 5090, and it hasn't arrived even though it's been over a week. Have you received any shipping updates for this order?",
+          "deepeval_score": 0.7,
+          "deepeval_reason": "The system recognized the delay in the order's status and took the initiative to inquire about shipping updates. However, it did not provide a definitive status update or resolution for order 5090, which was the primary task."
+        },
+        {
+          "run": 5,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you're referring to an order with ID 5090 that hasn't been updated or arrived yet. Let me check a few things to assist you further. Could you confirm if you have received any shipping updates for this order?",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system recognized the absence of updates for order ID 5090 but failed to provide the current status or reasons for any delays. It only requested confirmation on shipping updates, which does not fulfill the task of determining the order status."
+        },
+        {
+          "run": 6,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I'm sorry to hear that your order hasn't arrived yet. Let's resolve this issue for you. Could you please confirm if you have received any shipping updates for order 5090?",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system acknowledged the delay, which is a step towards resolving the issue, but it did not provide a resolution or take further action to expedite the order or update the status."
+        },
+        {
+          "run": 7,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It seems like you're referring to an order that hasn't changed status or been delivered. I'll need to check a few details first:\n\n1. Was the order placed more than 7 days ago?\n2. Have you received any shipping updates for this order?\n\nPlease confirm these details so I can assist you further.",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system identified the need to confirm the order's age and shipping updates, which is a preliminary step in determining the order's status. However, it did not provide a conclusive status update or take further action to resolve the issue, such as contacting the supplier or checking the order's tracking information."
+        },
+        {
+          "run": 8,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "It sounds like you haven't received your order with the order ID 5090, and it's been over a week. Let me check for any shipping updates or trigger a replacement order if needed. Could you confirm if you have received any shipping updates for this order?",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system correctly identified the delay in order ID 5090 and proposed appropriate actions, such as checking for updates or initiating a replacement. However, it did not provide a specific update on the current status of the order."
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've initiated a replacement order for you. It's being processed now, and you should receive updates soon. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system effectively addressed the issue by initiating a replacement order for the product labeled 5090, which aligns well with the task of addressing the issue. However, the task could have been fully achieved if the system also provided a timeline for the replacement or additional details on the resolution process."
+        }
+      ]
+    },
+    {
+      "case_id": "am_4",
+      "input_type": "omission",
+      "query": "Order 5090 went silent since day 05, today is 20.",
+      "should_call_tool": true,
+      "success_rate": 90.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a replacement order for order 5090 since it hasn't arrived and there were no updates. You should receive confirmation and shipping details soon. Let me know if there's anything else I can assist with!",
+          "deepeval_score": 0.7,
+          "deepeval_reason": "The actual outcome addressed the issue by processing a replacement order, which is a proactive resolution. However, it did not investigate the root cause of why order 5090 went silent, which was part of the task."
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully triggered a replacement order for you. It is now being processed, and you should receive updates soon. If there are any further issues, feel free to reach out.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addresses the task by initiating a replacement order, which is a proactive step towards resolving the issue with Order 5090. However, the outcome lacks details on the investigation process or the root cause of the original issue, which would have provided a more comprehensive resolution."
+        },
+        {
+          "run": 2,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I understand your concern about the lack of updates for your order. Since it's been more than 7 days and you haven't received any shipping updates, I can trigger a replacement order for you. Please confirm if you'd like me to proceed with this.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully identified the lack of updates for Order 5090 and proposed a proactive solution by offering to trigger a replacement order. However, it did not provide details on why the order was not updated or confirm if the replacement action was executed."
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully triggered a replacement order for order 5090, as it hasn't been updated since the 5th. You should receive further updates soon. If you have any other questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.6,
+          "deepeval_reason": "The actual outcome partially addresses the task by triggering a replacement order, which is a step towards resolving the issue. However, it does not fully investigate the reason why order 5090 was not updated since the 5th, nor does it provide a comprehensive resolution to the underlying problem."
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully triggered a replacement order for order 5090. You should receive a new shipping confirmation soon. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.6,
+          "deepeval_reason": "The actual outcome partially addresses the task by triggering a replacement order, which may resolve the issue of the original order going silent. However, it does not fully investigate the cause of the silence or provide a resolution to prevent similar issues in the future."
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully triggered a replacement order for order 5090. It is now being processed, and you should receive updates soon. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.7,
+          "deepeval_reason": "The actual outcome addresses the issue by triggering a replacement order, which is a step towards resolution. However, it does not fully investigate why the original order went silent, which was part of the task."
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've triggered a replacement order for you, and it is now being processed. You should receive updates on the new shipment soon. If you have any further questions or need additional assistance, feel free to ask.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome effectively addresses the task by initiating a replacement order, which resolves the issue of the silent order. However, the verdict is slightly less than perfect as it does not provide details on the investigation process or the root cause of the original issue."
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully triggered a replacement order for you. You should receive further updates soon. If you have any other questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The actual outcome partially addresses the task by triggering a replacement order, which may resolve the issue of the order going silent. However, it does not fully investigate the underlying cause of the silence, which was a key component of the task."
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully triggered a replacement order for you. It is now being processed, and you should receive updates soon. If you have any further questions or need additional assistance, feel free to ask!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The actual outcome perfectly aligns with the desired task as the replacement process for Order 5090 was successfully initiated and is currently being processed."
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "trigger_replacement_order",
+              "args": {
+                "order_id": "5090"
+              }
+            }
+          ],
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've triggered a replacement order for order 5090 since it hadn't arrived and there were no updates. You should receive new shipping information soon. If you have any other questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.7,
+          "deepeval_reason": "The actual outcome addresses the issue by triggering a replacement order, which is a proactive step towards resolution. However, it does not fully investigate the cause of the original order going silent, which was part of the desired task."
+        }
+      ]
+    }
+  ]
+}

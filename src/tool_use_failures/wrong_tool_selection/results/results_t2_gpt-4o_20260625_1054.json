@@ -1,0 +1,1945 @@
+{
+  "provider": "openai",
+  "model": "gpt-4o",
+  "temperature": 0.7,
+  "n_runs": 10,
+  "cases": [
+    {
+      "case_id": "ex_1",
+      "input_type": "cancel_explicit",
+      "query": "Cancel order ORD-2020 for customer Laura Mendes due to change of mind.",
+      "expected_tool": [
+        "cancel_order"
+      ],
+      "success_rate": 20.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I need to check the status of order ORD-2020 first to determine the appropriate action. Please provide the current status of the order (e.g., PENDING, SHIPPED, DELIVERED) if you have it, or let me know if you need me to look it up.",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system initiated the process by requesting the order status, which is a preliminary step towards cancellation. However, it did not complete the task of canceling the order as requested.",
+          "deepeval_error": null
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Laura Mendes"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": false,
+          "failure_type": "wrong_tool",
+          "final_content": "I found the customer profile for Laura Mendes. Could you please provide the current status of order ORD-2020 so I can determine the appropriate action?",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system successfully identified the customer profile for Laura Mendes, which is a crucial step in the cancellation process. However, it did not complete the task of canceling the order ORD-2020, as it required additional information to proceed. This partial completion results in a verdict of 0.5.",
+          "deepeval_error": null
+        },
+        {
+          "run": 2,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the current status of order ORD-2020? This will help me determine the appropriate action to take.",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system initiated the process by requesting the order status, which is a preliminary step towards cancellation. However, it did not complete the task of canceling the order as requested.",
+          "deepeval_error": null
+        },
+        {
+          "run": 3,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the status of the order ORD-2020? This will help me determine the appropriate action to take based on the order status.",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system initiated the process by checking the order status, which is a necessary step for cancellation. However, it did not complete the task of actually canceling the order for Laura Mendes.",
+          "deepeval_error": null
+        },
+        {
+          "run": 4,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Can you please provide me with the status of order ORD-2020? It is necessary to determine whether we can cancel or refund the order based on its current status.",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system initiated the process by checking the order status, which is a necessary step towards cancellation. However, it did not complete the task of canceling the order or confirming the cancellation for the customer.",
+          "deepeval_error": null
+        },
+        {
+          "run": 5,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "To proceed with canceling the order, I need to check the status of the order ORD-2020. Could you please provide the current status of the order? Or, if you prefer, I can search for the order details using Laura Mendes' information.",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system did not directly cancel the order as requested. Instead, it asked for the current status or offered to search for order details, which indicates a partial understanding of the task but not a complete execution.",
+          "deepeval_error": null
+        },
+        {
+          "run": 6,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the current status of order ORD-2020 to ensure the correct action for cancellation or refund?",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system initiated the process by requesting the order status, which is a necessary step towards cancellation. However, it did not complete the task of canceling the order or confirming the cancellation, thus only partially achieving the desired outcome.",
+          "deepeval_error": null
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-2020",
+                "reason": "Customer changed their mind"
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The order ORD-2020 for customer Laura Mendes has been successfully cancelled due to a change of mind.",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The actual outcome perfectly aligns with the desired task as the order ORD-2020 for customer Laura Mendes was successfully cancelled due to a change of mind, fulfilling the task requirements completely.",
+          "deepeval_error": null
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Laura Mendes"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": false,
+          "failure_type": "wrong_tool",
+          "final_content": "I have found multiple profiles for Laura Mendes. Could you please provide additional details such as an email address or phone number to identify the correct profile?",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not cancel the order as requested. Instead, it asked for additional details to identify the correct profile, which is a preliminary step and does not fulfill the task of canceling the order.",
+          "deepeval_error": null
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-2020",
+                "reason": "Change of mind"
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The order ORD-2020 for customer Laura Mendes has been successfully cancelled due to a change of mind.",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The actual outcome perfectly aligns with the desired task as the order ORD-2020 for customer Laura Mendes was successfully cancelled, fulfilling the task requirement completely.",
+          "deepeval_error": null
+        }
+      ]
+    },
+    {
+      "case_id": "ex_2",
+      "input_type": "refund_explicit",
+      "query": "Refund $120 for order ORD-4040 for customer Ana Costa.",
+      "expected_tool": [
+        "refund_order"
+      ],
+      "success_rate": 10.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the current status of order ORD-4040? This will help me determine the appropriate action for processing the refund.",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not process the refund as requested. Instead, it only initiated a preliminary step by requesting the order status, which is insufficient to achieve the desired task of processing the refund.",
+          "deepeval_error": null
+        },
+        {
+          "run": 1,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the status of order ORD-4040 (e.g., PENDING, SHIPPED, DELIVERED) so I can proceed with the appropriate action for the refund request?",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not process the refund as requested. Instead, it only initiated a preliminary step by requesting the order status, which is insufficient to fulfill the task of processing a refund.",
+          "deepeval_error": null
+        },
+        {
+          "run": 2,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the current status of the order ORD-4040? This information will help me determine the correct process for handling the refund.",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not process the refund as requested. Instead, it only initiated a preliminary step by requesting the order status, which is insufficient to achieve the desired task of processing a refund.",
+          "deepeval_error": null
+        },
+        {
+          "run": 3,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the status of the order ORD-4040? This will help me determine the appropriate action for processing the refund.",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system initiated the process by requesting the order status, which is a necessary step towards processing the refund. However, it did not complete the task of actually processing the refund for $120, which was the desired outcome.",
+          "deepeval_error": null
+        },
+        {
+          "run": 4,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the status of the order ORD-4040? This will help determine the appropriate refund process.",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system initiated the process by requesting the order status, which is a preliminary step towards processing the refund. However, it did not complete the task of actually processing the refund for $120 as required.",
+          "deepeval_error": null
+        },
+        {
+          "run": 5,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the status of order ORD-4040? This will help me determine the appropriate action to take for the refund process.",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system initiated the process by requesting the order status, which is a preliminary step towards processing the refund. However, it did not complete the task of actually processing the refund for $120 as specified.",
+          "deepeval_error": null
+        },
+        {
+          "run": 6,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the current status of order ORD-4040? It will help me determine the appropriate action for processing the refund.",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not process the refund as requested. Instead, it only initiated a preliminary step by requesting the order status, which is insufficient to achieve the desired task of processing the refund.",
+          "deepeval_error": null
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-4040",
+                "amount": 120
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The refund of $120 for order ORD-4040 has been successfully initiated for Ana Costa.",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The actual outcome perfectly aligns with the desired task as the refund of $120 for order ORD-4040 was successfully initiated for the customer Ana Costa, meeting all specified requirements.",
+          "deepeval_error": null
+        },
+        {
+          "run": 8,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "To process the refund for order ORD-4040, I need to know the order's current status. Could you please provide the status of this order (e.g., PENDING, SHIPPED, DELIVERED)?",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not process the refund as requested. Instead, it only initiated a preliminary step by requesting the order status, which is insufficient to achieve the desired task of processing the refund.",
+          "deepeval_error": null
+        },
+        {
+          "run": 9,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Could you please provide the status of order ORD-4040? This will help determine if we can proceed with a refund or if we need to cancel the order.",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not process the refund as requested. Instead, it only initiated a preliminary step by requesting the order status, which is insufficient to achieve the desired task of processing the refund.",
+          "deepeval_error": null
+        }
+      ]
+    },
+    {
+      "case_id": "ex_3",
+      "input_type": "get_client_explicit",
+      "query": "Retrieve the profile for client ID CLI-9901.",
+      "expected_tool": [
+        "get_client"
+      ],
+      "success_rate": 100.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client ID CLI-9901 has been successfully retrieved, including name, contact details, and account history. If you need further details or assistance, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for the specified client ID, including all necessary details such as name, contact information, and account history, perfectly aligning with the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client ID CLI-9901 has been successfully retrieved, including the name, contact details, and account history. If you need specific information from the profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system perfectly achieved the desired task by retrieving the complete profile for client ID CLI-9901, including all necessary details such as name, contact information, and account history.",
+          "deepeval_error": null
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client ID CLI-9901 has been successfully retrieved, including their name, contact details, and account history. If you need any specific details from this profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system perfectly achieved the desired task by retrieving the complete profile for client ID CLI-9901, including all necessary details such as name, contact information, and account history.",
+          "deepeval_error": null
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client ID CLI-9901 has been successfully retrieved, including their name, contact details, and account history. If you need specific information from the profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system perfectly achieved the desired task by retrieving the complete profile for client ID CLI-9901, including all necessary details.",
+          "deepeval_error": null
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client ID CLI-9901 has been successfully retrieved, including their name, contact details, and account history. If you need specific information from the profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system perfectly achieved the desired task by retrieving the complete profile for client ID CLI-9901, including all necessary details.",
+          "deepeval_error": null
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client ID CLI-9901 has been successfully retrieved, including the name, contact details, and account history. If you need further assistance or specific details, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for the specified client ID, including all necessary details such as name, contact information, and account history, perfectly aligning with the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client ID CLI-9901 has been successfully retrieved, including the name, contact details, and account history.",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for the specified client ID, including all necessary details such as name, contact information, and account history, perfectly aligning with the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client ID CLI-9901 has been successfully retrieved, including the name, contact details, and account history. If you need specific information from this profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for client ID CLI-9901, including all necessary details such as name, contact information, and account history, perfectly achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client ID CLI-9901 has been retrieved successfully, including name, contact details, and account history. If you need specific information or assistance, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system perfectly achieved the desired task by retrieving the complete profile for client ID CLI-9901, including all necessary details such as name, contact information, and account history.",
+          "deepeval_error": null
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client ID CLI-9901 has been successfully retrieved, including the name, contact details, and account history. If you need specific information from the profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system perfectly achieved the desired task by retrieving the complete profile for client ID CLI-9901, including all necessary details.",
+          "deepeval_error": null
+        }
+      ]
+    },
+    {
+      "case_id": "ex_4",
+      "input_type": "search_client_explicit",
+      "query": "Search for customer profiles matching the name 'Maria Lima'.",
+      "expected_tool": [
+        "search_client"
+      ],
+      "success_rate": 100.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Maria Lima"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have found customer profiles matching the name 'Maria Lima'. If you need further details or specific actions, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully found customer profiles that match the name 'Maria Lima', fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Maria Lima"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have retrieved the customer profiles matching the name 'Maria Lima'. If you need any specific information or further assistance, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved customer profiles that match the specified name 'Maria Lima', fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Maria Lima"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've found customer profiles matching the name \"Maria Lima.\" If you need further assistance or specific information regarding these profiles, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully found customer profiles matching the specified name 'Maria Lima', fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Maria Lima"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I found matching customer profiles for 'Maria Lima'. If you need more information or further assistance, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully found customer profiles matching the name 'Maria Lima', fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Maria Lima"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've found matching customer profiles for 'Maria Lima'. If you need further assistance or specific details, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully found customer profiles matching the name 'Maria Lima', fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Maria Lima"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have found customer profiles matching the name 'Maria Lima'. If you need further assistance or specific details about these profiles, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully found customer profiles matching the specified name 'Maria Lima', fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Maria Lima"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I found customer profiles matching the name 'Maria Lima'. If you need more specific information or further assistance, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully found customer profiles matching the specified name 'Maria Lima', fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Maria Lima"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have found the customer profiles matching the name 'Maria Lima'. If you need further details or assistance, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully found customer profiles that match the name 'Maria Lima', fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Maria Lima"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have found customer profiles matching the name 'Maria Lima'. If you need further details or assistance with a specific profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully found customer profiles that match the name 'Maria Lima', fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Maria Lima"
+              }
+            }
+          ],
+          "first_tool": "search_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have found matching customer profiles for 'Maria Lima'. If you need further assistance or specific details about these profiles, please let me know.",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully found customer profiles matching the name 'Maria Lima', fully achieving the desired task.",
+          "deepeval_error": null
+        }
+      ]
+    },
+    {
+      "case_id": "am_1",
+      "input_type": "refund_cancel_conflict",
+      "query": "I'm furious! My order ORD-123 was a gift and you ruined it with the delivery! I wan to cancel and want $150 back now, I don't want to hear from this company anymore!",
+      "expected_tool": [
+        "refund_order"
+      ],
+      "success_rate": 0.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-123",
+                "reason": "Delivery ruined the gift"
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": false,
+          "failure_type": "wrong_tool",
+          "final_content": "Your order ORD-123 has been successfully cancelled, and a refund of $150 will be processed shortly. I'm truly sorry for the inconvenience this has caused you. If there's anything else I can assist you with, please let me know.",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The actual outcome perfectly aligns with the desired task as the order was cancelled and the refund was initiated as requested.",
+          "deepeval_error": null
+        },
+        {
+          "run": 1,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I understand your frustration, and I'm here to help. First, let me check the status of your order ORD-123 to determine the best way to proceed with either cancelling or refunding your order. Could you please provide me with your client ID, or the email or phone number associated with your account? This will help me locate your order details.",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system initiated the process by requesting necessary information to locate the order, but it did not complete the task of cancelling the order and processing the refund as specified.",
+          "deepeval_error": null
+        },
+        {
+          "run": 2,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I understand your frustration and I'm here to help resolve this as quickly as possible. Before proceeding, I need to check the status of your order ORD-123 to determine the appropriate action for a cancellation or refund. Could you please provide me with the order status, or let me know if you need assistance in finding it?",
+          "deepeval_score": 0.4,
+          "deepeval_reason": "The system initiated the process by requesting the order status, which is a necessary step. However, it did not complete the task of resolving the complaint by canceling the order or processing the refund.",
+          "deepeval_error": null
+        },
+        {
+          "run": 3,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I understand your frustration and I'm here to help. I need to check the status of your order to determine the appropriate action. Could you please confirm if your order has already been shipped or delivered?",
+          "deepeval_score": 0.7,
+          "deepeval_reason": "The system appropriately acknowledged the customer's frustration and initiated the process by requesting confirmation on the order's status. However, it did not fully address the complaint by directly processing the cancellation and refund, which was part of the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 4,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I understand your frustration and I'm here to help. First, I need to check the status of your order ORD-123 to determine the right course of action for a cancellation or refund. Could you please provide me with some more details, such as the email or phone number associated with your account, so I can locate your order?",
+          "deepeval_score": 0.3,
+          "deepeval_reason": "The system did not directly address the customer's complaint or process the cancellation and refund as required. Instead, it requested additional details, which is a preliminary step and does not fulfill the task's main objectives.",
+          "deepeval_error": null
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-123",
+                "reason": "Customer unhappy with delivery, requests cancellation and refund."
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": false,
+          "failure_type": "wrong_tool",
+          "final_content": "Your order ORD-123 has been successfully cancelled.",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system successfully cancelled the order but did not process the refund of $150, which was part of the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 6,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I understand your frustration and I'm here to help. Let's first verify the status of your order ORD-123 to determine the best course of action for cancellation or refund. Please hold on for a moment while I check this.",
+          "deepeval_score": 0.6,
+          "deepeval_reason": "The system initiated the process to verify the order status, which is a necessary step towards cancellation and refund. However, it did not complete the task of canceling the order and processing the refund, which were the main objectives.",
+          "deepeval_error": null
+        },
+        {
+          "run": 7,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "I understand your frustration, and I'm here to help resolve this issue for you. First, let me check the status of your order to see if it can be canceled or if we can proceed with a refund. Please hold on for a moment.",
+          "deepeval_score": 0.6,
+          "deepeval_reason": "The system took initial steps by acknowledging the customer's frustration and checking the order status. However, it did not complete the task by confirming the cancellation or processing the refund, which are critical components of resolving the complaint.",
+          "deepeval_error": null
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-123",
+                "reason": "The delivery ruined the gift experience."
+              }
+            },
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-123",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": false,
+          "failure_type": "wrong_tool",
+          "final_content": "The refund of $150 for your order ORD-123 has been successfully initiated. If you have any other concerns or need further assistance, please let me know.",
+          "deepeval_score": 0.75,
+          "deepeval_reason": "The system successfully initiated a refund for the specified order, addressing the financial aspect of the cancellation request. However, it did not explicitly mention processing the cancellation itself or addressing the delivery issue, which are integral parts of the task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-123",
+                "reason": "Customer dissatisfaction with delivery"
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": false,
+          "failure_type": "wrong_tool",
+          "final_content": "I've successfully canceled your order ORD-123, as it was still pending. However, since the order was canceled, a refund won't be processed as part of this action. If you need further assistance or have any other concerns, please let me know.",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system successfully canceled the order ORD-123, achieving half of the desired task. However, it failed to process the refund of $150, which was a crucial part of the task.",
+          "deepeval_error": null
+        }
+      ]
+    },
+    {
+      "case_id": "am_2",
+      "input_type": "refund_cancel_conflict",
+      "query": "I'm very upset! My order ORD-456 hasn't been shipped yet and I'm quite angry! I want a refund of $150, give me my money back immediately!",
+      "expected_tool": [
+        "cancel_order"
+      ],
+      "success_rate": 100.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-456",
+                "reason": "Customer requested a refund for a pending order."
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully cancelled your order ORD-456 and processed the refund for $150 as it was still pending.",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system fully achieved the desired task by both cancelling the order and processing the refund, meeting all specified requirements.",
+          "deepeval_error": null
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-456",
+                "reason": "Customer requested a refund for a pending order"
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully cancelled your order ORD-456 and processed your refund request. You should see the refund of $150 back to your payment method shortly. If you have any more questions or need further assistance, feel free to ask.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully processed the refund for order ORD-456, which was a key component of the task. However, it did not address the user's complaint about the order not being shipped, which was also part of the desired outcome.",
+          "deepeval_error": null
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-456",
+                "reason": "Customer requested a refund for a pending order."
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "Your order ORD-456 has been successfully cancelled, and the refund of $150 will be processed shortly. You should see the refund reflected in your account soon. If you have any more questions or need further assistance, feel free to ask.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system effectively processed the refund request by cancelling the order and initiating a refund. However, it did not explicitly address the customer's complaint about the order not being shipped.",
+          "deepeval_error": null
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-456",
+                "reason": "Customer requested refund for order not shipped"
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully canceled your order ORD-456 and initiated the refund of $150. You should see the refund processed shortly. Please let me know if there's anything else I can assist you with!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully canceled the unshipped order ORD-456 and initiated the refund of $150, fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-456",
+                "reason": "Customer requested refund for unshipped order."
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "Your order ORD-456 has been successfully cancelled, and the refund process has been initiated. You should receive the refund of $150 shortly. If you have any other questions or need further assistance, feel free to let me know!",
+          "deepeval_score": 0.75,
+          "deepeval_reason": "The system successfully initiated a refund process for the order, which is a significant part of the task. However, it did not address the customer's complaint about the order not being shipped, which is an important aspect of the task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-456",
+                "reason": "Customer requested a refund for a pending order"
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully cancelled your order ORD-456 and processed the refund of $150. You should see the refund reflected in your account shortly. If there's anything else I can assist you with, please let me know.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully processed the refund for the unshipped order ORD-456 and informed the customer about the refund status. However, it did not explicitly address the customer's complaint, which was part of the task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-456",
+                "reason": "Customer requested refund for pending order"
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The order ORD-456 has been successfully cancelled, and your refund of $150 will be processed shortly. If you have any more questions or need further assistance, feel free to let me know.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome successfully processed the refund request for order ORD-456, addressing the primary concern of the customer. However, it did not explicitly mention addressing the customer's complaint about the order not being shipped, which could have provided a more comprehensive resolution.",
+          "deepeval_error": null
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-456",
+                "reason": "Customer requested refund for unshipped order"
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "Your order ORD-456 has been successfully cancelled, and the refund process has been initiated. You should see the refund of $150 in your account shortly. If you have any more questions or need further assistance, feel free to let me know.",
+          "deepeval_score": 0.75,
+          "deepeval_reason": "The system successfully initiated a refund for the order, which is a significant part of the task. However, it did not address the customer's complaint about the order not being shipped, which was also a crucial aspect of the task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-456",
+                "reason": "Customer requested refund for order not yet shipped."
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully cancelled your order ORD-456 and initiated the refund process for you. You should receive your refund of $150 shortly. If you have any other questions or need further assistance, feel free to let me know.",
+          "deepeval_score": 0.75,
+          "deepeval_reason": "The system successfully initiated a refund for the order, which is a significant part of the task. However, it did not address the user's complaint about the order not being shipped, which was also a crucial aspect of the task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "cancel_order",
+              "args": {
+                "order_id": "ORD-456",
+                "reason": "Customer requested refund for unshipped order."
+              }
+            }
+          ],
+          "first_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've successfully cancelled your order ORD-456 and initiated the refund process for you. Please allow a few business days for the refund of $150 to be processed back to your original payment method. If you have any further questions or need assistance, feel free to ask.",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully cancelled the unshipped order ORD-456 and initiated the refund process for the specified amount of $150, meeting all aspects of the desired task.",
+          "deepeval_error": null
+        }
+      ]
+    },
+    {
+      "case_id": "am_3",
+      "input_type": "refund_cancel_conflict",
+      "query": "My order ORD-789 was delivered, but the product arrived defective. I want to cancel immediately and receive a $150 refund!",
+      "expected_tool": [
+        "refund_order"
+      ],
+      "success_rate": 100.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-789",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The refund of $150 for your order ORD-789 has been successfully initiated. You should see the amount reflected in your account soon. If there's anything more I can help with, please let me know!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully initiated the refund for the specified order, which is the primary component of the task. However, the task also implied processing the cancellation, which was not explicitly mentioned in the outcome.",
+          "deepeval_error": null
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-789",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a refund of $150 for your delivered order ORD-789 due to the defective product. You should see the refund reflected in your account shortly. If you have any further questions or need assistance, feel free to ask!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The actual outcome perfectly aligns with the desired task as the refund was processed for the specified order due to the defective product, fulfilling the task requirements completely.",
+          "deepeval_error": null
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-789",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have processed a refund of $150 for your order ORD-789, as it was delivered defective. You should see the refund reflected in your account shortly. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The actual outcome perfectly aligns with the desired task. The refund was processed for the specified order due to the product being defective, fulfilling the task requirements completely.",
+          "deepeval_error": null
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-789",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a $150 refund for your order ORD-789 since the product arrived defective. The refund has been initiated, and you should see it reflected in your account shortly. If you have any further questions or need assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The refund for order ORD-789 was successfully processed, achieving the primary goal of the task. However, there is no explicit mention of the order being canceled, which is a part of the desired outcome.",
+          "deepeval_error": null
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-789",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have processed a refund of $150 for your order ORD-789, as it was delivered with a defect. You should see the refund reflected in your account shortly. If there's anything else I can assist you with, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully processed the $150 refund for order ORD-789 and acknowledged the defect, fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-789",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The refund of $150 for your order ORD-789 has been successfully initiated. If you have any further questions or need assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully initiated the refund for the specified order, which is the primary component of the task. However, the task also implied processing the cancellation, which was not explicitly mentioned in the outcome.",
+          "deepeval_error": null
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-789",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've initiated a $150 refund for your order ORD-789, which was delivered defective. You should see the refund reflected in your account shortly. If you have any further questions or need assistance, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully processed the cancellation and refund request by initiating a $150 refund for the defective product from order ORD-789, fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-789",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have processed a refund of $150 for your order ORD-789. The amount should be credited to your account shortly. If you have any further issues, please feel free to contact us.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome successfully processed the refund for the defective product from order ORD-789, aligning well with the task. However, the task also implied handling the cancellation, which was not explicitly mentioned in the outcome.",
+          "deepeval_error": null
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-789",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The refund of $150 for your order ORD-789 has been successfully initiated. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully initiated the refund for the specified order, which is the primary component of the task. However, the task also involved processing a cancellation request, which was not explicitly mentioned in the outcome.",
+          "deepeval_error": null
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-789",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "A refund of $150 for your order ORD-789 has been successfully initiated.",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The actual outcome successfully initiated a refund for the specified order, which aligns with the primary goal of processing a cancellation and refund request. However, the outcome does not explicitly mention the cancellation of the order, which is a part of the task.",
+          "deepeval_error": null
+        }
+      ]
+    },
+    {
+      "case_id": "am_4",
+      "input_type": "refund_cancel_conflict",
+      "query": "I just received the tracking code for my order ORD-101 which cost $150 by email, but I noticed the address is wrong. I want to cancel now!",
+      "expected_tool": [
+        "refund_order"
+      ],
+      "success_rate": 60.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-101",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The order ORD-101 has already been shipped, so I processed a refund for $150. You should see the refunded amount in your account soon.",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system successfully processed a refund for the order, which is part of the task. However, it did not cancel the order or address the issue of the incorrect address, as the order had already been shipped.",
+          "deepeval_error": null
+        },
+        {
+          "run": 1,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Since the order ORD-101 has already been shipped (you received a tracking code), I cannot cancel it. However, I can process a refund for you once the order is delivered. Would you like me to proceed with that instead?",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system did not fulfill the task of canceling the order due to an incorrect address, as it was already shipped. However, it provided an alternative solution by offering a refund, partially addressing the issue.",
+          "deepeval_error": null
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-101",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The order ORD-101 has already been shipped, so it couldn't be canceled. However, I have processed a refund of $150 for you. You should see the amount reflected in your account soon. If you need further assistance, please let me know!",
+          "deepeval_score": 0.6,
+          "deepeval_reason": "The task was partially completed. While the refund was successfully processed, the order could not be canceled due to it already being shipped. The inability to cancel the order means the task was not fully achieved.",
+          "deepeval_error": null
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-101",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have processed a refund of $150 for your order ORD-101. The refund has been initiated and should be reflected in your account soon. If you have any more questions or need further assistance, feel free to ask!",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The refund for order ORD-101 was processed, which partially fulfills the task. However, the order cancellation was not mentioned, leaving the task incomplete.",
+          "deepeval_error": null
+        },
+        {
+          "run": 4,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Since the order ORD-101 has already been sent (indicated by the tracking code), I won't be able to cancel it. However, I can process a refund for you once the order has been shipped or delivered. Please let me know if you'd like to proceed with the refund after delivery.",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system did not achieve the desired task of canceling the order due to an incorrect address. However, it provided an alternative solution by offering a refund after shipment or delivery, partially addressing the issue.",
+          "deepeval_error": null
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-101",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've processed a refund of $150 for your order ORD-101, as it has already been shipped. Please check your payment method for the refund confirmation. If you need further assistance, feel free to ask!",
+          "deepeval_score": 0.7,
+          "deepeval_reason": "The system successfully processed a refund for order ORD-101, which is a significant part of the task. However, it did not explicitly mention canceling the order due to the incorrect address, which was a key component of the desired outcome.",
+          "deepeval_error": null
+        },
+        {
+          "run": 6,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Since your order ORD-101 has already been shipped, I cannot cancel it. However, I can process a refund for you once the order is delivered or returned. Would you like me to proceed with that?",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system did not fulfill the task of canceling the order due to an incorrect address, as it was already shipped. However, it provided an alternative solution by offering a refund, partially addressing the issue.",
+          "deepeval_error": null
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-101",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The refund of $150 for order ORD-101 has been successfully initiated.",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system successfully initiated a refund for the order, which is part of the task. However, it did not address the cancellation of the order or the issue with the incorrect address, which were also key components of the desired outcome.",
+          "deepeval_error": null
+        },
+        {
+          "run": 8,
+          "tool_called": false,
+          "tool_calls_info": [],
+          "first_tool": null,
+          "correct": false,
+          "failure_type": "omission",
+          "final_content": "Since your order ORD-101 has already been shipped (as indicated by the receipt of a tracking code), I cannot cancel it. However, I can process a refund for you once you receive it. Please confirm if you would like to proceed with a refund request after delivery.",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system did not fulfill the task of canceling the order due to an incorrect address, as it was already shipped. However, it provided an alternative solution by offering a refund after delivery, partially addressing the issue.",
+          "deepeval_error": null
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "refund_order",
+              "args": {
+                "order_id": "ORD-101",
+                "amount": 150
+              }
+            }
+          ],
+          "first_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The order ORD-101 has already been shipped, so I couldn't cancel it. However, I have initiated a refund of $150 for you. Please allow a few business days for the refund to process. If you have any further questions or need assistance, feel free to ask!",
+          "deepeval_score": 0.5,
+          "deepeval_reason": "The system successfully initiated a refund, which is part of the task. However, it failed to cancel the order due to it already being shipped, which means the task was only partially completed.",
+          "deepeval_error": null
+        }
+      ]
+    },
+    {
+      "case_id": "eq_1",
+      "input_type": "get_client_explicit",
+      "query": "Retrieve the profile for client Maria Joana, ID CLI-9901.",
+      "expected_tool": [
+        "get_client",
+        "search_client"
+      ],
+      "success_rate": 100.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client Maria Joana with ID CLI-9901 has been retrieved. It includes her name, contact details, and account history. Is there anything specific you would like to know or do with her profile?",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for client Maria Joana, including all necessary details such as name, contact information, and account history, perfectly aligning with the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have successfully retrieved the profile for client Maria Joana with ID CLI-9901. Her name, contact details, and account history are now available. If you need further information, feel free to ask!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system perfectly achieved the desired task by retrieving the complete profile for client Maria Joana using her ID CLI-9901, including all necessary details such as name, contact information, and account history.",
+          "deepeval_error": null
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have successfully retrieved the profile for client Maria Joana, ID CLI-9901. If you need any specific information from her profile or need further assistance, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system perfectly achieved the desired task by retrieving the correct profile for client Maria Joana, ID CLI-9901, without any errors or omissions.",
+          "deepeval_error": null
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client Maria Joana with ID CLI-9901 has been successfully retrieved, including her name, contact details, and account history. If you need any specific information or assistance, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for client Maria Joana, including all requested details, perfectly achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client Maria Joana (ID: CLI-9901) has been successfully retrieved, including her name, contact details, and account history. Let me know if you need any specific information from it!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for client Maria Joana, including all requested details, perfectly achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client Maria Joana with ID CLI-9901 has been successfully retrieved, including her name, contact details, and account history. If you need any specific information from her profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for client Maria Joana, including all requested details, perfectly achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client Maria Joana with ID CLI-9901 has been successfully retrieved. It includes her name, contact details, and account history. If you need any specific information from the profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for client Maria Joana, including all requested details, perfectly achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client Maria Joana with ID CLI-9901 has been successfully retrieved, including her name, contact details, and account history. If you need specific information from her profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for client Maria Joana, including all requested details, perfectly achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client Maria Joana with ID CLI-9901 has been successfully retrieved. It includes her name, contact details, and account history. If you need specific information from her profile, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for client Maria Joana, including all requested details, perfectly achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-9901"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "The profile for client Maria Joana with ID CLI-9901 has been successfully retrieved, including name, contact details, and account history. If you need specific information, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the complete profile for client Maria Joana, including all necessary details such as name, contact information, and account history, perfectly aligning with the desired task.",
+          "deepeval_error": null
+        }
+      ]
+    },
+    {
+      "case_id": "eq_2",
+      "input_type": "vague_id_reference",
+      "query": "Check the system for any info on 'ID: CLI-1010' or user 'Robert Brown'.",
+      "expected_tool": [
+        "get_client",
+        "search_client"
+      ],
+      "success_rate": 100.0,
+      "runs": [
+        {
+          "run": 0,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-1010"
+              }
+            },
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Robert Brown"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have retrieved the information for 'ID: CLI-1010' and found matching profiles for the user 'Robert Brown'. Let me know if you need specific details or further assistance with these profiles!",
+          "deepeval_score": 0.95,
+          "deepeval_reason": "The system successfully retrieved information for both 'ID: CLI-1010' and the user 'Robert Brown', meeting the primary objectives of the task. However, the level of detail in the retrieved information is not specified, which slightly affects the completeness of the task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 1,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-1010"
+              }
+            },
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Robert Brown"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've retrieved the information for both the client with ID 'CLI-1010' and the user 'Robert Brown'. If you need specific details from these profiles, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved the required information for both the specified client ID and user, fully achieving the desired task.",
+          "deepeval_error": null
+        },
+        {
+          "run": 2,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-1010"
+              }
+            },
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Robert Brown"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have successfully retrieved the information for both 'ID: CLI-1010' and 'Robert Brown':\n\n1. **Client ID: CLI-1010** - The system has detailed information including the name, contact details, and account history.\n2. **Robert Brown** - Matching customer profiles have been found and returned.\n\nIf you need specific details from either of these, please let me know!",
+          "deepeval_score": 0.95,
+          "deepeval_reason": "The system effectively retrieved comprehensive information for both 'ID: CLI-1010' and the user 'Robert Brown', meeting the task requirements. However, the verdict is slightly less than perfect due to the lack of explicit confirmation that all possible data points were covered.",
+          "deepeval_error": null
+        },
+        {
+          "run": 3,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-1010"
+              }
+            },
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Robert Brown"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've retrieved the information for the client ID 'CLI-1010' and found relevant details for 'Robert Brown'. Let me know if you need any specific information or assistance regarding these profiles!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved information for both the specified client ID 'CLI-1010' and the user 'Robert Brown', fully meeting the task requirements.",
+          "deepeval_error": null
+        },
+        {
+          "run": 4,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-1010"
+              }
+            },
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Robert Brown"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've retrieved the information for both queries:\n\n1. **Client ID: CLI-1010** - The client's name, contact details, and account history are available.\n2. **Search for 'Robert Brown'** - Matching customer profiles have been returned.\n\nIf you need specific details or actions related to these profiles, please let me know!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully retrieved comprehensive information for 'ID: CLI-1010', including the client's name, contact details, and account history. Additionally, it provided matching profiles for 'Robert Brown'. However, the task could have been more complete if it explicitly confirmed the linkage between 'ID: CLI-1010' and 'Robert Brown', if applicable.",
+          "deepeval_error": null
+        },
+        {
+          "run": 5,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-1010"
+              }
+            },
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Robert Brown"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've retrieved the information for 'ID: CLI-1010' and found matching customer profiles for 'Robert Brown'. Let me know if you need any specific details from these profiles!",
+          "deepeval_score": 0.95,
+          "deepeval_reason": "The system successfully retrieved information for both 'ID: CLI-1010' and the user 'Robert Brown', meeting the primary objectives of the task. However, the verdict is slightly less than perfect as the depth and completeness of the information retrieved are not specified.",
+          "deepeval_error": null
+        },
+        {
+          "run": 6,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-1010"
+              }
+            },
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Robert Brown"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I've retrieved the information you requested:\n\n1. **Client ID: CLI-1010** - I have the name, contact details, and account history available.\n2. **Robert Brown** - I found matching customer profiles for this name.\n\nIf you need specific details from either of these results, please let me know!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully retrieved detailed information for 'Client ID: CLI-1010' and identified profiles for 'Robert Brown'. However, it is unclear if all relevant information for 'Robert Brown' was retrieved, leading to a slightly less than perfect score.",
+          "deepeval_error": null
+        },
+        {
+          "run": 7,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-1010"
+              }
+            },
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Robert Brown"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have retrieved the information for both 'ID: CLI-1010' and the user 'Robert Brown'. Here are the results:\n\n1. **Client ID: CLI-1010** - The client profile includes name, contact details, and account history.\n\n2. **Search for 'Robert Brown'** - Matching customer profiles have been returned. \n\nIf you need specific details from these profiles, please let me know!",
+          "deepeval_score": 0.95,
+          "deepeval_reason": "The system successfully retrieved comprehensive information for both 'ID: CLI-1010' and the user 'Robert Brown'. The only minor shortcoming is the lack of explicit confirmation that the retrieved 'Robert Brown' profiles are indeed the correct matches, but the task was largely achieved.",
+          "deepeval_error": null
+        },
+        {
+          "run": 8,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-1010"
+              }
+            },
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Robert Brown"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have retrieved the following information:\n\n1. **Client ID: CLI-1010** - The profile includes the name, contact details, and account history.\n2. **Search for 'Robert Brown'** - Matching customer profiles have been returned.\n\nIf you need specific details from either of these profiles, please let me know!",
+          "deepeval_score": 1.0,
+          "deepeval_reason": "The system successfully retrieved comprehensive information for both 'ID: CLI-1010' and user 'Robert Brown', meeting the task requirements perfectly.",
+          "deepeval_error": null
+        },
+        {
+          "run": 9,
+          "tool_called": true,
+          "tool_calls_info": [
+            {
+              "name": "get_client",
+              "args": {
+                "client_id": "CLI-1010"
+              }
+            },
+            {
+              "name": "search_client",
+              "args": {
+                "query": "Robert Brown"
+              }
+            }
+          ],
+          "first_tool": "get_client",
+          "correct": true,
+          "failure_type": null,
+          "final_content": "I have retrieved the information for 'ID: CLI-1010', including name, contact details, and account history. Additionally, I found customer profiles matching 'Robert Brown'. If you need specific details or further assistance, please let me know!",
+          "deepeval_score": 0.9,
+          "deepeval_reason": "The system successfully retrieved comprehensive information for 'ID: CLI-1010', including relevant details and account history. Additionally, it identified customer profiles matching 'Robert Brown'. However, the task did not specify if the information for 'Robert Brown' was expected to be linked to 'ID: CLI-1010', which could have provided a more complete alignment with the task.",
+          "deepeval_error": null
+        }
+      ]
+    }
+  ]
+}

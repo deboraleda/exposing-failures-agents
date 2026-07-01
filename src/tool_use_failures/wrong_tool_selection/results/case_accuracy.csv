@@ -1,0 +1,11 @@
+provider,model,case_id,n_runs,correct_runs,accuracy
+deepinfra,meta-llama/Meta-Llama-3.1-8B-Instruct,am_1,10,0,0.0
+deepinfra,meta-llama/Meta-Llama-3.1-8B-Instruct,am_4,10,0,0.0
+deepinfra,meta-llama/Meta-Llama-3.1-8B-Instruct,eq_1,10,0,0.0
+deepinfra,meta-llama/Meta-Llama-3.1-8B-Instruct,am_2,10,1,10.0
+deepinfra,meta-llama/Meta-Llama-3.1-8B-Instruct,ex_1,10,4,40.0
+deepinfra,meta-llama/Meta-Llama-3.1-8B-Instruct,ex_4,10,5,50.0
+deepinfra,meta-llama/Meta-Llama-3.1-8B-Instruct,eq_2,10,6,60.0
+deepinfra,meta-llama/Meta-Llama-3.1-8B-Instruct,ex_3,10,9,90.0
+deepinfra,meta-llama/Meta-Llama-3.1-8B-Instruct,am_3,10,10,100.0
+deepinfra,meta-llama/Meta-Llama-3.1-8B-Instruct,ex_2,10,10,100.0
