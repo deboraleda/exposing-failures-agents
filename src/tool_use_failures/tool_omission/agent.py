@@ -32,7 +32,7 @@ def create_t1_agent(llm):
     system_prompt = SystemMessage(content="""
         You are a customer support assistant.                                     
         Help customers with their order inquiries.
-        You have access to backend tools to retrieve order information.
+        You have access to backend tools to trigger replacement orders.
         """)
 
     def agent_node(state: AgentState):
