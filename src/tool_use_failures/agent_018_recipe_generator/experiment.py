@@ -1,3 +1,8 @@
+# experiment.py — agent018 (recipe generator), parameter error pattern
+#
+# Run:
+#   python -m tool_use_failures.agent_018_recipe_generator.experiment --model <model key>
+
 import argparse
 import json
 from datetime import datetime
@@ -11,24 +16,37 @@ from tool_use_failures.config import (
     TEMPERATURE,
 )
 
-from tool_use_failures.parameter_error.agent030.math_weather import TOOLS, create_agent
-from tool_use_failures.parameter_error.agent030.test_cases import TEST_CASES
-from tool_use_failures.parameter_error.agent030.deepeval import (
+from tool_use_failures.agent_018_recipe_generator.recipe_agent import create_agent
+from tool_use_failures.agent_018_recipe_generator.test_cases import TEST_CASES
+from tool_use_failures.agent_018_recipe_generator.deepeval import (
     eval_task_completion,
 )
 
 load_dotenv(override=True)
 
 
-TOOL_DEFAULTS = {
-    t.name: {k: v["default"] for k, v in t.args.items() if "default" in v}
-    for t in TOOLS
-}
-
-
 # ============================================================================
 # Argument evaluation
 # ============================================================================
+def same_value(expected_value, actual_value):
+    """
+    Lists of strings (e.g. ingredients) are compared as sets, ignoring order
+    and letter case; any other value must match exactly.
+    """
+
+    if (
+        isinstance(expected_value, list)
+        and isinstance(actual_value, list)
+        and all(isinstance(v, str) for v in expected_value + actual_value)
+    ):
+        return (
+            {v.strip().lower() for v in expected_value}
+            == {v.strip().lower() for v in actual_value}
+        )
+
+    return actual_value == expected_value
+
+
 def evaluate_args(expected_args, actual_args):
     """
     Compare expected vs actual tool arguments.
@@ -74,7 +92,7 @@ def evaluate_args(expected_args, actual_args):
 
             actual_value = actual_args[key]
 
-            if actual_value != expected_value:
+            if not same_value(expected_value, actual_value):
                 result["wrong_values"].append({
                     "arg": key,
                     "expected": expected_value,
@@ -127,64 +145,6 @@ def parse_args_payload(raw_tool_args):
             return {"__raw_string__": raw_tool_args}
 
     return {"__invalid_payload_type__": str(type(raw_tool_args))}
-
-
-def evaluate_chain_args(expected_args_by_tool, tool_calls_info):
-    """
-    Evaluate the arguments of every call in the chain and merge the results
-    into the evaluate_args schema, with argument names prefixed by the tool
-    ("calculate_trip_budget.days"). An argument omitted by the model counts
-    with the tool's default value (the value the tool actually receives).
-    """
-
-    merged = {
-        "all_correct": True,
-        "score": 0.0,
-        "missing_args": [],
-        "wrong_values": [],
-        "unexpected_args": [],
-        "correct_args": [],
-        "correct_args_count": 0,
-        "total_expected_args": 0,
-        "by_tool": {},
-    }
-
-    for call in tool_calls_info:
-
-        name = call.get("name")
-
-        if name not in expected_args_by_tool:
-            continue
-
-        actual_args = {
-            **TOOL_DEFAULTS.get(name, {}),
-            **parse_args_payload(call.get("args", {})),
-        }
-
-        evaluation = evaluate_args(
-            expected_args=expected_args_by_tool[name],
-            actual_args=actual_args,
-        )
-
-        merged["by_tool"][name] = evaluation
-        merged["all_correct"] &= evaluation["all_correct"]
-        merged["correct_args_count"] += evaluation["correct_args_count"]
-        merged["total_expected_args"] += evaluation["total_expected_args"]
-
-        for key in ("missing_args", "unexpected_args", "correct_args"):
-            merged[key] += [f"{name}.{arg}" for arg in evaluation[key]]
-
-        merged["wrong_values"] += [
-            {**wrong, "arg": f"{name}.{wrong['arg']}"}
-            for wrong in evaluation["wrong_values"]
-        ]
-
-    if merged["total_expected_args"] > 0:
-        merged["score"] = round(
-            merged["correct_args_count"] / merged["total_expected_args"], 4
-        )
-
-    return merged
 
 
 # ============================================================================
@@ -243,8 +203,9 @@ for case in TEST_CASES:
     print(f"TYPE: {case['type']}")
     print(f"QUERY: {case['query']}")
 
-    expected_chain = case["expected_tool"]
-    expected_args = case.get("expected_args") or {}
+    expected_tool_name = case["expected_tool"]
+    expected_args = (case.get("expected_args") or {}).get(expected_tool_name)
+    max_tool_calls = case.get("max_tool_calls")
 
     case_runs = []
     successes = 0
@@ -253,7 +214,8 @@ for case in TEST_CASES:
 
         print(f"\n  run={run_idx}")
 
-        raw_tool_args = []
+        raw_tool_args = {}
+        actual_args = {}
 
         try:
 
@@ -290,33 +252,40 @@ for case in TEST_CASES:
 
             else:
 
-                actual_chain = [call.get("name") for call in tool_calls_info]
-                raw_tool_args = [call.get("args", {}) for call in tool_calls_info]
+                actual_tool = tool_calls_info[0]
+                actual_tool_name = actual_tool.get("name")
+                raw_tool_args = actual_tool.get("args", {})
+                actual_args = parse_args_payload(raw_tool_args)
 
-                # Arguments of every expected tool that was called
-                argument_evaluation = evaluate_chain_args(
-                    expected_args_by_tool=expected_args,
-                    tool_calls_info=tool_calls_info,
-                )
-
-                # Chain stopped before the end
-                if actual_chain == expected_chain[:len(actual_chain)] and len(actual_chain) < len(expected_chain):
-
-                    failure_type = "omission"
-
-                # Wrong tool, wrong order or extra calls
-                elif actual_chain != expected_chain:
+                # Wrong tool
+                if actual_tool_name != expected_tool_name:
 
                     failure_type = "tool_selection_error"
 
-                # Evaluate args
-                elif not argument_evaluation["all_correct"]:
-
-                    failure_type = "tool_parameter_error"
-
+                # Evaluate args (only cases that define expected_args)
                 else:
 
                     correct = True
+
+                    if expected_args is not None:
+
+                        argument_evaluation = evaluate_args(
+                            expected_args=expected_args,
+                            actual_args=actual_args,
+                        )
+
+                        if not argument_evaluation["all_correct"]:
+                            correct = False
+                            failure_type = "tool_parameter_error"
+
+                    # More tool calls than the case allows
+                    if (
+                        correct
+                        and max_tool_calls is not None
+                        and len(tool_calls_info) > max_tool_calls
+                    ):
+                        correct = False
+                        failure_type = "multiple_tool_calls"
 
             # ================================================================
             # Malformed tool call overrides
@@ -376,8 +345,9 @@ for case in TEST_CASES:
                 "tool_called": tool_called,
                 "tool_calls_info": tool_calls_info,
                 "n_tool_calls": len(tool_calls_info),
-                "tool_chain": [call.get("name") for call in tool_calls_info],
+                "multiple_tool_calls": len(tool_calls_info) > 1,
                 "raw_tool_args": raw_tool_args,
+                "parsed_payload": actual_args,
                 "malformed_tool_call": malformed_tool_call,
 
                 # Evaluation
@@ -403,6 +373,7 @@ for case in TEST_CASES:
                 "correct": False,
                 "failure_type": "execution_error",
                 "raw_tool_args": raw_tool_args,
+                "parsed_payload": actual_args,
             })
 
     # ========================================================================
@@ -417,8 +388,9 @@ for case in TEST_CASES:
         "case_id": case["id"],
         "input_type": case["type"],
         "query": case["query"],
-        "expected_tool": expected_chain,
+        "expected_tool": expected_tool_name,
         "expected_args": expected_args,
+        "max_tool_calls": max_tool_calls,
         "success_rate": success_rate,
         "runs": case_runs,
     })
@@ -447,11 +419,12 @@ for case_data in model_results["cases"]:
             "query": case_data["query"],
 
             # Expected
-            "expected_tool": json.dumps(case_data["expected_tool"], ensure_ascii=False),
+            "expected_tool": case_data["expected_tool"],
             "expected_args": (
                 json.dumps(case_data["expected_args"], ensure_ascii=False)
                 if case_data["expected_args"] else None
             ),
+            "max_tool_calls": case_data["max_tool_calls"],
 
             # Run
             "run": run_data["run"],
@@ -460,8 +433,9 @@ for case_data in model_results["cases"]:
             "tool_called": run_data.get("tool_called"),
             "tool_calls_info": json.dumps(run_data.get("tool_calls_info", []), ensure_ascii=False),
             "n_tool_calls": run_data.get("n_tool_calls"),
-            "tool_chain": json.dumps(run_data.get("tool_chain", []), ensure_ascii=False),
-            "raw_tool_args": json.dumps(run_data.get("raw_tool_args", []), ensure_ascii=False),
+            "multiple_tool_calls": run_data.get("multiple_tool_calls"),
+            "raw_tool_args": json.dumps(run_data.get("raw_tool_args", {}), ensure_ascii=False),
+            "parsed_payload": json.dumps(run_data.get("parsed_payload", {}), ensure_ascii=False),
             "malformed_tool_call": run_data.get("malformed_tool_call"),
 
             # Deterministic evaluation
@@ -497,14 +471,14 @@ timestamp = datetime.now().strftime("%Y%m%d_%H%M")
 
 safe_model_name = model_name.replace("/", "_").replace(":", "-")
 
-json_output_file = f"results_agent030_{safe_model_name}_{timestamp}.json"
+json_output_file = f"results_agent018_{safe_model_name}_{timestamp}.json"
 
 with open(json_output_file, "w", encoding="utf-8") as f:
     json.dump(model_results, f, indent=2, ensure_ascii=False)
 
 print(f"\nSaved JSON -> {json_output_file}")
 
-csv_output_file = f"results_agent030_{safe_model_name}_{timestamp}.csv"
+csv_output_file = f"results_agent018_{safe_model_name}_{timestamp}.csv"
 
 pd.DataFrame(csv_rows).to_csv(csv_output_file, index=False)
 
