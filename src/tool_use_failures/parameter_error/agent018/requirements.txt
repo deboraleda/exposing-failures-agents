@@ -1,0 +1,10 @@
+langgraph>=1.0,<2
+langchain-core>=1.0,<2
+langchain-openai>=1.0,<2
+notion-client>=2.2,<4
+tavily-python>=0.7,<1
+python-dotenv>=1.0,<2
+# experiment.py
+deepeval
+langchain-anthropic
+pandas>=2,<3
