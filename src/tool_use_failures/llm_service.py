@@ -3,7 +3,7 @@ import os
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 
-from tool_use_failures.config import N_RUNS, TEMPERATURE, PROVIDER_CONFIG, MODELS
+from tool_use_failures.config import N_RUNS, TEMPERATURE, MAX_TOKENS, PROVIDER_CONFIG, MODELS
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
@@ -36,11 +36,13 @@ def get_llm(target):
             base_url=config["base_url"],
             api_key=os.getenv(config["api_key_env"]),
             temperature=TEMPERATURE,
+            max_tokens=MAX_TOKENS,
         )
     elif config["class"] == "ChatAnthropic":
         llm = ChatAnthropic(
             model=model_name,
             api_key=os.getenv(config["api_key_env"]),
             temperature=TEMPERATURE,
+            max_tokens=MAX_TOKENS,
         )
     return llm, provider, model_name
