@@ -18,7 +18,7 @@ from tool_use_failures.config import (
 
 from tool_use_failures.parameter_error.agent018.recipe_agent import create_agent
 from tool_use_failures.parameter_error.agent018.test_cases import TEST_CASES
-from tool_use_failures.parameter_error.agent018.deepeval_eval import (
+from tool_use_failures.parameter_error.agent018.deepeval import (
     eval_task_completion,
 )
 

@@ -18,7 +18,7 @@ from tool_use_failures.llm_service import get_llm
 
 from tool_use_failures.wrong_tool_selection.agent012.travel_agent import create_agent
 from tool_use_failures.wrong_tool_selection.agent012.test_cases import TEST_CASES
-from tool_use_failures.wrong_tool_selection.agent012.deepeval_eval import (
+from tool_use_failures.wrong_tool_selection.agent012.deepeval import (
     eval_task_completion,
 )
 

@@ -1,11 +1,3 @@
-# experiment.py — agent030 (trip budget and destination weather), parameter error pattern
-#
-# The expected output of each case is a chain of tool calls (expected_tool, in order)
-# with the expected arguments of each call (expected_args, keyed by tool name).
-#
-# Run:
-#   python -m tool_use_failures.parameter_error.agent030.experiment --model <model key>
-
 import argparse
 import json
 from datetime import datetime
@@ -21,7 +13,7 @@ from tool_use_failures.config import (
 
 from tool_use_failures.parameter_error.agent030.math_weather import TOOLS, create_agent
 from tool_use_failures.parameter_error.agent030.test_cases import TEST_CASES
-from tool_use_failures.parameter_error.agent030.deepeval_eval import (
+from tool_use_failures.parameter_error.agent030.deepeval import (
     eval_task_completion,
 )
 
