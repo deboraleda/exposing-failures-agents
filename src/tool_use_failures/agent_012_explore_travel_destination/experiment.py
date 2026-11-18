@@ -1,7 +1,7 @@
-# experiment.py — agent012 (travel destination assistant), wrong tool selection pattern
+# experiment.py — agent012 (explore travel destination), wrong tool selection pattern
 #
 # Run:
-#   python -m tool_use_failures.agent_012_travel_destination_assistant.experiment --model <model key>
+#   python -m tool_use_failures.agent_012_explore_travel_destination.experiment --model <model key>
 
 import argparse
 import csv
@@ -16,9 +16,9 @@ from tool_use_failures.config import (
 )
 from tool_use_failures.llm_service import get_llm
 
-from tool_use_failures.agent_012_travel_destination_assistant.travel_agent import create_agent
-from tool_use_failures.agent_012_travel_destination_assistant.test_cases import TEST_CASES
-from tool_use_failures.agent_012_travel_destination_assistant.deepeval import (
+from tool_use_failures.agent_012_explore_travel_destination.agent import create_agent
+from tool_use_failures.agent_012_explore_travel_destination.test_cases import TEST_CASES
+from tool_use_failures.agent_012_explore_travel_destination.deepeval import (
     eval_task_completion,
 )
 

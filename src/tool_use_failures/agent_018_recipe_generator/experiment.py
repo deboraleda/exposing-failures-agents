@@ -16,7 +16,7 @@ from tool_use_failures.config import (
     TEMPERATURE,
 )
 
-from tool_use_failures.agent_018_recipe_generator.recipe_agent import create_agent
+from tool_use_failures.agent_018_recipe_generator.agent import create_agent
 from tool_use_failures.agent_018_recipe_generator.test_cases import TEST_CASES
 from tool_use_failures.agent_018_recipe_generator.deepeval import (
     eval_task_completion,
