@@ -221,3 +221,7 @@ __marimo__/
 
 .deepeval
 .claude
+
+# local hand review of judge vs oracle disagreements
+src/tool_use_failures/dashboard/review_disagreements.py
+src/tool_use_failures/dashboard/data/review.md

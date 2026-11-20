@@ -667,7 +667,9 @@
         h('div', { class: 'ex-grid' },
           h('dl', { class: 'kv' },
             h('dt', { text: 'Request' }), h('dd', {}, h('p', { class: 'quote', text: r.query || '(empty request)', style: r.query ? null : 'font-style: italic; color: var(--color-fg-muted)' })),
-            h('dt', { text: 'Expected' }), h('dd', {}, h('div', { class: 'call expected', text: r.expected })),
+            h('dt', { text: 'Expected' }), h('dd', {}, r.expected_calls
+              ? h('div', { class: 'calls' }, r.expected_calls.split('; ').map((t) => h('div', { class: 'call expected', text: t })))
+              : h('div', { class: 'call expected', text: r.expected })),
             h('dt', { text: 'Tools actually called' }), h('dd', {}, h('div', { class: 'calls' },
               String(r.tool_calls).split('; ').map((t) => h('div', { class: 'call', text: t }))))),
           h('dl', { class: 'kv' },

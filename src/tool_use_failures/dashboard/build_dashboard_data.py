@@ -140,7 +140,8 @@ def find_result_file(agent, model):
             if re.fullmatch(r"\d{8}_\d{4}\.json", os.path.basename(path)[len(stem):]):
                 candidates.append(path)
 
-    return max(candidates, key=os.path.getmtime) if candidates else None
+    # by the timestamp in the name: copies and checkouts reset the modification times
+    return max(candidates, key=lambda p: (os.path.basename(p)[len(stem):], os.path.getmtime(p))) if candidates else None
 
 
 def expected_text(case):
@@ -153,6 +154,21 @@ def expected_text(case):
     if "should_call_tool" in case:
         return "a tool call" if case["should_call_tool"] else "no tool"
     return ""
+
+
+def expected_calls_text(case):
+    """Expected calls with their arguments, e.g. "book_flight({...})"; "" when the case has no expected_args.
+
+    expected_args is either the arguments of a single expected_tool or a {tool: args} map."""
+
+    args = case.get("expected_args")
+    if not args:
+        return ""
+    tools = case.get("expected_tool")
+    tools = tools if isinstance(tools, list) else [tools]
+    if not set(args) <= set(tools):
+        args = {tools[0]: args}
+    return "; ".join(f"{name}({json.dumps(a, ensure_ascii=False)})" for name, a in args.items())
 
 
 def clean(text):
@@ -198,6 +214,7 @@ def main():
 
         excluded_cases = EXCLUDED_CASES.get(agent["agent"], set())
         cases = [c for c in load_test_cases(agent["package"]) if case_id_of(c) not in excluded_cases]
+        cases_by_id = {case_id_of(c): c for c in cases}
         n_conflicting = sum(case_group(case_id_of(c)) == "conflicting" for c in cases)
         tools = tool_names(os.path.join(PACKAGE_DIR, agent["package"], agent["module"]))
 
@@ -287,6 +304,9 @@ def main():
                             "group": group,
                             "query": clean(case.get("query")),
                             "expected": expected_text(case),
+                            # for parameter errors the expected arguments matter, not just the tool
+                            "expected_calls": expected_calls_text(cases_by_id.get(cid, {}))
+                            if failure_type == "tool_parameter_error" else "",
                             "tool_calls": tool_calls_text(run.get("tool_calls_info") or []),
                             "failure_type": failure_type,
                             "judges_passed": f"{len(judges_passed)} of {len(JUDGE_KEYS)}",
