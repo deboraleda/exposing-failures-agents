@@ -12,7 +12,7 @@ from tool_use_failures.config import (
     TEMPERATURE,
 )
 
-from tool_use_failures.agent_030_trip_budget_weather.math_weather import TOOLS, create_agent
+from tool_use_failures.agent_030_trip_budget_weather.agent import TOOLS, create_agent
 from tool_use_failures.agent_030_trip_budget_weather.test_cases import TEST_CASES
 from tool_use_failures.agent_030_trip_budget_weather.deepeval import (
     DEEPEVAL_COLUMNS,
