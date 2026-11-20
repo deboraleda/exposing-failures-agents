@@ -6,6 +6,7 @@
 import argparse
 import csv
 import json
+import os
 from datetime import datetime
 
 from dotenv import load_dotenv
@@ -19,7 +20,9 @@ from tool_use_failures.llm_service import get_llm
 from tool_use_failures.agent_012_travel_destination_assistant.travel_agent import create_agent
 from tool_use_failures.agent_012_travel_destination_assistant.test_cases import TEST_CASES
 from tool_use_failures.agent_012_travel_destination_assistant.deepeval import (
+    DEEPEVAL_COLUMNS,
     eval_task_completion,
+    summarize_scores,
 )
 
 load_dotenv(override=True)
@@ -115,18 +118,10 @@ for case in TEST_CASES:
                 successes += 1
 
             # ── DeepEval ──────────────────────────────────────────────────────
-            deepeval_score = None
-            deepeval_reason = None
-            deepeval_error = None
-
-            try:
-                deepeval_reason, deepeval_score = eval_task_completion(
-                    actual_input=case["query"],
-                    actual_output=result["final_content"],
-                )
-
-            except Exception as deepeval_exception:
-                deepeval_error = str(deepeval_exception)
+            deepeval_results = eval_task_completion(
+                actual_input=case["query"],
+                actual_output=result["final_content"],
+            )
 
             print(
                 f"run={run_idx} | "
@@ -134,7 +129,7 @@ for case in TEST_CASES:
                 f"first_tool={first_tool} | "
                 f"n_tool_calls={len(tool_calls_info)} | "
                 f"correct={correct} | "
-                f"deepeval={deepeval_score}"
+                f"deepeval=[{summarize_scores(deepeval_results)}]"
             )
 
             case_runs.append({
@@ -152,9 +147,7 @@ for case in TEST_CASES:
                 "final_content": result["final_content"],
 
                 # deepeval
-                "deepeval_score": deepeval_score,
-                "deepeval_reason": deepeval_reason,
-                "deepeval_error": deepeval_error,
+                **deepeval_results,
             })
 
         except Exception as e:
@@ -195,7 +188,10 @@ safe_model = (
     .replace(":", "-")
 )
 
-output_file = f"results_agent012_{safe_model}_{timestamp}.json"
+results_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+os.makedirs(results_dir, exist_ok=True)
+
+output_file = os.path.join(results_dir, f"results_agent012_{safe_model}_{timestamp}.json")
 
 with open(output_file, "w", encoding="utf-8") as f:
     json.dump(model_results, f, indent=2, ensure_ascii=False)
@@ -246,9 +242,7 @@ for case_data in model_results["cases"]:
             "final_content": run_data.get("final_content"),
 
             # ── deepeval ────────────────────────────────────────────────────
-            "deepeval_score": run_data.get("deepeval_score"),
-            "deepeval_reason": run_data.get("deepeval_reason"),
-            "deepeval_error": run_data.get("deepeval_error"),
+            **{column: run_data.get(column) for column in DEEPEVAL_COLUMNS},
 
             # ── execution errors ────────────────────────────────────────────
             "error": run_data.get("error"),

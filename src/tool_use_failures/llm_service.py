@@ -31,12 +31,18 @@ def get_llm(target):
     config = PROVIDER_CONFIG[provider]
 
     if config["class"] == "ChatOpenAI":
+        optional_kwargs = {}
+
+        if config.get("supports_temperature", True):
+            optional_kwargs["temperature"] = TEMPERATURE
+
         llm = ChatOpenAI(
             model=model_name,
             base_url=config["base_url"],
             api_key=os.getenv(config["api_key_env"]),
-            temperature=TEMPERATURE,
             max_tokens=MAX_TOKENS,
+            use_responses_api=config.get("use_responses_api", False),
+            **optional_kwargs,
         )
     elif config["class"] == "ChatAnthropic":
         llm = ChatAnthropic(

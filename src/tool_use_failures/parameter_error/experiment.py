@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 from datetime import datetime
 
 import pandas as pd
@@ -12,7 +13,9 @@ from tool_use_failures.llm_service import get_llm
 from tool_use_failures.parameter_error.agent import agent
 from tool_use_failures.parameter_error.test_cases import TEST_CASES
 from tool_use_failures.parameter_error.deepeval import (
+    DEEPEVAL_COLUMNS,
     eval_task_completion,
+    summarize_scores,
 )
 
 from tool_use_failures.config import (
@@ -422,21 +425,10 @@ for case in TEST_CASES[0]["cases"]:
             # DeepEval
             # ================================================================
 
-            try:
-
-                reason, score = eval_task_completion(
-                    actual_input=case["query"], actual_output=raw_output)
-
-            except Exception as deepeval_error:
-
-                print(
-                    f"DeepEval ERROR: "
-                    f"{deepeval_error}"
-                )
-
-                reason = None
-
-                score = None
+            deepeval_results = eval_task_completion(
+                actual_input=case["query"],
+                actual_output=raw_output,
+            )
 
             # ================================================================
             # Console log
@@ -448,7 +440,7 @@ for case in TEST_CASES[0]["cases"]:
 
             print(f"    failure_type={failure_type}")
 
-            print(f"    deepeval={score}")
+            print(f"    deepeval=[{summarize_scores(deepeval_results)}]")
 
             print(
                 f"    n_tool_calls="
@@ -567,9 +559,7 @@ for case in TEST_CASES[0]["cases"]:
                 # DeepEval
                 # ------------------------------------------------------------
 
-                "deepeval_score": score,
-
-                "deepeval_reason": reason,
+                **deepeval_results,
             }
 
             case_runs.append(run_result)
@@ -829,17 +819,10 @@ for case_data in model_results["cases"]:
             # DeepEval
             # ================================================================
 
-            "deepeval_score": (
-                run_data.get(
-                    "deepeval_score"
-                )
-            ),
-
-            "deepeval_reason": (
-                run_data.get(
-                    "deepeval_reason"
-                )
-            ),
+            **{
+                column: run_data.get(column)
+                for column in DEEPEVAL_COLUMNS
+            },
 
             # ================================================================
             # Final response
@@ -878,8 +861,11 @@ safe_model_name = (
 # JSON
 # ----------------------------------------------------------------------------
 
-json_output_file = (
+results_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+os.makedirs(results_dir, exist_ok=True)
 
+json_output_file = os.path.join(
+    results_dir,
     f"results_parameter_error_"
     f"{safe_model_name}_"
     f"{timestamp}.json"
@@ -911,12 +897,7 @@ print(f"\nSaved JSON -> {json_output_file}")
 # CSV
 # ----------------------------------------------------------------------------
 
-csv_output_file = (
-
-    f"results_parameter_error_"
-    f"{safe_model_name}_"
-    f"{timestamp}.csv"
-)
+csv_output_file = json_output_file.replace(".json", ".csv")
 
 csv_df = pd.DataFrame(csv_rows)
 

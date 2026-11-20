@@ -140,7 +140,7 @@ def create_agent(llm):
         return {
             "tool_called": bool(tool_calls_info),
             "tool_calls_info": tool_calls_info,
-            "final_content": final["messages"][-1].text,
+            "final_content": str(final["messages"][-1].text),
         }
 
     return run

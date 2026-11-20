@@ -365,7 +365,7 @@ def agent(llm):
             "success": True,
             "tool_called": tool_called,
             "tool_calls_info": tool_calls_info,
-            "final_content": final_message.content,
+            "final_content": str(final_message.text),
         }
 
     return run

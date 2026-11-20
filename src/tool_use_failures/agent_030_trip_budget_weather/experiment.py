@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 from datetime import datetime
 
 import pandas as pd
@@ -14,7 +15,9 @@ from tool_use_failures.config import (
 from tool_use_failures.agent_030_trip_budget_weather.math_weather import TOOLS, create_agent
 from tool_use_failures.agent_030_trip_budget_weather.test_cases import TEST_CASES
 from tool_use_failures.agent_030_trip_budget_weather.deepeval import (
+    DEEPEVAL_COLUMNS,
     eval_task_completion,
+    summarize_scores,
 )
 
 load_dotenv(override=True)
@@ -333,15 +336,10 @@ for case in TEST_CASES:
             # DeepEval
             # ================================================================
 
-            try:
-                reason, score = eval_task_completion(
-                    actual_input=case["query"],
-                    actual_output=raw_output,
-                )
-            except Exception as deepeval_error:
-                print(f"DeepEval ERROR: {deepeval_error}")
-                reason = None
-                score = None
+            deepeval_results = eval_task_completion(
+                actual_input=case["query"],
+                actual_output=raw_output,
+            )
 
             # ================================================================
             # Console log
@@ -350,7 +348,7 @@ for case in TEST_CASES:
             print(f"    tool_called={tool_called}")
             print(f"    correct={correct}")
             print(f"    failure_type={failure_type}")
-            print(f"    deepeval={score}")
+            print(f"    deepeval=[{summarize_scores(deepeval_results)}]")
             print(f"    n_tool_calls={len(tool_calls_info)}")
 
             if tool_calls_info:
@@ -389,8 +387,7 @@ for case in TEST_CASES:
                 "final_content": raw_output,
 
                 # DeepEval
-                "deepeval_score": score,
-                "deepeval_reason": reason,
+                **deepeval_results,
             })
 
         except Exception as e:
@@ -478,8 +475,7 @@ for case_data in model_results["cases"]:
             "total_expected_args": arg_eval.get("total_expected_args"),
 
             # DeepEval
-            "deepeval_score": run_data.get("deepeval_score"),
-            "deepeval_reason": run_data.get("deepeval_reason"),
+            **{column: run_data.get(column) for column in DEEPEVAL_COLUMNS},
 
             # Final response
             "final_content": run_data.get("final_content"),
@@ -497,14 +493,17 @@ timestamp = datetime.now().strftime("%Y%m%d_%H%M")
 
 safe_model_name = model_name.replace("/", "_").replace(":", "-")
 
-json_output_file = f"results_agent030_{safe_model_name}_{timestamp}.json"
+results_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+os.makedirs(results_dir, exist_ok=True)
+
+json_output_file = os.path.join(results_dir, f"results_agent030_{safe_model_name}_{timestamp}.json")
 
 with open(json_output_file, "w", encoding="utf-8") as f:
     json.dump(model_results, f, indent=2, ensure_ascii=False)
 
 print(f"\nSaved JSON -> {json_output_file}")
 
-csv_output_file = f"results_agent030_{safe_model_name}_{timestamp}.csv"
+csv_output_file = json_output_file.replace(".json", ".csv")
 
 pd.DataFrame(csv_rows).to_csv(csv_output_file, index=False)
 

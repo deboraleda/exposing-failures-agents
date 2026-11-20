@@ -17,7 +17,9 @@ from tool_use_failures.llm_service import get_llm
 from tool_use_failures.tool_omission.agent import create_t1_agent
 from tool_use_failures.tool_omission.test_cases import TEST_CASES
 from tool_use_failures.tool_omission.deepeval_eval import (
+    DEEPEVAL_COLUMNS,
     eval_task_completion,
+    summarize_scores,
 )
 
 load_dotenv(override=True)
@@ -112,19 +114,10 @@ for case in TEST_CASES:
             # DeepEval
             # ─────────────────────────────────────────────────────────────
 
-            try:
-
-                reason, score = eval_task_completion(
-                    case["query"],
-                    result["final_content"]
-                )
-
-            except Exception as deepeval_error:
-
-                print(f"DeepEval ERROR: {deepeval_error}")
-
-                reason = None
-                score = None
+            deepeval_results = eval_task_completion(
+                actual_input=case["query"],
+                actual_output=result["final_content"],
+            )
 
             # ─────────────────────────────────────────────────────────────
             # Logging
@@ -135,7 +128,7 @@ for case in TEST_CASES:
                 f"expected={expected} | "
                 f"tool_called={tool_called} | "
                 f"correct={correct} | "
-                f"deepeval={score}"
+                f"deepeval=[{summarize_scores(deepeval_results)}]"
             )
 
             # ─────────────────────────────────────────────────────────────
@@ -155,9 +148,7 @@ for case in TEST_CASES:
 
                 "final_content": result["final_content"],
 
-                "deepeval_score": score,
-
-                "deepeval_reason": reason,
+                **deepeval_results,
             }
 
             case_runs.append(run_data)
@@ -196,8 +187,7 @@ for case in TEST_CASES:
                 "final_content": result["final_content"],
 
                 # deepeval
-                "deepeval_score": score,
-                "deepeval_reason": reason,
+                **deepeval_results,
             })
 
         except Exception as e:
@@ -236,8 +226,7 @@ for case in TEST_CASES:
 
                 "final_content": None,
 
-                "deepeval_score": None,
-                "deepeval_reason": None,
+                **{column: None for column in DEEPEVAL_COLUMNS},
 
                 "error": str(e),
             })
@@ -278,7 +267,11 @@ safe_model_name = (
 )
 
 # JSON
-json_output_file = (
+results_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+os.makedirs(results_dir, exist_ok=True)
+
+json_output_file = os.path.join(
+    results_dir,
     f"results_{safe_model_name}_{timestamp}.json"
 )
 
@@ -291,9 +284,7 @@ with open(json_output_file, "w", encoding="utf-8") as f:
     )
 
 # CSV
-csv_output_file = (
-    f"results_{safe_model_name}_{timestamp}.csv"
-)
+csv_output_file = json_output_file.replace(".json", ".csv")
 
 df = pd.DataFrame(csv_rows)
 

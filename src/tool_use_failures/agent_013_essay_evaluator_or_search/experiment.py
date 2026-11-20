@@ -16,7 +16,11 @@ from tool_use_failures.config import (
     TEMPERATURE,
 )
 from tool_use_failures.llm_service import get_llm
-from tool_use_failures.agent_013_essay_evaluator_or_search.deepeval import eval_task_completion
+from tool_use_failures.agent_013_essay_evaluator_or_search.deepeval import (
+    DEEPEVAL_COLUMNS,
+    eval_task_completion,
+    summarize_scores,
+)
 from tool_use_failures.agent_013_essay_evaluator_or_search.test_cases import TEST_CASES
 from tool_use_failures.agent_013_essay_evaluator_or_search.agent import agent as create_agent
 
@@ -164,20 +168,10 @@ for case in TEST_CASES:
                 successes += 1
 
             # ── DeepEval ──────────────────────────────────────────────────────
-            deepeval_score = None
-            deepeval_reason = None
-            deepeval_error = None
-
-            try:
-                deepeval_reason, deepeval_score = eval_task_completion(
-                    actual_input=case["query"],
-                    actual_output=final_content,
-                )
-
-            except Exception as deepeval_exception:
-                deepeval_error = str(deepeval_exception)
-
-                print(f"DeepEval ERROR: {deepeval_error}")
+            deepeval_results = eval_task_completion(
+                actual_input=case["query"],
+                actual_output=final_content,
+            )
 
             print(
                 f"run={run_idx} | "
@@ -188,7 +182,7 @@ for case in TEST_CASES:
                 f"n_tool_calls={n_tool_calls} | "
                 f"args_correct={args_correct} | "
                 f"failure={failure_type} | "
-                f"deepeval={deepeval_score}"
+                f"deepeval=[{summarize_scores(deepeval_results)}]"
             )
 
             case_runs.append({
@@ -209,9 +203,7 @@ for case in TEST_CASES:
                 "final_content": final_content,
 
                 # deepeval
-                "deepeval_score": deepeval_score,
-                "deepeval_reason": deepeval_reason,
-                "deepeval_error": deepeval_error,
+                **deepeval_results,
             })
 
         except Exception as e:
@@ -319,9 +311,7 @@ for case_data in model_results["cases"]:
             "final_content": run_data.get("final_content"),
 
             # ── deepeval ────────────────────────────────────────────────────
-            "deepeval_score": run_data.get("deepeval_score"),
-            "deepeval_reason": run_data.get("deepeval_reason"),
-            "deepeval_error": run_data.get("deepeval_error"),
+            **{column: run_data.get(column) for column in DEEPEVAL_COLUMNS},
 
             # ── execution errors ────────────────────────────────────────────
             "error": run_data.get("error"),

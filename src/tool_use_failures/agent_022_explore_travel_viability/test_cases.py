@@ -5,77 +5,77 @@ TEST_CASES = []
 # Group 1: Valid requests
 # ============================================================
 
-# TEST_CASES += [
-#     {
-#         "id": "ok_1",
-#         "type": "explicit_travel_viability",
-#         "query": (
-#             "I'm planning a trip to Tokyo, Japan next week. "
-#             "Can you evaluate whether it is a good destination to visit "
-#             "considering the weather and recent local developments?"
-#         ),
-#         "acceptable_tools": ["get_weather", "search_destination_news"],
-#         "expected_tool_count": 2,
-#         "expected_args": {
-#             "get_weather": {"location": "Tokyo, Japan"},
-#             "search_destination_news": {"destination": "Tokyo, Japan"}
-#         },
-#         "expected_status": "success",
-#         "expected_response": None,
-#     },
-#     {
-#         "id": "ok_2",
-#         "type": "implicit_travel_viability",
-#         "query": (
-#             "I'm considering spending my summer vacation in Lisbon. "
-#             "Before booking anything, I'd like to know what conditions "
-#             "I might encounter and whether anything relevant has happened "
-#             "there recently."
-#         ),
-#         "acceptable_tools": ["get_weather", "search_destination_news"],
-#         "expected_tool_count": 2,
-#         "expected_args": {
-#             "get_weather": {"location": "Lisbon, Portugal"},
-#             "search_destination_news": {"destination": "Lisbon, Portugal"}
-#         },
-#         "expected_status": "success",
-#         "expected_response": None,
-#     },
-#     {
-#         "id": "ok_3",
-#         "type": "destination_with_country",
-#         "query": (
-#             "Would Kyoto, Japan be a suitable destination for a trip "
-#             "at this time? I'm particularly interested in environmental "
-#             "conditions and recent events that could affect visitors."
-#         ),
-#         "acceptable_tools": ["get_weather", "search_destination_news"],
-#         "expected_tool_count": 2,
-#         "expected_args": {
-#             "get_weather": {"location": "Kyoto, Japan"},
-#             "search_destination_news": {"destination": "Kyoto, Japan"}
-#         },
-#         "expected_status": "success",
-#         "expected_response": None,
-#     },
-#     {
-#         "id": "ok_4",
-#         "type": "ambiguous_city_resolvable",
-#         "query": (
-#             "I'm thinking about visiting Cambridge. "
-#             "Could you check the conditions there and any recent "
-#             "developments that might influence my trip?"
-#         ),
-#         "acceptable_tools": ["get_weather", "search_destination_news"],
-#         "expected_tool_count": 2,
-#         "expected_args": {
-#             "get_weather": {"location": "Cambridge, United Kingdom"},
-#             "search_destination_news": {"destination": "Cambridge, United Kingdom"}
-#         },
-#         "expected_status": "success",
-#         "expected_response": None,
-#     },
-# ]
+TEST_CASES += [
+    {
+        "id": "ok_1",
+        "type": "explicit_travel_viability",
+        "query": (
+            "I'm planning a trip to Tokyo, Japan next week. "
+            "Can you evaluate whether it is a good destination to visit "
+            "considering the weather and recent local developments?"
+        ),
+        "acceptable_tools": ["get_weather", "search_destination_news"],
+        "expected_tool_count": 2,
+        "expected_args": {
+            "get_weather": {"location": "Tokyo, Japan"},
+            "search_destination_news": {"destination": "Tokyo, Japan"}
+        },
+        "expected_status": "success",
+        "expected_response": None,
+    },
+    {
+        "id": "ok_2",
+        "type": "implicit_travel_viability",
+        "query": (
+            "I'm considering spending my summer vacation in Lisbon. "
+            "Before booking anything, I'd like to know what conditions "
+            "I might encounter and whether anything relevant has happened "
+            "there recently."
+        ),
+        "acceptable_tools": ["get_weather", "search_destination_news"],
+        "expected_tool_count": 2,
+        "expected_args": {
+            "get_weather": {"location": "Lisbon, Portugal"},
+            "search_destination_news": {"destination": "Lisbon, Portugal"}
+        },
+        "expected_status": "success",
+        "expected_response": None,
+    },
+    {
+        "id": "ok_3",
+        "type": "destination_with_country",
+        "query": (
+            "Would Kyoto, Japan be a suitable destination for a trip "
+            "at this time? I'm particularly interested in environmental "
+            "conditions and recent events that could affect visitors."
+        ),
+        "acceptable_tools": ["get_weather", "search_destination_news"],
+        "expected_tool_count": 2,
+        "expected_args": {
+            "get_weather": {"location": "Kyoto, Japan"},
+            "search_destination_news": {"destination": "Kyoto, Japan"}
+        },
+        "expected_status": "success",
+        "expected_response": None,
+    },
+    {
+        "id": "ok_4",
+        "type": "ambiguous_city_resolvable",
+        "query": (
+            "I'm thinking about visiting Cambridge. "
+            "Could you check the conditions there and any recent "
+            "developments that might influence my trip?"
+        ),
+        "acceptable_tools": ["get_weather", "search_destination_news"],
+        "expected_tool_count": 2,
+        "expected_args": {
+            "get_weather": {"location": "Cambridge, United Kingdom"},
+            "search_destination_news": {"destination": "Cambridge, United Kingdom"}
+        },
+        "expected_status": "success",
+        "expected_response": None,
+    },
+]
 
 
 # ============================================================

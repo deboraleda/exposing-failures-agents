@@ -1,0 +1,721 @@
+<style>
+  .csx { --ts: var(--color-ok); --cs: var(--color-bad); --ff: var(--color-warn); --tf: var(--color-neutral);
+    max-width: 1180px; margin: 0 auto; display: grid; gap: 28px; color: var(--color-fg);
+    font-family: var(--font-sans); font-size: 14px; line-height: 1.5; }
+  .csx .num, .kpi b, .mx-num, .mx-pct, .mx-tot, .bar .num { font-variant-numeric: tabular-nums; }
+  .csx *, .csx *::before, .csx *::after { box-sizing: border-box; }
+  .csx .muted { color: var(--color-fg-muted); }
+  .csx .mono { font-family: var(--font-mono); font-size: 12px; }
+
+  /* Header */
+  .hd { display: grid; gap: 6px; padding-right: 220px; }
+  .hd h1 { margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; text-wrap: balance; }
+  .hd .sub { margin: 0; font-size: 17px; color: var(--color-fg-muted); text-wrap: balance; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 18px; }
+  .kpi { display: grid; gap: 2px; padding: 14px 16px; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 12px; }
+  .kpi b { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+  .kpi span { font-size: 12.5px; color: var(--color-fg-muted); }
+  .kpi.alert b { color: var(--color-bad); }
+  .notes { display: grid; gap: 2px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 12.5px; color: var(--color-fg-muted); }
+  @media (max-width: 720px) { .hd { padding-right: 0; } }
+
+  /* Tabs */
+  .csx-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--color-border-line); overflow-x: auto; scrollbar-width: none; }
+  .csx-tab { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 10px 14px;
+    font: inherit; font-weight: 500; color: var(--color-fg-muted); cursor: pointer; white-space: nowrap; }
+  .csx-tab:hover { color: var(--color-fg); }
+  .csx-tab[aria-selected="true"] { color: var(--color-accent); border-bottom-color: var(--color-accent); font-weight: 600; }
+  .csx-tab:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -3px; border-radius: 6px; }
+  .csx-sec { display: grid; gap: 18px; min-width: 0; }
+  .csx-sec[hidden] { display: none; }
+  .sec-head h2 { margin: 0; font-size: 19px; font-weight: 650; letter-spacing: -0.01em; }
+  .sec-head p { margin: 4px 0 0; max-width: 78ch; font-size: 13.5px; color: var(--color-fg-muted); text-wrap: pretty; }
+
+  /* Controls */
+  .toolbar { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+  .toolbar .spacer { flex: 1; }
+  .seg { display: inline-flex; gap: 2px; padding: 3px; background: var(--color-subtle); border: 1px solid var(--color-border-line); border-radius: 10px; }
+  .seg button { appearance: none; border: 0; background: none; padding: 6px 12px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 500; color: var(--color-fg-muted); cursor: pointer; white-space: nowrap; }
+  .seg button:hover { color: var(--color-fg); }
+  .seg button[aria-pressed="true"] { background: var(--color-panel); color: var(--color-fg); box-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 0 0 1px var(--color-border-line); }
+  .seg button:focus-visible, .btn:focus-visible, .dash-select:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+  .field { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--color-fg-muted); }
+  .dash-select { font: inherit; font-size: 13px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg); }
+  .btn { appearance: none; font: inherit; font-size: 12.5px; font-weight: 500; padding: 5px 11px; border-radius: 8px; border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg); cursor: pointer; }
+  .btn:hover { background: var(--color-subtle); }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 12.5px; color: var(--color-fg-muted); }
+  .legend b { color: var(--color-fg); font-weight: 600; }
+  .dot { display: inline-block; width: 9px; height: 9px; margin-right: 6px; border-radius: 3px; background: var(--tone); vertical-align: -0.5px; }
+  .tone-ts { --tone: var(--ts); } .tone-cs { --tone: var(--cs); } .tone-ff { --tone: var(--ff); } .tone-tf { --tone: var(--tf); }
+
+  /* Cards and tables */
+  .card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 12px; min-width: 0; overflow: hidden; }
+  .tw { overflow-x: auto; }
+  table.t { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+  .t th, .t td { padding: 9px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--color-border-line); }
+  .t thead th { position: sticky; top: 0; z-index: 1; background: var(--color-subtle); color: var(--color-fg-muted); font-size: 11.5px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; white-space: nowrap; vertical-align: bottom; }
+  .t thead th.jh { text-align: center; text-transform: none; letter-spacing: 0; font-size: 12.5px; color: var(--color-fg); }
+  .t .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .t .jl { border-left: 1px solid var(--color-border-line); }
+  .t tbody tr:hover td { background: color-mix(in srgb, var(--color-accent) 4%, transparent); }
+  .t th.ag { min-width: 190px; font-weight: 600; background: var(--color-panel); border-right: 1px solid var(--color-border-line); }
+  .t th.ag .chip { margin-top: 6px; }
+  .t tr.sub td { background: var(--color-subtle); font-weight: 600; }
+  .t tbody.grand th, .t tbody.grand td { background: var(--color-subtle); font-weight: 600; }
+  .t tbody.grand tr:first-child > * { border-top: 2px solid var(--color-border-line); }
+  .t tbody:last-child tr:last-child > * { border-bottom: 0; }
+  .t td.heat { background: color-mix(in srgb, var(--tone) var(--h), transparent); font-weight: 600; }
+  .t tr.sub td.heat, .t tbody.grand td.heat { background: color-mix(in srgb, var(--tone) var(--h), var(--color-subtle)); }
+  .t .query { min-width: 240px; max-width: 380px; }
+  .chip { display: inline-flex; align-items: center; padding: 1px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 500; white-space: nowrap;
+    background: var(--color-subtle); border: 1px solid var(--color-border-line); color: var(--color-fg-muted); }
+  .chip.bad { color: var(--color-bad); background: color-mix(in srgb, var(--color-bad) 8%, transparent); border-color: color-mix(in srgb, var(--color-bad) 30%, transparent); }
+  .chip.ok { color: var(--color-ok); background: color-mix(in srgb, var(--color-ok) 8%, transparent); border-color: color-mix(in srgb, var(--color-ok) 30%, transparent); }
+  .chip.warn { color: var(--color-warn); background: color-mix(in srgb, var(--color-warn) 10%, transparent); border-color: color-mix(in srgb, var(--color-warn) 35%, transparent); }
+  .chip.id { font-family: var(--font-mono); font-size: 11px; margin-right: 6px; }
+  code.tool { font-family: var(--font-mono); font-size: 11.5px; padding: 1px 6px; border-radius: 5px; background: var(--color-subtle); border: 1px solid var(--color-border-line); white-space: nowrap; }
+  .tools { display: flex; flex-wrap: wrap; gap: 4px; }
+  .bar { display: grid; grid-template-columns: 54px 1fr; gap: 10px; align-items: center; min-width: 170px; }
+  .bar-track { height: 8px; border-radius: 99px; background: var(--color-subtle); overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 99px; background: var(--tone, var(--color-accent)); }
+
+  /* Confusion matrices */
+  .mxs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: 16px; }
+  .mx { display: grid; gap: 14px; padding: 18px 20px; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 12px; min-width: 0; }
+  .mx-head { display: flex; flex-wrap: wrap; gap: 4px 12px; justify-content: space-between; align-items: baseline; }
+  .mx-title { font-size: 15px; font-weight: 650; }
+  .mx-n { font-size: 12.5px; color: var(--color-fg-muted); }
+  .mx-grid { display: grid; grid-template-columns: auto 1fr 1fr auto; gap: 6px; }
+  .mx-col, .mx-row { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-fg-muted); }
+  .mx-col { text-align: center; padding-bottom: 2px; }
+  .mx-row { display: flex; align-items: center; padding-right: 8px; white-space: nowrap; }
+  .mx-cell { display: grid; gap: 1px; padding: 14px 16px; border-radius: 10px;
+    background: color-mix(in srgb, var(--tone) var(--w), var(--color-panel)); border: 1px solid color-mix(in srgb, var(--tone) 28%, transparent); }
+  .mx-num { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+  .mx-pct { font-size: 13px; font-weight: 600; color: color-mix(in srgb, var(--tone) 75%, var(--color-fg)); }
+  .mx-lab { font-size: 12px; color: var(--color-fg-muted); }
+  .mx-tot { display: flex; align-items: center; justify-content: center; padding: 0 8px; font-size: 13px; color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .mx-grand { font-weight: 700; color: var(--color-fg); }
+  .mx-foot { display: flex; flex-wrap: wrap; gap: 6px 22px; padding-top: 12px; border-top: 1px solid var(--color-border-line); font-size: 13px; color: var(--color-fg-muted); }
+  .mx-foot b { color: var(--color-fg); font-weight: 650; }
+
+  /* LaTeX export */
+  details.latex { font-size: 13px; }
+  details.latex > summary { cursor: pointer; width: fit-content; color: var(--color-accent); font-weight: 500; }
+  .latex-body { display: grid; gap: 8px; margin-top: 10px; }
+  .latex-body .row { display: flex; gap: 10px; align-items: center; }
+  .latex pre { margin: 0; max-height: 300px; overflow: auto; padding: 12px 14px; background: var(--color-subtle); border: 1px solid var(--color-border-line); border-radius: 10px; font: 12px/1.55 var(--font-mono); white-space: pre; }
+
+  /* Corrupt success examples */
+  .exs { display: grid; gap: 16px; }
+  .ex { display: grid; gap: 16px; padding: 20px 22px; }
+  .ex-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .ex-head h3 { margin: 0 auto 0 0; font-size: 15.5px; font-weight: 650; }
+  .ex-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 8px 28px; }
+  .kv { margin: 0; display: grid; gap: 4px; align-content: start; }
+  .kv dt { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-fg-muted); }
+  .kv dd { margin: 0 0 12px; overflow-wrap: anywhere; }
+  .quote { margin: 0; padding: 10px 14px; background: var(--color-subtle); border-left: 3px solid var(--color-accent); border-radius: 0 8px 8px 0; }
+  .calls { display: grid; gap: 4px; }
+  .call { font-family: var(--font-mono); font-size: 12px; padding: 6px 10px; border-radius: 7px; background: color-mix(in srgb, var(--color-bad) 7%, var(--color-panel)); border: 1px solid color-mix(in srgb, var(--color-bad) 25%, transparent); overflow-wrap: anywhere; }
+  .call.expected { background: color-mix(in srgb, var(--color-ok) 7%, var(--color-panel)); border-color: color-mix(in srgb, var(--color-ok) 25%, transparent); }
+  .scores { display: flex; flex-wrap: wrap; gap: 6px; }
+  .score { padding: 3px 10px; border-radius: 8px; font-size: 12.5px; background: var(--color-subtle); border: 1px solid var(--color-border-line); }
+  .score b { font-weight: 650; }
+  .score.pass b { color: var(--color-ok); }
+  details.answer > summary { cursor: pointer; width: fit-content; font-size: 13px; font-weight: 500; color: var(--color-accent); }
+  details.answer pre { margin: 10px 0 0; max-height: 320px; overflow: auto; padding: 12px 14px; background: var(--color-subtle); border: 1px solid var(--color-border-line); border-radius: 10px; font: 12px/1.55 var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+
+  /* Definitions and method */
+  .defs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; }
+  .def { padding: 14px 16px; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 12px; font-size: 13px; color: var(--color-fg-muted); }
+  .def b { display: block; margin-bottom: 4px; font-size: 14px; color: var(--color-fg); }
+  .def code { font-family: var(--font-mono); font-size: 11.5px; color: var(--color-fg); }
+  .method { border-top: 1px solid var(--color-border-line); padding-top: 16px; font-size: 13px; color: var(--color-fg-muted); }
+  .method summary { cursor: pointer; width: fit-content; font-weight: 600; color: var(--color-fg); }
+  .method ul { margin: 10px 0 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 90ch; }
+  .empty { padding: 28px; text-align: center; color: var(--color-fg-muted); }
+</style>
+
+<div class="csx">
+
+  <header class="hd" id="overview">
+    <h1>Corrupt Success in Tool-Calling Agents</h1>
+    <p class="sub">Problematic Tool Calls Behind Passing Runs</p>
+    <div class="kpis" data-draw="kpis"></div>
+    <ul class="notes" data-draw="notes"></ul>
+  </header>
+
+  <nav class="csx-tabs" role="tablist" aria-label="Dashboard sections">
+    <button type="button" class="csx-tab" role="tab" id="tab-agents" aria-controls="agents" data-tab="agents">Agents</button>
+    <button type="button" class="csx-tab" role="tab" id="tab-scores" aria-controls="scores" data-tab="scores">Scores</button>
+    <button type="button" class="csx-tab" role="tab" id="tab-confusion" aria-controls="confusion" data-tab="confusion">Oracle verdicts</button>
+    <button type="button" class="csx-tab" role="tab" id="tab-judge-quality" aria-controls="judge-quality" data-tab="judge-quality">Precision, recall, F1</button>
+    <button type="button" class="csx-tab" role="tab" id="tab-corrupt" aria-controls="corrupt" data-tab="corrupt">Corrupt success examples</button>
+  </nav>
+
+  <section class="csx-sec" id="agents" role="tabpanel" aria-labelledby="tab-agents">
+    <div class="sec-head">
+      <h2>Agents under test</h2>
+      <p>Each agent targets one kind of tool-calling failure. A baseline case is a direct request; a conflicting case is built to push the agent into that failure. Eureka Chat was developed outside this study and is in beta; its results will be added when they arrive.</p>
+    </div>
+    <div class="card"><div class="tw" data-draw="agents-table"></div></div>
+  </section>
+
+  <section class="csx-sec" id="scores" role="tabpanel" aria-labelledby="tab-scores">
+    <div class="sec-head">
+      <h2>Deterministic pass rate by case group</h2>
+      <p>Share of runs that pass the deterministic oracle: the expected tools, the allowed number of calls and the expected arguments. Judges play no part here.</p>
+    </div>
+    <div class="card"><div class="tw" data-draw="scores-table"></div></div>
+  </section>
+
+  <section class="csx-sec" id="confusion" role="tabpanel" aria-labelledby="tab-confusion">
+    <div class="sec-head">
+      <h2>LLM judge verdict against the deterministic oracle</h2>
+      <p>Each judged run falls in one of four outcomes. A judge passes a run when its TaskCompletion score is at least 0.7. Corrupt success is a run the judge approves although its tool calls fail the oracle.</p>
+    </div>
+    <div class="legend">
+      <span><i class="dot tone-ts"></i><b>True success</b> judge pass, oracle pass</span>
+      <span><i class="dot tone-cs"></i><b>Corrupt success</b> judge pass, oracle fail</span>
+      <span><i class="dot tone-ff"></i><b>False failure</b> judge fail, oracle pass</span>
+      <span><i class="dot tone-tf"></i><b>True failure</b> judge fail, oracle fail</span>
+    </div>
+    <div data-draw="oracle" style="display: grid; gap: 18px;"></div>
+  </section>
+
+  <section class="csx-sec" id="judge-quality" role="tabpanel" aria-labelledby="tab-judge-quality">
+    <div class="sec-head">
+      <h2>How well each judge tracks the oracle</h2>
+      <p>The deterministic oracle is the ground truth and each judge a classifier of "this run succeeded".</p>
+    </div>
+    <div class="defs">
+      <div class="def"><b>Precision</b>Of the runs a judge approved, the share that also passed the oracle. <code>TS / (TS + CS)</code>. Low precision means the judge hands out corrupt successes.</div>
+      <div class="def"><b>Recall</b>Of the runs that passed the oracle, the share the judge also approved. <code>TS / (TS + FF)</code>. Low recall means the judge rejects runs whose tool calls were right.</div>
+      <div class="def"><b>F1</b>Harmonic mean of precision and recall. <code>2PR / (P + R)</code>. It is high only when both are high.</div>
+    </div>
+    <div data-draw="prf" style="display: grid; gap: 14px;"></div>
+  </section>
+
+  <section class="csx-sec" id="corrupt" role="tabpanel" aria-labelledby="tab-corrupt">
+    <div class="sec-head">
+      <h2>A corrupt success from each agent</h2>
+      <p>For each agent, the run approved by the most judges (then with the highest judge score) among the runs that failed the oracle.</p>
+    </div>
+    <div class="exs" data-draw="corrupt-cards"></div>
+  </section>
+
+  <details class="method" id="method">
+    <summary>How the numbers are made</summary>
+    <ul>
+      <li>Every run of every case is checked deterministically by its experiment: whether the expected tools were called, how many times and with which arguments. That check is the oracle.</li>
+      <li>Each run's final answer is also scored by the LLM judges with DeepEval's TaskCompletion metric. A score of 0.7 or more is a pass. Judge errors are left out of the matrices and of precision, recall and F1.</li>
+      <li>Runs that crashed before finishing (for example, the provider was overloaded) are left out of every count.</li>
+      <li>Cases whose id starts with am_ or inj_ are conflicting; every other case is baseline. Each agent keeps 4 baseline and 4 conflicting cases: nt_1 of Academic triage and eq_1 and eq_2 of Order support are left out.</li>
+      <li>For each agent and executor model, only the most recent result file is used.</li>
+      <li data-draw="method-lists"></li>
+    </ul>
+  </details>
+</div>
+
+<script>
+  dash.calc('totals', {
+    inputs: ['runs'],
+    title: 'Overall counts',
+    description: 'Distinct runs, agents with results, runs failing the oracle, and runs approved by at least one judge although they failed the oracle.',
+    fn: (runs) => {
+      const all = new Set();
+      const fail = new Set();
+      const corrupt = new Set();
+      const agents = new Set();
+      for (const r of runs) {
+        all.add(r.run_key);
+        agents.add(r.agent);
+        if (!r.det_pass) fail.add(r.run_key);
+        if (r.judge_pass === true && !r.det_pass) corrupt.add(r.run_key);
+      }
+      return [{ runs: all.size, agents_with_results: agents.size, oracle_fail_runs: fail.size, corrupt_runs: corrupt.size }];
+    },
+  });
+
+  dash.calc('group_scores', {
+    inputs: ['runs'],
+    title: 'Deterministic pass rate by case group',
+    description: 'Percent of runs that pass the oracle, for baseline and conflicting cases, by agent and executor model.',
+    fn: (runs) => {
+      const seen = new Set();
+      const groups = new Map();
+      for (const r of runs) {
+        if (seen.has(r.run_key)) continue;
+        seen.add(r.run_key);
+        const key = `${r.agent}|${r.model}`;
+        if (!groups.has(key)) groups.set(key, { key, agent: r.agent, model: r.model, b_pass: 0, b_n: 0, c_pass: 0, c_n: 0 });
+        const g = groups.get(key);
+        if (r.group === 'conflicting') { g.c_n += 1; if (r.det_pass) g.c_pass += 1; }
+        else { g.b_n += 1; if (r.det_pass) g.b_pass += 1; }
+      }
+      const rate = (pass, n) => (n ? Math.round((1000 * pass) / n) / 10 : null);
+      return [...groups.values()].map((g) => ({
+        key: g.key, agent: g.agent, model: g.model,
+        baseline_rate: rate(g.b_pass, g.b_n), baseline_runs: g.b_n,
+        conflicting_rate: rate(g.c_pass, g.c_n), conflicting_runs: g.c_n,
+      }));
+    },
+  });
+
+  dash.calc('confusion', {
+    inputs: ['runs'],
+    title: 'Judge verdict vs. deterministic oracle',
+    description: 'Per judge: true success, corrupt success, false failure and true failure counts, with precision, recall and F1. Rows with "all" aggregate over agents or models.',
+    fn: (runs) => {
+      const cells = new Map();
+      const add = (agent, model, r) => {
+        const key = `${agent}|${model}|${r.judge}`;
+        if (!cells.has(key)) {
+          cells.set(key, { key, agent, model, judge: r.judge, judge_label: r.judge_label,
+            true_success: 0, corrupt_success: 0, false_failure: 0, true_failure: 0, judge_errors: 0 });
+        }
+        const c = cells.get(key);
+        if (r.judge_pass == null) c.judge_errors += 1;
+        else if (r.judge_pass && r.det_pass) c.true_success += 1;
+        else if (r.judge_pass) c.corrupt_success += 1;
+        else if (r.det_pass) c.false_failure += 1;
+        else c.true_failure += 1;
+      };
+      for (const r of runs) {
+        for (const agent of [r.agent, 'all']) {
+          for (const model of [r.model, 'all']) add(agent, model, r);
+        }
+      }
+      const round2 = (v) => (v == null ? null : Math.round(100 * v) / 100);
+      return [...cells.values()].map((c) => {
+        const judged = c.true_success + c.corrupt_success + c.false_failure + c.true_failure;
+        const approved = c.true_success + c.corrupt_success;
+        const positives = c.true_success + c.false_failure;
+        const precision = approved ? c.true_success / approved : null;
+        const recall = positives ? c.true_success / positives : null;
+        const f1 = precision == null || recall == null ? null : (precision + recall ? (2 * precision * recall) / (precision + recall) : 0);
+        return { ...c, judged, precision: round2(precision), recall: round2(recall), f1: round2(f1) };
+      });
+    },
+  });
+</script>
+
+<script>
+  // ---------------------------------------------------------------- helpers
+  const h = (tag, props, ...kids) => {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(props || {})) {
+      if (v == null || v === false) continue;
+      if (k === 'class') el.className = v;
+      else if (k === 'text') el.textContent = v;
+      else if (k.startsWith('on')) el[k] = v;
+      else if (k === 'style') el.style.cssText = v;
+      else el.setAttribute(k, v === true ? '' : v);
+    }
+    for (const c of kids.flat(Infinity)) {
+      if (c == null || c === false) continue;
+      el.append(c instanceof Node ? c : document.createTextNode(String(c)));
+    }
+    return el;
+  };
+  const short = (m) => (m === 'all' ? 'All' : String(m).split('/').pop());
+  const share = (n, d) => (d ? n / d : null);
+  const pct = (v, digits = 1) => (v == null ? '–' : `${(100 * v).toFixed(digits)}%`);
+  const ratio = (v) => (v == null ? '–' : v.toFixed(2));
+  const tex = (s) => String(s).replace(/[\\&%$#_{}~^]/g, (c) => ({ '\\': '\\textbackslash{}', '~': '\\textasciitilde{}', '^': '\\textasciicircum{}' }[c] || `\\${c}`));
+  const ready = (...ids) => ids.every((id) => dash.data(id).status === 'ok');
+
+  const OUTCOMES = [
+    { f: 'true_success', label: 'True success', abbr: 'TS', tone: 'ts' },
+    { f: 'corrupt_success', label: 'Corrupt success', abbr: 'CS', tone: 'cs' },
+    { f: 'false_failure', label: 'False failure', abbr: 'FF', tone: 'ff' },
+    { f: 'true_failure', label: 'True failure', abbr: 'TF', tone: 'tf' },
+  ];
+  const OUT = Object.fromEntries(OUTCOMES.map((o) => [o.f, o]));
+
+  // Everything the views need, from the datasets and calcs
+  const context = () => {
+    const agents = dash.data('agents').data;
+    const runs = dash.data('runs').data;
+    const conf = dash.data('confusion').data;
+    const withResults = new Set(runs.map((r) => r.agent));
+    const agentList = agents.filter((a) => withResults.has(a.agent));
+    const models = [...new Set(runs.map((r) => r.model))].sort((a, b) => short(a).localeCompare(short(b)));
+    const judges = [...new Map(runs.map((r) => [r.judge, r.judge_label]))]
+      .map(([id, label]) => ({ id, label: short(label) }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+    const index = new Map(conf.map((r) => [`${r.agent}|${r.model}|${r.judge}`, r]));
+    return {
+      agents, agentList, models, judges,
+      get: (agent, model, judge) => index.get(`${agent}|${model}|${judge}`),
+      label: (agent) => (agent === 'all' ? 'All agents' : agents.find((a) => a.agent === agent)?.label ?? agent),
+    };
+  };
+
+  const segmented = (label, param, current, options) => h('div', { class: 'seg', role: 'group', 'aria-label': label },
+    options.map(([value, text]) => h('button', {
+      type: 'button', 'aria-pressed': String(current === value), text,
+      onclick: () => dash.setParams({ [param]: value }),
+    })));
+
+  const selectField = (label, param, current, options) => {
+    const sel = h('select', { class: 'dash-select', 'aria-label': label },
+      options.map(([value, text]) => h('option', { value, text })));
+    sel.value = options.some(([v]) => v === current) ? current : options[0][0];
+    sel.onchange = () => dash.setParams({ [param]: sel.value });
+    return h('label', { class: 'field' }, label, sel);
+  };
+
+  // A collapsible LaTeX snippet with a copy button
+  const latexBlock = (summary, text) => {
+    const pre = h('pre', { text });
+    const status = h('span', { class: 'muted', style: 'font-size: 12.5px' });
+    const copy = h('button', {
+      type: 'button', class: 'btn', text: 'Copy',
+      onclick: () => {
+        const done = () => { status.textContent = 'Copied to the clipboard.'; };
+        const manual = () => {
+          const range = document.createRange();
+          range.selectNodeContents(pre);
+          getSelection().removeAllRanges();
+          getSelection().addRange(range);
+          status.textContent = 'Selected: press Cmd+C to copy.';
+        };
+        if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, manual);
+        else manual();
+      },
+    });
+    return h('details', { class: 'latex' }, h('summary', { text: summary }),
+      h('div', { class: 'latex-body' }, h('div', { class: 'row' }, copy, status), pre,
+        h('span', { class: 'muted', style: 'font-size: 12px', text: 'Needs \\usepackage{booktabs} in the preamble.' })));
+  };
+
+  // A table with one row group per agent (one row per executor model plus an
+  // "All executors" row) and a final "All agents" group. Columns repeat per judge.
+  const groupedTable = (c, cols, cell, { subtotals = true } = {}) => {
+    const head1 = h('tr', {}, h('th', { rowspan: 2, text: 'Agent' }), h('th', { rowspan: 2, text: 'Executor' }),
+      c.judges.map((j) => h('th', { class: 'jh jl', colspan: cols.length, text: j.label })));
+    const head2 = h('tr', {}, c.judges.map(() => cols.map((col, i) => h('th', { class: `num${i === 0 ? ' jl' : ''}` },
+      col.tone ? h('i', { class: `dot tone-${col.tone}` }) : null, col.label))));
+    const groups = [...c.agentList.map((a) => a.agent), 'all'];
+    const bodies = groups.map((agent) => {
+      const models = subtotals || agent === 'all' ? [...c.models, 'all'] : c.models;
+      const meta = c.agents.find((a) => a.agent === agent);
+      const rows = models.map((model, i) => {
+        const tr = h('tr', { class: model === 'all' && agent !== 'all' ? 'sub' : null });
+        if (i === 0) {
+          tr.append(h('th', { class: 'ag', scope: 'rowgroup', rowspan: models.length },
+            h('div', { text: c.label(agent) }), meta ? h('span', { class: 'chip', text: meta.failure_focus }) : null));
+        }
+        tr.append(h('td', { text: model === 'all' ? 'All executors' : short(model) }));
+        for (const j of c.judges) {
+          const r = c.get(agent, model, j.id);
+          cols.forEach((col, k) => {
+            const v = cell(r, col);
+            const td = h('td', { class: `num${k === 0 ? ' jl' : ''}${v.heat != null ? ` heat tone-${col.tone}` : ''}`, text: v.text });
+            if (v.heat != null) td.style.setProperty('--h', `${Math.round(4 + 46 * v.heat)}%`);
+            tr.append(td);
+          });
+        }
+        return tr;
+      });
+      return h('tbody', { class: agent === 'all' ? 'grand' : null }, rows);
+    });
+    return h('table', { class: 't' }, h('thead', {}, head1, head2), bodies);
+  };
+
+  const groupedLatex = (c, cols, value, caption, label, { subtotals = true } = {}) => {
+    const n = cols.length;
+    const lines = [
+      '\\begin{table*}[t]', '\\centering', '\\small',
+      `\\caption{${caption}}`, `\\label{${label}}`,
+      `\\begin{tabular}{ll${c.judges.map(() => 'r'.repeat(n)).join('')}}`, '\\toprule',
+      ` & & ${c.judges.map((j) => `\\multicolumn{${n}}{c}{${tex(j.label)}}`).join(' & ')} \\\\`,
+      c.judges.map((_, i) => `\\cmidrule(lr){${3 + i * n}-${2 + (i + 1) * n}}`).join(''),
+      `Agent & Executor & ${c.judges.map(() => cols.map((col) => col.label).join(' & ')).join(' & ')} \\\\`,
+      '\\midrule',
+    ];
+    const groups = [...c.agentList.map((a) => a.agent), 'all'];
+    groups.forEach((agent, gi) => {
+      const models = subtotals || agent === 'all' ? [...c.models, 'all'] : c.models;
+      models.forEach((model, i) => {
+        const cells = c.judges.flatMap((j) => cols.map((col) => value(c.get(agent, model, j.id), col)));
+        const name = i === 0 ? tex(c.label(agent)) : '';
+        const exec = model === 'all' ? '\\textit{All}' : tex(short(model));
+        lines.push(`${name} & ${exec} & ${cells.join(' & ')} \\\\`);
+      });
+      if (gi < groups.length - 1) lines.push('\\midrule');
+    });
+    lines.push('\\bottomrule', '\\end{tabular}', '\\end{table*}');
+    return lines.join('\n');
+  };
+
+  // One 2x2 confusion matrix with margins and the judge's P/R/F1
+  const matrix = (r, title) => {
+    const box = h('div', { class: 'mx' });
+    box.append(h('div', { class: 'mx-head' }, h('span', { class: 'mx-title', text: title }),
+      h('span', { class: 'mx-n', text: r ? `${r.judged} judged runs${r.judge_errors ? ` · ${r.judge_errors} judge errors` : ''}` : 'no runs' })));
+    if (!r || !r.judged) { box.append(h('p', { class: 'muted', text: 'No judged runs for this selection.' })); return box; }
+    const cell = (f) => {
+      const o = OUT[f];
+      const s = share(r[f], r.judged);
+      return h('div', { class: `mx-cell tone-${o.tone}`, style: `--w: ${Math.round(5 + 40 * s)}%` },
+        h('span', { class: 'mx-num', text: r[f] }), h('span', { class: 'mx-pct', text: pct(s) }), h('span', { class: 'mx-lab', text: o.label }));
+    };
+    const tot = (n, grand) => h('div', { class: `mx-tot${grand ? ' mx-grand' : ''}`, text: n });
+    box.append(h('div', { class: 'mx-grid', role: 'img', 'aria-label': `${title}: ${OUTCOMES.map((o) => `${o.label} ${r[o.f]}`).join(', ')}` },
+      h('span'), h('span', { class: 'mx-col', text: 'Oracle pass' }), h('span', { class: 'mx-col', text: 'Oracle fail' }), h('span', { class: 'mx-col', text: 'Total' }),
+      h('span', { class: 'mx-row', text: 'Judge pass' }), cell('true_success'), cell('corrupt_success'), tot(r.true_success + r.corrupt_success),
+      h('span', { class: 'mx-row', text: 'Judge fail' }), cell('false_failure'), cell('true_failure'), tot(r.false_failure + r.true_failure),
+      h('span', { class: 'mx-row', text: 'Total' }), tot(r.true_success + r.false_failure), tot(r.corrupt_success + r.true_failure), tot(r.judged, true)));
+    box.append(h('div', { class: 'mx-foot' },
+      h('span', {}, 'Precision ', h('b', { text: ratio(r.precision) })),
+      h('span', {}, 'Recall ', h('b', { text: ratio(r.recall) })),
+      h('span', {}, 'F1 ', h('b', { text: ratio(r.f1) })),
+      h('span', {}, 'Corrupt success rate ', h('b', { text: pct(share(r.corrupt_success, r.judged)) }))));
+    return box;
+  };
+
+  const matricesLatex = (c, agent, model) => {
+    const scope = `${agent === 'all' ? 'all agents' : tex(c.label(agent))}, ${model === 'all' ? 'all executor models' : tex(short(model))}`;
+    const lines = ['\\begin{table}[t]', '\\centering', '\\small',
+      `\\caption{LLM judge verdict against the deterministic oracle (${scope}). Percentages are over judged runs.}`,
+      '\\label{tab:confusion}', '\\begin{tabular}{llrr}', '\\toprule',
+      'Judge & Verdict & Oracle pass & Oracle fail \\\\', '\\midrule'];
+    c.judges.forEach((j, i) => {
+      const r = c.get(agent, model, j.id);
+      const v = (f) => (r && r.judged ? `${r[f]} (${(100 * r[f] / r.judged).toFixed(1)}\\%)` : '--');
+      lines.push(`${tex(j.label)} & Pass & ${v('true_success')} & ${v('corrupt_success')} \\\\`);
+      lines.push(` & Fail & ${v('false_failure')} & ${v('true_failure')} \\\\`);
+      if (i < c.judges.length - 1) lines.push('\\midrule');
+    });
+    lines.push('\\bottomrule', '\\end{tabular}', '\\end{table}');
+    return lines.join('\n');
+  };
+
+  // ---------------------------------------------------------------- header
+  dash.draw('kpis', (el) => {
+    if (!ready('totals', 'agents')) return;
+    const t = dash.data('totals').data[0] ?? { runs: 0, agents_with_results: 0, oracle_fail_runs: 0, corrupt_runs: 0 };
+    const kpi = (value, label, alert) => h('div', { class: `kpi${alert ? ' alert' : ''}` }, h('b', { text: value }), h('span', { text: label }));
+    el.replaceChildren(
+      (() => {
+        const expected = dash.data('agents').data.reduce((sum, a) => sum + (a.expected_runs ?? 0), 0);
+        return kpi(`${t.runs.toLocaleString('en-US')} / ${expected.toLocaleString('en-US')}`,
+          `runs judged / runs planned (${pct(share(t.runs, expected))} complete)`);
+      })(),
+      kpi(`${t.agents_with_results} of ${dash.data('agents').data.length}`, 'agents with results'),
+      kpi(t.corrupt_runs.toLocaleString('en-US'), 'corrupt successes (approved by at least one judge, failed the oracle)', true),
+      kpi(pct(share(t.corrupt_runs, t.oracle_fail_runs)), 'of oracle failures approved by at least one judge', true),
+    );
+  });
+
+  dash.draw('notes', (el) => {
+    if (!ready('agents', 'runs', 'excluded_runs')) return;
+    const withResults = new Set(dash.data('runs').data.map((r) => r.agent));
+    const pending = dash.data('agents').data.filter((a) => !withResults.has(a.agent)).map((a) => a.label);
+    const excluded = dash.data('excluded_runs').data;
+    const by = new Map();
+    for (const r of excluded) {
+      const k = `${r.agent} with ${short(r.model)}`;
+      by.set(k, (by.get(k) ?? 0) + 1);
+    }
+    el.replaceChildren(...[
+      excluded.length ? h('li', { text: `${excluded.length} crashed runs left out of every count (${[...by].map(([k, n]) => `${n} from ${k}`).join(', ')}).` }) : null,
+      pending.length ? h('li', { text: `Still without results: ${pending.join(', ')}.` }) : null,
+    ].filter(Boolean));
+  });
+
+  // ---------------------------------------------------------------- agents
+  dash.draw('agents-table', (el) => {
+    if (!ready('agents', 'runs')) return;
+    const withResults = new Set(dash.data('runs').data.map((r) => r.agent));
+    const status = (a) => {
+      if (a.status && a.status.startsWith('External')) return h('span', { class: 'chip warn', text: a.status });
+      return withResults.has(a.agent) ? h('span', { class: 'chip ok', text: 'Results in' }) : h('span', { class: 'chip', text: 'Running' });
+    };
+    el.replaceChildren(h('table', { class: 't' },
+      h('thead', {}, h('tr', {},
+        h('th', { text: 'Agent' }), h('th', { text: 'Status' }), h('th', { text: 'Failure targeted' }), h('th', { text: 'Tools' }),
+        h('th', { class: 'num', text: 'Baseline cases' }), h('th', { class: 'num', text: 'Conflicting cases' }))),
+      h('tbody', {}, dash.data('agents').data.map((a) => h('tr', {},
+        h('td', {}, h('div', { style: 'font-weight: 600', text: a.label }), h('div', { class: 'muted mono', text: a.agent })),
+        h('td', {}, status(a)),
+        h('td', {}, a.failure_focus ? h('span', { class: 'chip', text: a.failure_focus }) : h('span', { class: 'muted', text: 'To be confirmed' })),
+        h('td', {}, a.tools
+          ? [h('div', { class: 'muted', style: 'margin-bottom: 4px', text: a.tools_note ? `${a.n_tools} tools (${a.tools_note})` : `${a.n_tools} tool${a.n_tools === 1 ? "" : "s"}` }),
+             h('div', { class: 'tools' }, String(a.tools).split(', ').map((t) => h('code', { class: 'tool', text: t })))]
+          : h('span', { class: 'muted', text: 'To be confirmed' })),
+        h('td', { class: 'num', text: a.n_baseline ?? '–' }),
+        h('td', { class: 'num', text: a.n_conflicting ?? '–' }))))));
+  });
+
+  // ---------------------------------------------------------------- scores
+  dash.draw('scores-table', (el) => {
+    if (!ready('group_scores', 'agents', 'runs')) return;
+    const c = context();
+    const rows = dash.data('group_scores').data;
+    if (!rows.length) { el.replaceChildren(h('p', { class: 'empty', text: 'No results yet.' })); return; }
+    const bar = (rate, tone) => h('div', { class: 'bar' }, h('span', { class: 'num', text: rate == null ? '–' : `${rate.toFixed(1)}%` }),
+      h('div', { class: 'bar-track' }, h('div', { class: 'bar-fill', style: `width: ${rate ?? 0}%; --tone: var(--${tone})` })));
+    const bodies = c.agentList.map((a) => {
+      const own = c.models.map((m) => rows.find((r) => r.agent === a.agent && r.model === m)).filter(Boolean);
+      return h('tbody', {}, own.map((r, i) => h('tr', {},
+        i === 0 ? h('th', { class: 'ag', scope: 'rowgroup', rowspan: own.length }, h('div', { text: a.label }), h('span', { class: 'chip', text: a.failure_focus })) : null,
+        h('td', { text: short(r.model) }),
+        h('td', { class: 'jl' }, bar(r.baseline_rate, 'ts')), h('td', { class: 'num muted', text: r.baseline_runs }),
+        h('td', { class: 'jl' }, bar(r.conflicting_rate, 'ff')), h('td', { class: 'num muted', text: r.conflicting_runs }))));
+    });
+    el.replaceChildren(h('table', { class: 't' },
+      h('thead', {}, h('tr', {}, h('th', { text: 'Agent' }), h('th', { text: 'Executor' }),
+        h('th', { class: 'jl', text: 'Baseline pass' }), h('th', { class: 'num', text: 'Runs' }),
+        h('th', { class: 'jl', text: 'Conflicting pass' }), h('th', { class: 'num', text: 'Runs' }))),
+      bodies));
+  });
+
+  // ---------------------------------------------------------------- oracle verdicts
+  dash.draw('oracle', (el) => {
+    if (!ready('confusion', 'agents', 'runs')) return;
+    const c = context();
+    if (!c.judges.length) { el.replaceChildren(h('p', { class: 'empty', text: 'No judged runs yet.' })); return; }
+    const p = dash.params();
+    const view = p.cm_view ?? 'overall';
+    const unit = p.cm_unit ?? 'count';
+
+    const toolbar = h('div', { class: 'toolbar' },
+      segmented('View', 'cm_view', view, [['overall', 'Overall'], ['table', 'All agents × executors'], ['single', 'One at a time']]));
+
+    if (view === 'overall') {
+      el.replaceChildren(toolbar,
+        h('p', { class: 'muted', style: 'margin: 0; font-size: 13px', text: 'All agents and all executor models together, one matrix per judge.' }),
+        h('div', { class: 'mxs' }, c.judges.map((j) => matrix(c.get('all', 'all', j.id), j.label))),
+        latexBlock('LaTeX table for the paper', matricesLatex(c, 'all', 'all')));
+      return;
+    }
+
+    if (view === 'single') {
+      const agent = c.agentList.some((a) => a.agent === p.cm_agent) ? p.cm_agent : 'all';
+      const model = c.models.includes(p.cm_model) ? p.cm_model : 'all';
+      toolbar.append(h('span', { class: 'spacer' }),
+        selectField('Agent', 'cm_agent', agent, [['all', 'All agents'], ...c.agentList.map((a) => [a.agent, a.label])]),
+        selectField('Executor', 'cm_model', model, [['all', 'All executors'], ...c.models.map((m) => [m, short(m)])]));
+      el.replaceChildren(toolbar,
+        h('div', { class: 'mxs' }, c.judges.map((j) => matrix(c.get(agent, model, j.id), j.label))),
+        latexBlock('LaTeX table for this selection', matricesLatex(c, agent, model)));
+      return;
+    }
+
+    // table: every agent x executor, the four outcomes per judge
+    toolbar.append(h('span', { class: 'spacer' }), segmented('Values', 'cm_unit', unit, [['count', 'Counts'], ['pct', '% of judged runs']]));
+    const cols = OUTCOMES.map((o) => ({ key: o.f, label: o.abbr, tone: o.tone }));
+    const cell = (r, col) => {
+      if (!r || !r.judged) return { text: '–' };
+      const s = share(r[col.key], r.judged);
+      const text = unit === 'pct' ? pct(s) : String(r[col.key]);
+      return { text, heat: col.key === 'corrupt_success' || col.key === 'false_failure' ? s : null };
+    };
+    const value = (r, col) => {
+      if (!r || !r.judged) return '--';
+      return unit === 'pct' ? `${(100 * r[col.key] / r.judged).toFixed(1)}\\%` : String(r[col.key]);
+    };
+    el.replaceChildren(toolbar,
+      h('p', { class: 'muted', style: 'margin: 0; font-size: 13px' },
+        'TS true success · CS corrupt success · FF false failure · TF true failure. Shaded cells: the darker, the larger the share of judged runs.'),
+      h('div', { class: 'card' }, h('div', { class: 'tw' }, groupedTable(c, cols, cell))),
+      latexBlock('LaTeX table for the paper', groupedLatex(c, cols, value,
+        `LLM judge verdict against the deterministic oracle by agent and executor model (${unit === 'pct' ? 'percent of judged runs' : 'number of runs'}). TS: true success; CS: corrupt success; FF: false failure; TF: true failure.`,
+        'tab:confusion-by-agent')));
+  });
+
+  // ---------------------------------------------------------------- precision / recall / F1
+  dash.draw('prf', (el) => {
+    if (!ready('confusion', 'agents', 'runs')) return;
+    const c = context();
+    if (!c.judges.length) { el.replaceChildren(h('p', { class: 'empty', text: 'No judged runs yet.' })); return; }
+    const cols = [{ key: 'precision', label: 'P' }, { key: 'recall', label: 'R' }, { key: 'f1', label: 'F1' }];
+    const cell = (r, col) => ({ text: r ? ratio(r[col.key]) : '–' });
+    const value = (r, col) => (r && r[col.key] != null ? r[col.key].toFixed(2) : '--');
+    el.replaceChildren(
+      h('div', { class: 'card' }, h('div', { class: 'tw' }, groupedTable(c, cols, cell))),
+      latexBlock('LaTeX table for the paper', groupedLatex(c, cols, value,
+        'Precision (P), recall (R) and F1 of each LLM judge against the deterministic oracle, by agent and executor model.',
+        'tab:prf')));
+  });
+
+  // ---------------------------------------------------------------- corrupt success examples
+  dash.draw('corrupt-cards', (el) => {
+    if (!ready('corrupt_examples', 'agents', 'runs')) return;
+    const c = context();
+    const rows = dash.data('corrupt_examples').data;
+    const found = new Set(rows.map((r) => r.agent));
+    const missing = c.agentList.filter((a) => !found.has(a.agent)).map((a) => a.label);
+    const order = new Map(c.agents.map((a, i) => [a.agent, i]));
+    const cards = [...rows].sort((a, b) => order.get(a.agent) - order.get(b.agent)).map((r) => {
+      const meta = c.agents.find((a) => a.agent === r.agent);
+      const scores = String(r.judge_scores ?? '').split(', ').filter(Boolean).map((s) => {
+        const [name, value] = s.split(': ');
+        const pass = Number(value) >= 0.7;
+        return h('span', { class: `score${pass ? ' pass' : ''}` }, `${short(name)} `, h('b', { text: value }));
+      });
+      return h('article', { class: 'card ex' },
+        h('div', { class: 'ex-head' },
+          h('h3', { text: c.label(r.agent) }),
+          h('span', { class: 'chip', text: short(r.model) }),
+          h('span', { class: 'chip id', text: `${r.case_id} · ${r.group}` }),
+          h('span', { class: 'chip bad', text: r.failure_type })),
+        h('div', { class: 'ex-grid' },
+          h('dl', { class: 'kv' },
+            h('dt', { text: 'Request' }), h('dd', {}, h('p', { class: 'quote', text: r.query || '(empty request)', style: r.query ? null : 'font-style: italic; color: var(--color-fg-muted)' })),
+            h('dt', { text: 'Expected' }), h('dd', {}, h('div', { class: 'call expected', text: r.expected })),
+            h('dt', { text: 'Tools actually called' }), h('dd', {}, h('div', { class: 'calls' },
+              String(r.tool_calls).split('; ').map((t) => h('div', { class: 'call', text: t }))))),
+          h('dl', { class: 'kv' },
+            h('dt', { text: `Judge scores (${r.judges_passed} judges passed)` }), h('dd', {}, h('div', { class: 'scores' }, scores)),
+            h('dt', { text: `Reason given by ${short(r.judge_reason_by)}` }), h('dd', { text: r.judge_reason }),
+            meta ? h('dt', { text: 'Failure targeted by the agent' }) : null, meta ? h('dd', { text: meta.failure_focus }) : null)),
+        h('details', { class: 'answer' }, h('summary', { text: 'Final answer the judges saw' }), h('pre', { text: r.response })));
+    });
+    el.replaceChildren(
+      ...(cards.length ? cards : [h('p', { class: 'empty', text: 'No corrupt success found in the current results.' })]),
+      missing.length ? h('p', { class: 'muted', style: 'margin: 0; font-size: 13px', text: `No corrupt success found for: ${missing.join(', ')}.` }) : '',
+    );
+  });
+
+  dash.draw('method-lists', (el) => {
+    if (!ready('runs')) return;
+    const runs = dash.data('runs').data;
+    const judges = [...new Set(runs.map((r) => r.judge_label))].sort();
+    const models = [...new Set(runs.map((r) => r.model))].sort();
+    el.textContent = `Judges: ${judges.join(' and ') || 'none yet'}. Executor models: ${models.join(', ') || 'none yet'}.`;
+  });
+</script>
+
+<script>
+  // Tabs: the selected one is kept in the URL hash (#tab=scores, #tab=corrupt, ...)
+  (() => {
+    const buttons = [...document.querySelectorAll('.csx-tab')];
+    const ids = buttons.map((b) => b.dataset.tab);
+    const show = (id, focus) => {
+      if (!ids.includes(id)) id = ids[0];
+      for (const b of buttons) {
+        const on = b.dataset.tab === id;
+        b.setAttribute('aria-selected', String(on));
+        b.tabIndex = on ? 0 : -1;
+        document.getElementById(b.dataset.tab).hidden = !on;
+        if (on && focus) b.focus();
+      }
+    };
+    buttons.forEach((b, i) => {
+      b.addEventListener('click', () => { history.replaceState(null, '', `#tab=${b.dataset.tab}`); show(b.dataset.tab); });
+      b.addEventListener('keydown', (e) => {
+        const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!step) return;
+        const next = buttons[(i + step + buttons.length) % buttons.length];
+        history.replaceState(null, '', `#tab=${next.dataset.tab}`);
+        show(next.dataset.tab, true);
+      });
+    });
+    show(location.hash.replace(/^#tab=/, ''));
+  })();
+</script>
