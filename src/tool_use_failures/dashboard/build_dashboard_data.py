@@ -41,17 +41,17 @@ PACKAGE_DIR = os.path.join(SRC_DIR, "tool_use_failures")
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 AGENTS = [
-    {"agent": "agent_012", "package": "agent_012_travel_destination_assistant", "module": "travel_agent.py",
+    {"agent": "agent_012", "package": "agent_012_explore_travel_destination", "module": "agent.py",
      "label": "Travel destination assistant", "failure_focus": "Only one tool", "file_prefix": "results_agent012_"},
     {"agent": "agent_013", "package": "agent_013_essay_evaluator_or_search", "module": "agent.py",
      "label": "Essay evaluator or search", "failure_focus": "Only one tool", "file_prefix": "results_013_"},
     {"agent": "agent_014", "package": "agent_014_academic_triage_agent", "module": "agent.py",
      "label": "Academic triage", "failure_focus": "Wrong tool selection", "file_prefix": "results_014_"},
-    {"agent": "agent_018", "package": "agent_018_recipe_generator", "module": "recipe_agent.py",
+    {"agent": "agent_018", "package": "agent_018_recipe_generator", "module": "agent.py",
      "label": "Recipe generator", "failure_focus": "Parameter error", "file_prefix": "results_agent018_"},
     {"agent": "agent_022", "package": "agent_022_explore_travel_viability", "module": "agent.py",
      "label": "Travel viability", "failure_focus": "Partial tool omission", "file_prefix": "results_022_"},
-    {"agent": "agent_030", "package": "agent_030_trip_budget_weather", "module": "math_weather.py",
+    {"agent": "agent_030", "package": "agent_030_trip_budget_weather", "module": "agent.py",
      "label": "Trip budget and weather", "failure_focus": "Parameter error", "file_prefix": "results_agent030_"},
     {"agent": "parameter_error", "package": "parameter_error", "module": "agent.py",
      "label": "Flight booking", "failure_focus": "Parameter error", "file_prefix": "results_parameter_error_"},
