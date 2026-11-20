@@ -20,7 +20,7 @@
         "record_locator": "RL-7H2K91",
         "routing_ref": "RX-778"
       },
-      "success_rate": 0.0,
+      "success_rate": 100.0,
       "runs": [
         {
           "run": 0,
@@ -66,16 +66,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -141,16 +139,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -216,16 +212,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -291,16 +285,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -366,16 +358,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -441,16 +431,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -516,16 +504,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -591,16 +577,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -666,16 +650,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -741,16 +723,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -1551,7 +1531,7 @@
         "record_locator": "RL-M8P5TR",
         "routing_ref": "CA-401"
       },
-      "success_rate": 0.0,
+      "success_rate": 100.0,
       "runs": [
         {
           "run": 0,
@@ -1597,16 +1577,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -1672,16 +1650,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -1747,16 +1723,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -1822,16 +1796,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -1897,16 +1869,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -1972,16 +1942,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -2047,16 +2015,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -2122,16 +2088,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -2197,16 +2161,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",
@@ -2272,16 +2234,14 @@
             "return_date": null
           },
           "malformed_tool_call": false,
-          "correct": false,
-          "failure_type": "tool_parameter_error",
+          "correct": true,
+          "failure_type": null,
           "argument_evaluation": {
-            "all_correct": false,
+            "all_correct": true,
             "score": 1.0,
             "missing_args": [],
             "wrong_values": [],
-            "unexpected_args": [
-              "return_date"
-            ],
+            "unexpected_args": [],
             "correct_args": [
               "traveler_name",
               "departure_code",

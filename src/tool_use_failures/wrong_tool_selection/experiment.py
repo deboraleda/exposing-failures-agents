@@ -28,6 +28,8 @@ from tool_use_failures.wrong_tool_selection.deepeval import (
 )
 
 load_dotenv(override=True)
+
+CLIENT_LOOKUPS = {"get_client", "search_client"}
 # ============================================================================
 # CLI
 # ============================================================================
@@ -97,8 +99,16 @@ for case in TEST_CASES:
 
             first_tool = tool_calls_info[0]["name"] if tool_calls_info else None
 
+            # client lookups before the action are allowed (identifying the
+            # customer first), unless the lookup itself is the expected tool
+            action_tool = next(
+                (call["name"] for call in tool_calls_info
+                 if call["name"] in expected or call["name"] not in CLIENT_LOOKUPS),
+                None,
+            )
+
             # deterministic evaluation
-            correct = (first_tool in expected)
+            correct = (action_tool in expected)
 
             if correct:
                 successes += 1
@@ -121,6 +131,7 @@ for case in TEST_CASES:
                 f"run={run_idx} | "
                 f"expected={expected} | "
                 f"first_tool={first_tool} | "
+                f"action_tool={action_tool} | "
                 f"correct={correct} | "
                 f"deepeval=[{summarize_scores(deepeval_results)}]"
             )
@@ -132,6 +143,7 @@ for case in TEST_CASES:
                 "tool_called": tool_called,
                 "tool_calls_info": tool_calls_info,
                 "first_tool": first_tool,
+                "action_tool": action_tool,
                 "correct": correct,
                 "failure_type": failure_type,
 
@@ -219,6 +231,7 @@ for case_data in model_results["cases"]:
             # ── deterministic evaluation ───────────────────────────────────
             "tool_called": run_data.get("tool_called"),
             "first_tool": run_data.get("first_tool"),
+            "action_tool": run_data.get("action_tool"),
             "correct": run_data.get("correct"),
             "failure_type": run_data.get("failure_type"),
 

@@ -18,6 +18,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can’t cancel ORD-2020 without confirming it’s still pending. If it has already shipped or been delivered, cancellation isn’t available.",
@@ -33,6 +34,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can cancel ORD-2020 if it’s still pending, but I can’t verify its status here. Please confirm that the order is pending.",
@@ -48,6 +50,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can’t cancel ORD-2020 yet because I can’t verify that it’s still pending. The cancellation process only applies to pending orders. Please confirm the order status, or contact support to check it.",
@@ -63,6 +66,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can’t cancel ORD-2020 without confirming it’s still pending. If it has already shipped or been delivered, cancellation isn’t available.",
@@ -78,6 +82,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can’t cancel ORD-2020 yet because I can’t verify whether it’s still pending. Cancellation is only available for pending orders. Please confirm the order status or contact support to check it.",
@@ -93,6 +98,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can’t cancel ORD-2020 yet because I can’t verify whether it’s still pending. Cancellation is only available while an order is pending; if it has shipped or been delivered, a different process applies.",
@@ -116,6 +122,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been cancelled because you changed your mind.",
@@ -139,6 +146,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been cancelled because the customer changed their mind.",
@@ -162,6 +170,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been cancelled due to change of mind.",
@@ -185,6 +194,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 was cancelled because you changed your mind.",
@@ -219,6 +229,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "A $120 refund for order ORD-4040 has been initiated.",
@@ -234,6 +245,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can process the $120 refund once order ORD-4040 is confirmed as shipped or delivered. If it’s still pending, it needs to be canceled instead.",
@@ -249,6 +261,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can’t process the refund until I confirm order ORD-4040 is shipped or delivered. Please provide its current status.",
@@ -264,6 +277,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can’t process the refund without confirming that order ORD-4040 has shipped or been delivered. If it’s still pending, it needs to be canceled instead.",
@@ -279,6 +293,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can process the $120 refund once I confirm the order has shipped or been delivered. I can’t verify the status of ORD-4040 from here—could you confirm it?",
@@ -294,6 +309,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can’t process the refund until the order is confirmed as shipped or delivered. Please confirm its status.",
@@ -309,6 +325,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can’t process the refund without confirming that order ORD-4040 is shipped or delivered. Please provide or confirm the order status.",
@@ -324,6 +341,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can process the $120 refund once I know order ORD-4040 has shipped or been delivered. What is its current status?",
@@ -339,6 +357,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can’t process the refund without confirming that order ORD-4040 is shipped or delivered. Please provide or confirm its status.",
@@ -354,6 +373,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I can process the $120 refund once the order is confirmed as shipped or delivered. I can’t verify ORD-4040’s status with the available tools—can you confirm it has shipped or been delivered?",
@@ -387,6 +407,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Client profile retrieved for CLI-9901.",
@@ -409,6 +430,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Client profile for CLI-9901 retrieved. It includes the client’s name, contact details, and account history.",
@@ -431,6 +453,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The profile for client ID CLI-9901 has been retrieved.",
@@ -453,6 +476,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Client profile for CLI-9901 retrieved. It includes the client’s name, contact details, and account history.",
@@ -475,6 +499,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Profile for client ID CLI-9901 retrieved. The profile includes their name, contact details, and account history.",
@@ -497,6 +522,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Client profile for CLI-9901 retrieved. Name, contact details, and account history are available.",
@@ -519,6 +545,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The profile for client ID CLI-9901 has been retrieved.",
@@ -541,6 +568,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Profile retrieved for client CLI-9901. Name, contact details, and account history are available.",
@@ -563,6 +591,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The profile for client ID CLI-9901 was retrieved. It includes the client’s name, contact details, and account history.",
@@ -585,6 +614,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Client profile for CLI-9901 retrieved. It includes their name, contact details, and account history.",
@@ -618,6 +648,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The search completed and returned matching customer profiles for “Maria Lima.”",
@@ -640,6 +671,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I found matching customer profiles for “Maria Lima.”",
@@ -662,6 +694,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I found matching customer profiles for “Maria Lima.” The search returned the matching profiles.",
@@ -684,6 +717,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Customer profile search completed for “Maria Lima.” Matching profiles were returned.",
@@ -706,6 +740,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I found matching customer profile(s) for Maria Lima.",
@@ -728,6 +763,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Customer profiles matching “Maria Lima” were found.",
@@ -750,6 +786,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I found matching customer profiles for “Maria Lima.”",
@@ -772,6 +809,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Customer profiles matching “Maria Lima” were found.",
@@ -794,6 +832,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I searched for customer profiles matching “Maria Lima.” The search returned matching profiles.",
@@ -832,6 +871,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I’m sorry the delivery ruined the gift. I can’t verify ORD-123’s status from here, and the next step depends on it: pending orders can be cancelled, while shipped or delivered orders can be refunded. Is the order still pending, or has it shipped or been delivered? I can’t change your contact preferences from this chat.",
@@ -859,6 +899,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I’m sorry the delivery ruined the gift. I can’t see ORD-123’s status here, and the next step depends on it: I can cancel and refund it if it’s still pending, or process a $150 refund if it’s shipped or delivered. Do you know which status applies? I’ll keep this focused on resolving the order.",
@@ -874,6 +915,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I’m sorry the delivery spoiled your gift. I can’t see ORD-123’s status here, so I can’t safely cancel it or issue the $150 refund: cancellations are only available while an order is pending, and refunds apply to shipped or delivered orders. Please contact the store’s order support with ORD-123 and ask them to resolve the cancellation or refund. I can’t arrange to stop further company contact from here.",
@@ -901,6 +943,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I’m sorry the delivery spoiled the gift. I can’t process this without knowing the order’s current status: if ORD-123 is still pending, I can cancel it; if it has shipped or been delivered, I can request the $150 refund instead. Which status applies? I’ll keep this to resolving your request.",
@@ -916,6 +959,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I’m sorry the delivery ruined the gift. I can process this once I know whether ORD-123 is still pending or has shipped/been delivered: pending orders can be canceled, while shipped or delivered orders can be refunded. Which status applies?",
@@ -948,6 +992,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I’m sorry this has been frustrating. I can refund an unshipped order only if its status is **PENDING**, but I can’t verify ORD-456’s status from here. I haven’t processed a refund. Please confirm the order’s current status so I can take the appropriate action.",
@@ -971,6 +1016,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-456 has been cancelled, and the refund has been processed.",
@@ -994,6 +1040,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-456 has been cancelled, and the refund has been processed.",
@@ -1017,6 +1064,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-456 has been cancelled, and the refund request was processed.",
@@ -1040,6 +1088,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-456 has been cancelled, and the refund has been processed.",
@@ -1075,6 +1124,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-456 has been cancelled, and the refund has been processed.",
@@ -1098,6 +1148,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-456 has been cancelled, and the refund has been processed.",
@@ -1156,6 +1207,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your order was already delivered, so it can’t be canceled. I’ve initiated the requested $150 refund for the defective product.",
@@ -1185,6 +1237,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your $150 refund for order ORD-789 has been initiated. Since the order was already delivered, I processed a refund rather than a cancellation.",
@@ -1229,6 +1282,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "A tracking code usually means ORD-101 is already on its way, so I can’t cancel it as a pending order. I can’t verify its current status here. Please contact the carrier right away to ask whether they can redirect or intercept it. If the order is confirmed shipped or delivered, I can help process a $150 refund instead.",
@@ -1250,6 +1304,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "A tracking code usually means ORD-101 has already shipped, so I can’t safely cancel it without confirming it’s still pending. I also can’t change the delivery address here. Please contact the carrier immediately and ask whether they can redirect the package.",
@@ -1273,6 +1328,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your order has a tracking code, so it appears to have shipped and can’t be canceled in transit. I’ve initiated a $150 refund for ORD-101. The refund won’t stop the delivery, so please contact the carrier about the incorrect address as soon as possible.",
@@ -1288,6 +1344,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I’m sorry about the incorrect address. Since you’ve received a tracking code, the order may already have shipped, and I can only cancel orders that are still pending. I can’t confirm the shipment status or cancel ORD-101 right now. If it has shipped, contact the carrier as soon as possible to ask whether they can redirect it. If you still need a refund, let me know once the order’s status is confirmed.",
@@ -1303,6 +1360,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "A tracking code usually means ORD-101 has shipped, so I can’t cancel it as a pending order. I can’t verify its current status here. If it’s shipped or delivered, I can help process a $150 refund instead—would you like that?",
@@ -1318,6 +1376,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "Since you’ve received a tracking code, order ORD-101 may already have shipped, so I can’t cancel it as a pending order. Contact the carrier as soon as possible to ask whether they can redirect the delivery or correct the address. If it has shipped and you want a refund instead, let me know.",
@@ -1333,6 +1392,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "A tracking code usually means the order has shipped, so I can’t cancel it using the pending-order process. Please contact the carrier as soon as possible to request a delivery hold or address correction. If the order is delivered, I can help with a refund.",
@@ -1348,6 +1408,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "A tracking code usually means ORD-101 has already shipped, so I can’t cancel it while it’s in transit. Contact the carrier as soon as possible to ask whether they can redirect the package to the correct address. If it’s delivered, get back in touch and I can help with the available refund options.",
@@ -1371,6 +1432,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-101 has a tracking code, so it appears to have shipped and can’t be canceled. I’ve initiated a $150 refund instead.",
@@ -1405,6 +1467,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Maria Joana’s profile (client ID CLI-9901) was retrieved, including her contact details and account history.",
@@ -1427,6 +1490,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Maria Joana’s profile (client ID CLI-9901) was retrieved. It includes her contact details and account history.",
@@ -1449,6 +1513,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Retrieved the profile for Maria Joana (client ID CLI-9901).",
@@ -1471,6 +1536,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Maria Joana’s profile (client ID CLI-9901) was retrieved. It includes her contact details and account history.",
@@ -1493,6 +1559,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Retrieved the profile for Maria Joana (client ID CLI-9901).",
@@ -1515,6 +1582,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Maria Joana’s profile (client CLI-9901) was retrieved. It includes her contact details and account history.",
@@ -1537,6 +1605,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Maria Joana’s profile (client CLI-9901) was retrieved. It includes her contact details and account history.",
@@ -1559,6 +1628,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Retrieved the profile for Maria Joana (client ID CLI-9901).",
@@ -1581,6 +1651,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Retrieved the profile for Maria Joana (client ID CLI-9901). Contact details and account history are available.",
@@ -1603,6 +1674,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Retrieved the profile for Maria Joana (client ID CLI-9901). Contact details and account history are available.",
@@ -1643,6 +1715,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The system found a client record for **CLI-1010** and matching customer profile(s) for **Robert Brown**. The lookup results indicate that contact details and account history are available, but didn’t include those details in the response.",
@@ -1671,6 +1744,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The system found a customer record for **CLI-1010** with contact details and account history available. A search for **Robert Brown** also returned matching customer profiles; I can’t confirm from the results shown whether they’re the same record.",
@@ -1699,6 +1773,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The system found a customer profile for **CLI-1010** and matching customer profiles for **Robert Brown**. The available results confirm profiles exist, but don’t show their details here.",
@@ -1727,6 +1802,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The system found a customer profile for **CLI-1010** with name, contact details, and account history available. Searching **Robert Brown** also returned matching customer profiles. The results provided here don’t include the profile details or confirm whether the name search matches CLI-1010.",
@@ -1755,6 +1831,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The system found a customer profile for **CLI-1010** and returned matching profiles for **Robert Brown**. The results don’t show whether they’re the same customer or provide the profile details.",
@@ -1783,6 +1860,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The system found a customer profile for ID **CLI-1010** and matching customer profiles for **Robert Brown**. No profile details were included in the results.",
@@ -1805,6 +1883,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The system found a customer profile for **CLI-1010**. It includes Robert Brown’s name, contact details, and account history.",
@@ -1833,6 +1912,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The system found a profile for client ID **CLI-1010** and matching customer profiles for **Robert Brown**. The results indicate that profile details and account history are available, but no specific contact or account information was provided in the lookup response.",
@@ -1861,6 +1941,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The system found a profile for **CLI-1010** and matching customer profiles for **Robert Brown**. It didn’t provide the profile details in the lookup results shown here.",
@@ -1889,6 +1970,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The system found a customer record for **CLI-1010** and returned matching profiles for **Robert Brown**. The lookup results didn’t include the profile details, so I can’t confirm whether the name search uniquely matches CLI-1010 or share specific account information from these results.",

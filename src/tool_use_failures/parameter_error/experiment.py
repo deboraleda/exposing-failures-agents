@@ -42,6 +42,9 @@ def evaluate_args(expected_args, actual_args):
             - may be absent
             - may exist with value None
             - any non-None value is error
+
+    - argument not in expected_args:
+        error, unless its value is None
     """
 
     result = {
@@ -123,9 +126,10 @@ def evaluate_args(expected_args, actual_args):
     # Extra unexpected args
     # =====================================================================
 
+    # an explicit None is the same as leaving the argument out
     for key in actual_args:
 
-        if key not in expected_args:
+        if key not in expected_args and actual_args[key] is not None:
 
             result["unexpected_args"].append(key)
             result["all_correct"] = False

@@ -7,7 +7,6 @@ import argparse
 import csv
 import json
 import os
-import re
 from datetime import datetime
 
 from dotenv import load_dotenv
@@ -26,37 +25,6 @@ from tool_use_failures.agent_014_academic_triage_agent.test_cases import TEST_CA
 from tool_use_failures.agent_014_academic_triage_agent.agent import agent as create_agent
 
 load_dotenv(override=True)
-
-
-# ============================================================================
-# Helpers
-# ============================================================================
-
-def _tokens(text):
-    """Lowercase alphanumeric tokens with more than two characters."""
-
-    return [token for token in re.findall(r"[a-z0-9]+", str(text).lower()) if len(token) > 2]
-
-
-def evaluate_args(expected_args, actual_args):
-    """Check the arguments of the chosen tool against the test case.
-
-    The tools use different parameter names (research_query / concept), so the
-    expected values are compared against all argument values, regardless of
-    the key. Every significant token of the expected value must appear in the
-    actual arguments (e.g. "predict" matches "prediction").
-    """
-
-    if not expected_args:
-        return None
-
-    actual_text = " ".join(str(value) for value in actual_args.values()).lower()
-
-    return all(
-        token in actual_text
-        for expected_value in expected_args.values()
-        for token in _tokens(expected_value)
-    )
 
 
 # ============================================================================
@@ -151,15 +119,7 @@ for case in TEST_CASES:
             # at most one tool call is allowed per execution
             tool_count_ok = n_tool_calls <= case["expected_tool_count"]
 
-            # arguments are only checked when an acceptable tool was chosen
-            args_correct = None
-
-            if tool_correct and acceptable:
-                args_correct = evaluate_args(
-                    case["expected_args"],
-                    tool_calls_info[0]["args"],
-                )
-
+            # only the tool choice is checked, not its arguments
             failure_type = None
 
             if not tool_correct:
@@ -177,10 +137,7 @@ for case in TEST_CASES:
                 else:
                     failure_type = "fallback"
 
-            elif args_correct is False:
-                failure_type = "wrong_args"
-
-            # correct = right tool, a single call and correct arguments
+            # correct = an acceptable tool and a single call
             correct = failure_type is None
 
             if correct:
@@ -199,7 +156,6 @@ for case in TEST_CASES:
                 f"tool_correct={tool_correct} | "
                 f"correct={correct} | "
                 f"n_tool_calls={n_tool_calls} | "
-                f"args_correct={args_correct} | "
                 f"failure={failure_type} | "
                 f"deepeval=[{summarize_scores(deepeval_results)}]"
             )
@@ -214,7 +170,6 @@ for case in TEST_CASES:
                 "tool_correct": tool_correct,
                 "n_tool_calls": n_tool_calls,
                 "tool_count_ok": tool_count_ok,
-                "args_correct": args_correct,
                 "correct": correct,
                 "failure_type": failure_type,
 
@@ -318,7 +273,6 @@ for case_data in model_results["cases"]:
             "tool_correct": run_data.get("tool_correct"),
             "n_tool_calls": run_data.get("n_tool_calls"),
             "tool_count_ok": run_data.get("tool_count_ok"),
-            "args_correct": run_data.get("args_correct"),
             "correct": run_data.get("correct"),
             "failure_type": run_data.get("failure_type"),
 

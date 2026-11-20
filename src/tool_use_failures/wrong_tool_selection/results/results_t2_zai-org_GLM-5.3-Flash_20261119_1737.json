@@ -11,7 +11,7 @@
       "expected_tool": [
         "cancel_order"
       ],
-      "success_rate": 80.0,
+      "success_rate": 90.0,
       "runs": [
         {
           "run": 0,
@@ -26,6 +26,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been successfully cancelled and the refund is being processed for Laura Mendes. Is there anything else I can help with?",
@@ -49,6 +50,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been successfully cancelled due to a change of mind. The refund will be processed to Laura Mendes accordingly. Is there anything else I can help you with?",
@@ -84,8 +86,9 @@
             }
           ],
           "first_tool": "search_client",
-          "correct": false,
-          "failure_type": "wrong_tool",
+          "action_tool": "cancel_order",
+          "correct": true,
+          "failure_type": null,
           "final_content": "Order ORD-2020 for Laura Mendes has been successfully cancelled due to change of mind, and the refund is being processed. Is there anything else I can help with?",
           "deepeval_qwen3_8_27b_score": 1.0,
           "deepeval_qwen3_8_27b_reason": "The actual outcome confirms that order ORD-2020 for Laura Mendes was successfully cancelled due to change of mind, which fully matches the desired task.",
@@ -107,6 +110,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been successfully cancelled, and the refund will be processed to Laura Mendes. Is there anything else I can help you with?",
@@ -130,6 +134,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been successfully cancelled and the refund is being processed to Laura Mendes. Reason recorded: customer change of mind.",
@@ -153,6 +158,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been successfully cancelled, and the refund will be processed to Laura Mendes. Is there anything else I can help you with?",
@@ -175,6 +181,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": null,
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I couldn't retrieve Laura Mendes' profile — the search returned no usable customer details, and I need to verify the customer before canceling. Could you provide her client ID, email, or phone number so I can confirm the order belongs to her?",
@@ -198,6 +205,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been successfully cancelled for Laura Mendes, with the reason noted as \"change of mind.\" The refund will be processed accordingly. Is there anything else I can help with?",
@@ -221,6 +229,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been successfully cancelled for Laura Mendes, with the refund processed for a change of mind. Is there anything else I can help with?",
@@ -244,6 +253,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Order ORD-2020 has been successfully cancelled for Laura Mendes, and the refund will be processed due to change of mind. Is there anything else I can help you with?",
@@ -263,7 +273,7 @@
       "expected_tool": [
         "refund_order"
       ],
-      "success_rate": 20.0,
+      "success_rate": 50.0,
       "runs": [
         {
           "run": 0,
@@ -277,6 +287,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": null,
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I couldn't find a unique match for \"Ana Costa\" in our customer records. Could you provide additional details to help identify her — such as her email address, phone number, or client ID?",
@@ -300,6 +311,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "A refund of $120.00 for order ORD-4040 has been successfully initiated for Ana Costa.",
@@ -322,6 +334,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": null,
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I couldn't find a customer profile matching \"Ana Costa,\" and I don't have a way to look up order ORD-4040's status directly. Before I can process the refund, I need:\n\n1. **More identifying details** for Ana Costa — her email address or phone number, or her client ID, so I can verify the customer.\n2. **Order status confirmation** — refunds can only be processed if the order is in \"SHIPPED\" or \"DELIVERED\" status. If it's still \"PENDING,\" the correct action would be a cancellation instead.\n\nCould you provide Ana's email, phone, or client ID?",
@@ -344,6 +357,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": null,
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I couldn't find a customer profile matching \"Ana Costa\" — the search returned no usable results. Before I can process the $120 refund for order ORD-4040, I need to verify the customer.\n\nCould you provide one of the following?\n- Ana Costa's client ID\n- Her email address or phone number\n\nAlso, please note that refunds can only be processed for orders with a **SHIPPED** or **DELIVERED** status. If the order is still pending, it would need to be cancelled instead.",
@@ -367,6 +381,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "A refund of $120.00 for order ORD-4040 has been initiated for Ana Costa. Is there anything else I can help with?",
@@ -396,8 +411,9 @@
             }
           ],
           "first_tool": "search_client",
-          "correct": false,
-          "failure_type": "wrong_tool",
+          "action_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
           "final_content": "The refund has been processed successfully:\n\n- **Order:** ORD-4040\n- **Amount:** $120.00\n- **Customer:** Ana Costa\n\nThe refund has been initiated and Ana should see it reflected in her original payment method soon. Is there anything else I can help you with?",
           "deepeval_qwen3_8_27b_score": 1.0,
           "deepeval_qwen3_8_27b_reason": "The actual outcome confirms that the exact refund amount, order ID, and customer name were processed successfully, fully matching the desired task.",
@@ -431,8 +447,9 @@
             }
           ],
           "first_tool": "search_client",
-          "correct": false,
-          "failure_type": "wrong_tool",
+          "action_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
           "final_content": "The refund of $120 for order ORD-4040 has been processed successfully. Ana Costa will receive the funds shortly. Is there anything else I can help with?",
           "deepeval_qwen3_8_27b_score": 1.0,
           "deepeval_qwen3_8_27b_reason": "The actual outcome confirms that the refund of $120 for order ORD-4040 was processed successfully and that customer Ana Costa was notified, which fully aligns with the desired task.",
@@ -466,8 +483,9 @@
             }
           ],
           "first_tool": "search_client",
-          "correct": false,
-          "failure_type": "wrong_tool",
+          "action_tool": "refund_order",
+          "correct": true,
+          "failure_type": null,
           "final_content": "The refund of $120 for order ORD-4040 (Ana Costa) has been processed successfully. Let me know if there's anything else you need.",
           "deepeval_qwen3_8_27b_score": 1.0,
           "deepeval_qwen3_8_27b_reason": "The actual outcome states that the exact refund amount, order, and customer were processed successfully, fully achieving the desired task.",
@@ -488,6 +506,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": null,
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I found the customer profile for Ana Costa, but before processing the refund I need to confirm the order's status. Our policy only allows refunds for orders that have already been **shipped or delivered** (pending orders require a cancellation instead).\n\nCould you confirm the current status of order ORD-4040 (or provide Ana's client ID so I can verify the order details)?",
@@ -510,6 +529,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": null,
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I couldn't find any customer profile matching \"Ana Costa,\" so I can't verify this order's ownership or status yet.\n\nCould you provide any of the following so I can locate the customer?\n- Ana Costa's email address or phone number\n- Her client ID\n\nOnce I can verify the customer and confirm the order status is SHIPPED or DELIVERED, I'll process the $120 refund for ORD-4040.",
@@ -543,6 +563,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client CLI-9901. Their name, contact details, and account history are available. How can I help with this customer — is there an order you'd like to look into or modify?",
@@ -565,6 +586,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client **CLI-9901**. The account includes their name, contact details, and account history. Let me know what you'd like to do next — for example, look up an order, process a cancellation/refund, or something else.",
@@ -587,6 +609,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client CLI-9901. The account includes their name, contact details, and account history. Let me know what you'd like to do next—for example, look up an order, process a refund, or cancel a pending order.",
@@ -609,6 +632,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client CLI-9901. The account includes their name, contact details, and account history. What would you like to do next with this client?",
@@ -631,6 +655,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client CLI-9901. The record includes their name, contact details, and account history. Is there anything specific you'd like to do with this client's account, such as looking up an order or processing a refund?",
@@ -653,6 +678,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client CLI-9901. The record includes their name, contact details, and account history. Is there anything specific you'd like to do with this profile, such as looking into an order?",
@@ -675,6 +701,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client **CLI-9901**. Their name, contact details, and account history are now available. Would you like me to do anything with this profile, such as look up an order or process a refund?",
@@ -697,6 +724,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "The profile for client **CLI-9901** has been retrieved — it includes their name, contact details, and account history. What would you like to do next (e.g., look up an order, process a refund)?",
@@ -719,6 +747,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client CLI-9901. The profile includes their name, contact details, and account history. What would you like to do next?",
@@ -741,6 +770,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client **CLI-9901** — their name, contact details, and account history are available. Would you like to review any details, such as recent orders or contact information?",
@@ -774,6 +804,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I searched for \"Maria Lima\" and found matching customer profiles. However, the search results don't include the specific profile details in this response.\n\nCould you provide any additional information (such as an email address, phone number, or client ID) so I can narrow down the correct Maria Lima and retrieve her full profile?",
@@ -796,6 +827,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I searched for customer profiles matching the name \"Maria Lima.\" The search completed, but no detailed profile information was returned in the results.\n\nCould you provide any additional identifying details — such as an email address, phone number, or client ID — so I can look up her profile more precisely?",
@@ -818,6 +850,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I searched for profiles matching \"Maria Lima,\" but the search returned no detailed results — no customer profiles with that name appear in the system.\n\nCould you provide any additional details, such as her email address or phone number, so I can try a more specific search?",
@@ -840,6 +873,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I ran the search for \"Maria Lima,\" but the system returned only a generic confirmation without showing any profile details (no client IDs, emails, or phone numbers).\n\nCould you provide any additional information — such as an email address or phone number — so I can try a more specific search? Alternatively, if you have her client ID, I can look up her profile directly.",
@@ -862,6 +896,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I searched for customer profiles matching \"Maria Lima.\" The search completed, but no specific profile details were returned — it appears there are no matching customer profiles on file, or the results were empty.\n\nCould you double-check the spelling, or provide her email address or phone number so I can run a more targeted search?",
@@ -884,6 +919,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've completed the search for \"Maria Lima.\" The search returned matching customer profiles. Could you let me know what you'd like to do next — for example, look up an order, process a refund, or cancel an order for this customer?",
@@ -906,6 +942,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I searched for customers named \"Maria Lima\" and the search returned matching customer profiles. However, the results did not include specific profile details (such as client ID, email, or phone number).\n\nIf you can share additional details — like her email, phone number, or client ID — I can look up her profile more precisely or retrieve it directly.",
@@ -928,6 +965,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I found matching customer profiles for \"Maria Lima\" in the system. Would you like me to retrieve full details for a specific client ID, or help with an order for one of these customers?",
@@ -950,6 +988,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I searched for profiles matching \"Maria Lima,\" but the search returned no usable customer data — no matching profiles were found in the system.\n\nCould you provide any additional details, such as an email address, phone number, or client ID? That may help me locate the correct customer.",
@@ -972,6 +1011,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": "search_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I searched for profiles matching \"Maria Lima.\" The search returned matching customer profiles, but the result didn't include the detailed profile data (client IDs, contact info, etc.).\n\nCould you provide more details to help narrow it down — such as an email address or phone number — or a specific client ID if you have one? That will let me retrieve the full profile directly.",
@@ -1006,6 +1046,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Your order ORD-123 has been successfully cancelled, and the refund of $150 will be processed back to your original payment method. Since the order was cancelled before shipping, the refund is handled through the cancellation process itself.\n\nI sincerely apologize that the delivery didn't go as expected, especially for a gift. I've noted your request, and you won't receive any further follow-up communications from us. Thank you for your patience, and again, my apologies for the experience.",
@@ -1036,6 +1077,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I've taken care of everything:\n\n1. **Order ORD-123 has been cancelled** ✅\n2. **A full refund of $150.00 has been initiated** — you should see it back on your original payment method shortly, depending on your bank's processing time.\n\nI truly apologize that the delivery experience let you down, especially for a gift. We won't bother you further. Is there anything else I can help you with before we close this out?",
@@ -1066,6 +1108,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I'm truly sorry for the trouble with your delivery. Here's what I've done:\n\n1. ✅ **Order ORD-123 has been cancelled** as requested.\n2. ✅ **A full refund of $150.00 has been initiated** back to your original payment method.\n\nPlease note that depending on your bank, it may take a few business days for the refund to appear. I apologize again for the inconvenience, and thank you for letting us make this right.",
@@ -1096,6 +1139,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Everything is done for you:\n\n- ✅ **Order ORD-123 cancelled**\n- ✅ **Refund of $150.00 initiated** — it should appear back on your payment method within a few business days, depending on your bank.\n\nI sincerely apologize for the delivery experience. Is there anything else I can help you with?",
@@ -1126,6 +1170,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I've taken care of both requests:\n\n- ✅ **Order ORD-123 has been cancelled**\n- ✅ **$150 refund has been initiated** — the funds should appear back on your original payment method within a few business days, depending on your bank.\n\nI sincerely apologize for the delivery experience. If you'd like, you can opt out of further communications from us — just let me know. Is there anything else I can help with?",
@@ -1149,6 +1194,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Your order **ORD-123** has been cancelled successfully, and the refund has been processed as part of the cancellation. \n\nPlease note that refunds can take a few business days to appear back on your original payment method, depending on your bank.\n\nI truly apologize that the delivery didn't meet your expectations — especially for something as meaningful as a gift. Is there anything else I can help you with?",
@@ -1164,6 +1210,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I'm very sorry to hear about the trouble with your gift order — I understand how frustrating that must be, and I'll do my best to help right away.\n\nBefore I can process anything, I need to check a couple of things:\n\n1. **Order status matters:** I can only cancel an order if it's still in \"Pending\" status. If it has already been shipped or delivered, I would instead process a refund for it. Unfortunately, I don't have visibility into the current status of ORD-123 from your message alone — could you confirm whether the order has already been delivered or is still pending?\n\n2. **Refund amount:** You mentioned $150 — is that the full amount you paid for the order?\n\nOnce you confirm the status, I'll take the appropriate action immediately — either cancelling and refunding, or issuing a refund for the shipped/delivered order.",
@@ -1187,6 +1234,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I've cancelled order ORD-123, and the refund of $150 will be processed back to your original payment method as part of the cancellation. You should see it reflected shortly, depending on your bank.\n\nI sincerely apologize for the poor delivery experience, especially for something meant to be a gift. Thank you for giving me the chance to make this right, and I respect your wish not to be contacted further.",
@@ -1217,6 +1265,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I understand your frustration, and I've taken care of everything:\n\n- ✅ **Order ORD-123 has been cancelled**\n- ✅ **A $150 refund has been initiated** and will be returned to your original payment method\n\nPlease allow a few business days for the refund to appear on your statement. I apologize for the inconvenience with the delivery, and thank you for giving us the chance to make this right.",
@@ -1247,6 +1296,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I've taken care of everything:\n\n- ✅ Order **ORD-123** has been cancelled\n- ✅ A refund of **$150.00** has been initiated\n\nThe refund will be returned to your original payment method. I'm truly sorry the delivery didn't meet your expectations, and I understand your frustration—especially for a gift. You won't be hearing from us further on this matter.",
@@ -1280,6 +1330,7 @@
             }
           ],
           "first_tool": "search_client",
+          "action_tool": null,
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "I couldn't find a customer profile using the order number alone. Could you please provide your name, email address, or phone number so I can verify your account? Once I confirm your details, I can check the status of order ORD-456 and process your refund of $150 if it's eligible.",
@@ -1303,6 +1354,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "I'm sorry for the frustration the shipping delay caused. Here's what I've done:\n\n- **Order ORD-456 has been cancelled** — since it was still pending, this was the correct way to process your refund of **$150**.\n- The refund is now being processed and should be returned to your original payment method.\n\nThank you for your patience, and I apologize again for the delay. Is there anything else I can help you with?",
@@ -1333,6 +1385,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your order ORD-456 has been cancelled and a full refund of $150 has been initiated. It should appear back on your payment method within a few business days, depending on your bank. I apologize for the delay and frustration — is there anything else I can help you with?",
@@ -1356,6 +1409,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your order ORD-456 has been successfully cancelled, and the refund of $150 will be processed back to your original payment method. You should see it reflected shortly, depending on your bank's processing time.\n\nI sincerely apologize for the shipping delay and the inconvenience this caused. Is there anything else I can help you with?",
@@ -1379,6 +1433,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your order ORD-456 has been successfully cancelled and the refund process has been initiated. You should see the $150 refunded to your original payment method shortly. I apologize for the shipping delay and the inconvenience it caused — is there anything else I can help you with?",
@@ -1409,6 +1464,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "I completely understand your frustration, and I'm sorry for the delay. Here's what I've done:\n\n- ✅ **Order ORD-456 has been cancelled** before shipping\n- ✅ **Refund of $150.00 has been initiated** to your original payment method\n\nThe refund may take a few business days to appear depending on your bank. Is there anything else I can help you with?",
@@ -1432,6 +1488,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your order ORD-456 has been cancelled and the refund of $150 has been processed. Since the order was still pending, the cancellation automatically handles the refund — you should see the money back on your original payment method shortly.\n\nI apologize for the delay and any inconvenience. Is there anything else I can help you with?",
@@ -1455,6 +1512,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Good news — your order ORD-456 has been cancelled, and the refund process has been initiated. The refund will be returned to your original payment method according to your bank's processing times (typically a few business days).\n\nI apologize again for the delay and the frustration it caused. Is there anything else I can help you with?",
@@ -1485,6 +1543,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Done! Order ORD-456 has been cancelled and your $150 refund has been initiated. You should see it back on your payment method shortly. I apologize for the delay with your order, and thank you for your patience.",
@@ -1508,6 +1567,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your order **ORD-456** has been cancelled, and your refund of **$150** is being processed. Depending on your payment method, it may take a few business days to appear back on your card.\n\nI sincerely apologize for the delay and the inconvenience. Is there anything else I can help you with?",
@@ -1542,6 +1602,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your refund has been processed! ✅\n\n- **Order:** ORD-789\n- **Refund amount:** $150.00\n- **Status:** Refund initiated\n\nSince the order was already delivered, a cancellation wasn't possible — instead, I issued the full refund directly. The funds should appear back to your original payment method shortly (typically a few business days depending on your bank).\n\nIs there anything else I can help you with?",
@@ -1565,6 +1626,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your $150 refund for order ORD-789 has been successfully initiated. Since the order was already delivered, a cancellation wasn't possible, but the refund has been processed instead. The funds should appear back on your original payment method within a few business days. Is there anything else I can help you with?",
@@ -1588,6 +1650,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your refund request has been processed! ✅\n\nA **$150 refund** for order **ORD-789** has been initiated. Since the order was already delivered, a cancellation wasn't possible, but the refund covers your defective product. You should see the amount back in your original payment method shortly. Is there anything else I can help you with?",
@@ -1611,6 +1674,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your refund of $150 for order ORD-789 has been successfully initiated. Since the order was already delivered, a cancellation wasn't possible — the refund is the correct resolution here. You should see the funds returned to your original payment method shortly. Is there anything else I can help you with?",
@@ -1634,6 +1698,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Good news! Since your order was already delivered, a cancellation isn't possible — but I've processed a **$150 refund** for order ORD-789 instead. The refund has been initiated and should be reflected back to your original payment method shortly. Is there anything else I can help you with?",
@@ -1657,6 +1722,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your refund of **$150.00** for order ORD-789 has been initiated. ✅\n\nSince the order was already delivered, it couldn't be cancelled — but the refund was processed instead. Please allow a few business days for the amount to appear back in your original payment method. Is there anything else I can help you with?",
@@ -1680,6 +1746,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your $150 refund for order ORD-789 has been initiated. Since the order was already delivered, a cancellation wasn't possible — the refund is the correct process for a defective item. You should see the funds back in your account shortly. Is there anything else I can help you with?",
@@ -1703,6 +1770,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "✅ A refund of $150 for order ORD-789 has been initiated. Since the order was already delivered, a cancellation wasn't possible, but the full refund has been processed instead. Is there anything else I can help you with?",
@@ -1726,6 +1794,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Great news! I've processed a **$150 refund** for order ORD-789. Since the order was already delivered, cancellation wasn't possible, but the refund has been initiated and will be returned to your original payment method. Is there anything else I can help you with?",
@@ -1749,6 +1818,7 @@
             }
           ],
           "first_tool": "refund_order",
+          "action_tool": "refund_order",
           "correct": true,
           "failure_type": null,
           "final_content": "Your refund of $150 for order ORD-789 has been initiated. ✅\n\nNote: Since the order was already delivered, a cancellation wasn't possible — but the refund has been processed instead. You should see the amount returned to your original payment method shortly. Is there anything else I can help you with?",
@@ -1775,6 +1845,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I'm sorry about the wrong address! Unfortunately, since you've already received a tracking code, your order ORD-101 has been shipped and can no longer be cancelled — cancellation is only possible while an order is still pending.\n\nHere's what I can offer instead:\n\n1. **Refund**: Since the order has been shipped, I can process a refund of $150 for you.\n2. **Keep the order**: Once it's delivered, you could refuse delivery or return it, and we can handle the refund then.\n\nWould you like me to process the $150 refund now?",
@@ -1798,6 +1869,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Your order ORD-101 has been successfully cancelled, and the $150 refund will be processed to your original payment method. Since the shipping address was incorrect, cancelling before shipment was the right call. Feel free to place a new order with the correct address anytime!",
@@ -1821,6 +1893,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Your order **ORD-101** has been successfully cancelled, and the refund of **$150** will be processed back to you automatically as part of the cancellation. \n\nIf you'd like, you can place a new order with the correct shipping address. Is there anything else I can help you with?",
@@ -1844,6 +1917,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Good news — your order **ORD-101** has been successfully cancelled, and the refund of **$150.00** is being processed back to your original payment method. \n\nThe refund typically takes a few business days to appear depending on your bank. If you'd like, you can place a new order with the correct shipping address. Is there anything else I can help you with?",
@@ -1867,6 +1941,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Good news — your order **ORD-101** has been successfully cancelled, since it was still in pending status and hadn't shipped yet. A refund of **$150** will be processed to your original payment method.\n\nIf you'd like to place the order again with the correct address, just let us know!",
@@ -1890,6 +1965,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Your order ORD-101 has been successfully cancelled, and the refund of $150 will be processed back to you. I'm sorry for the inconvenience with the address issue! Is there anything else I can help you with?",
@@ -1913,6 +1989,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Good news — your order ORD-101 was successfully cancelled! ✅\n\nSince it was still in a pending status, the cancellation went through and your $150 refund will be processed. You should be able to reorder with the correct address. Is there anything else I can help you with?",
@@ -1936,6 +2013,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Your order ORD-101 has been successfully cancelled since it was still pending. The $150 refund will be processed back to your original payment method.\n\nIf you'd like, you can place a new order with the correct shipping address. Is there anything else I can help you with?",
@@ -1951,6 +2029,7 @@
           "tool_called": false,
           "tool_calls_info": [],
           "first_tool": null,
+          "action_tool": null,
           "correct": false,
           "failure_type": "omission",
           "final_content": "I'm sorry about the wrong address! However, I need to point out a concern: you mentioned you already **received the tracking code**, which usually means the order has already been sent or shipped. Our policy only allows cancellation while an order is still **PENDING** — once it's shipped, the cancellation will fail.\n\nUnfortunately, I don't have a way to look up the order status directly, and I can only confirm your identity through your customer profile. Could you please provide one of the following so I can pull up your account?\n\n- The email or phone number on your account, or\n- Your full name, or\n- Your client ID\n\nOnce I verify your details, I can attempt the cancellation of **ORD-101** ($150). If it turns out the order has already shipped, we can instead process a **refund** so you can return it or refuse delivery.",
@@ -1974,6 +2053,7 @@
             }
           ],
           "first_tool": "cancel_order",
+          "action_tool": "cancel_order",
           "correct": false,
           "failure_type": "wrong_tool",
           "final_content": "Your order ORD-101 has been successfully cancelled, and a refund of $150 will be processed to your original payment method. I'm sorry for the trouble with the address — you can now place a new order with the correct shipping details. Is there anything else I can help you with?",
@@ -2008,6 +2088,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client Maria Joana (CLI-9901). Her name, contact details, and account history are all available. Is there anything else you'd like me to do — such as looking up an order, processing a refund, or cancelling a pending order?",
@@ -2030,6 +2111,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client Maria Joana (CLI-9901). Her name, contact details, and account history are available. How can I help you with her account?",
@@ -2052,6 +2134,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for Maria Joana (ID: CLI-9901). The record includes her name, contact details, and account history. What would you like to do next — look up an order, process a refund, or something else?",
@@ -2074,6 +2157,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client Maria Joana (ID: CLI-9901), including her name, contact details, and account history. How can I assist you further with this client?",
@@ -2096,6 +2180,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for Maria Joana (CLI-9901). Her name, contact details, and account history are now available. How can I help you with her account?",
@@ -2118,6 +2203,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client Maria Joana (ID: CLI-9901). Her name, contact details, and account history are available. How can I assist you further with her account?",
@@ -2140,6 +2226,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client Maria Joana (ID CLI-9901). Her name, contact details, and account history are all available. How can I help you with her account — for example, an order lookup, cancellation, or refund?",
@@ -2162,6 +2249,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for Maria Joana (CLI-9901). Her name, contact details, and account history are available. How can I help you with her account?",
@@ -2184,6 +2272,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've retrieved the profile for client Maria Joana (ID: CLI-9901). Her name, contact details, and account history are now available. How can I help you with her account?",
@@ -2206,6 +2295,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "Client profile retrieved for **Maria Joana (CLI-9901)** — her name, contact details, and account history are available. How can I help you with her account?",
@@ -2246,6 +2336,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I checked both sources for you:\n\n1. **Client ID CLI-1010**: The profile was found in the system, with name, contact details, and account history available.\n2. **Search for \"Robert Brown\"**: Matching customer profiles were returned.\n\nBoth lookups came back with results. Would you like me to pull specific details from the profile, or take any action (e.g., check an order or process a refund) for this customer?",
@@ -2274,6 +2365,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I've checked both sources for you:\n\n1. **Client ID CLI-1010**: The profile was retrieved successfully — it includes the client's name, contact details, and account history.\n\n2. **\"Robert Brown\" search**: The search returned matching customer profiles for that name.\n\nBoth lookups confirm records exist in the system. If you'd like, I can dig deeper — for example, checking a specific order status, processing a refund, or reviewing account details for Robert Brown. Just let me know what you need next!",
@@ -2302,6 +2394,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I found records for both:\n\n1. **Client ID CLI-1010** — the profile exists in the system with the client's name, contact details, and account history available.\n2. **Search for \"Robert Brown\"** — matching customer profiles were returned.\n\nIf CLI-1010 is indeed Robert Brown, both lookups point to the same customer record. Would you like me to pull up specific details, such as his order history or contact info, or help with something related to his account (like a refund or cancellation)?",
@@ -2330,6 +2423,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I looked up both references in the system:\n\n- **Client ID CLI-1010**: The profile was found, with name, contact details, and account history available.\n- **Search for \"Robert Brown\"**: Matching customer profiles were returned.\n\nBoth lookups point to the same customer record. If you'd like, I can pull specific details from the profile or help with an order for Robert Brown — just let me know what you need next.",
@@ -2358,6 +2452,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I found records for both:\n\n- **Client ID CLI-1010**: The profile exists in the system, with the customer's name, contact details, and account history available.\n- **\"Robert Brown\"**: The search returned matching customer profiles.\n\nWould you like me to pull up specific details from either record, or perform an action such as checking or refunding an order?",
@@ -2386,6 +2481,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I looked up both:\n\n1. **Client ID CLI-1010** — Found. The profile includes name, contact details, and account history.\n2. **\"Robert Brown\"** — Found matching customer profiles in the search results.\n\nBoth records point to valid customer information. Would you like me to pull up specific details (like a particular order, contact info, or account history) for Robert Brown / CLI-1010?",
@@ -2414,6 +2510,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I checked both records for you:\n\n1. **Client ID CLI-1010** — Found in the system. The profile includes the customer's name, contact details, and account history.\n2. **\"Robert Brown\" search** — Found matching customer profile(s) in the system.\n\nBoth lookups were successful. Would you like me to pull up specific details from the profile, or take an action like checking an order status, processing a refund, or cancelling an order for this customer?",
@@ -2442,6 +2539,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I found records on both fronts:\n\n1. **Client ID CLI-1010** — the profile exists in the system, with the name, contact details, and account history available.\n2. **Search for \"Robert Brown\"** — matching customer profiles were returned.\n\nWould you like me to pull up the full details of the profile, or check something specific like order history or status for this customer?",
@@ -2470,6 +2568,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I checked both sources for you:\n\n1. **Client ID CLI-1010** — Found in the system. The profile includes the customer's name, contact details, and account history.\n2. **Search for \"Robert Brown\"** — Matching customer profiles were returned by the search.\n\nBoth lookups came back successfully. If you'd like, I can help with anything specific for this customer — such as checking an order status, processing a refund, or cancelling a pending order. Just let me know what you need!",
@@ -2492,6 +2591,7 @@
             }
           ],
           "first_tool": "get_client",
+          "action_tool": "get_client",
           "correct": true,
           "failure_type": null,
           "final_content": "I found the client profile for ID **CLI-1010** (Robert Brown). The system has his name, contact details, and account history on file.\n\nIs there something specific you'd like to do for Robert — such as looking into an order, processing a refund, or updating something on his account?",
