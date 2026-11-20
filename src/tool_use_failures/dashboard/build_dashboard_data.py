@@ -159,15 +159,16 @@ def expected_text(case):
 def expected_calls_text(case):
     """Expected calls with their arguments, e.g. "book_flight({...})"; "" when the case has no expected_args.
 
-    expected_args is either the arguments of a single expected_tool or a {tool: args} map."""
+    expected_args is either the arguments of a single expected tool or a {tool: args} map.
+    With acceptable_tools, any of them may take the arguments: "search_arxiv | search_pubmed({...})"."""
 
     args = case.get("expected_args")
     if not args:
         return ""
-    tools = case.get("expected_tool")
+    tools = case.get("expected_tool") or case.get("acceptable_tools") or []
     tools = tools if isinstance(tools, list) else [tools]
     if not set(args) <= set(tools):
-        args = {tools[0]: args}
+        args = {" | ".join(tools) or "any tool": args}
     return "; ".join(f"{name}({json.dumps(a, ensure_ascii=False)})" for name, a in args.items())
 
 
