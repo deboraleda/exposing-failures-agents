@@ -15,6 +15,7 @@ from tool_use_failures.config import (
     N_RUNS,
     TEMPERATURE,
 )
+from tool_use_failures.judge_service import DEEPEVAL_COLUMNS
 from tool_use_failures.llm_service import get_llm
 
 from tool_use_failures.agent_012_explore_travel_destination.agent import create_agent
