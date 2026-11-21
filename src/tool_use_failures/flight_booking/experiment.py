@@ -10,9 +10,9 @@ import pandas as pd
 from dotenv import load_dotenv
 
 from tool_use_failures.llm_service import get_llm
-from tool_use_failures.parameter_error.agent import agent
-from tool_use_failures.parameter_error.test_cases import TEST_CASES
-from tool_use_failures.parameter_error.deepeval import (
+from tool_use_failures.flight_booking.agent import agent
+from tool_use_failures.flight_booking.test_cases import TEST_CASES
+from tool_use_failures.flight_booking.deepeval import (
     DEEPEVAL_COLUMNS,
     eval_task_completion,
     summarize_scores,

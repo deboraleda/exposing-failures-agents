@@ -14,9 +14,9 @@ from tool_use_failures.config import (
 )
 
 from tool_use_failures.llm_service import get_llm
-from tool_use_failures.tool_omission.agent import create_t1_agent
-from tool_use_failures.tool_omission.test_cases import TEST_CASES
-from tool_use_failures.tool_omission.deepeval_eval import (
+from tool_use_failures.replacement_orders.agent import create_t1_agent
+from tool_use_failures.replacement_orders.test_cases import TEST_CASES
+from tool_use_failures.replacement_orders.deepeval_eval import (
     DEEPEVAL_COLUMNS,
     eval_task_completion,
     summarize_scores,
