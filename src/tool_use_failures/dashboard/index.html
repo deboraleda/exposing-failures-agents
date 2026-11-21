@@ -135,6 +135,23 @@
   .method summary { cursor: pointer; width: fit-content; font-weight: 600; color: var(--color-fg); }
   .method ul { margin: 10px 0 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 90ch; }
   .empty { padding: 28px; text-align: center; color: var(--color-fg-muted); }
+
+  /* Eureca Chat */
+  .eu-banner { padding: 12px 16px; border-radius: 12px; font-size: 13px; color: var(--color-fg-muted);
+    background: color-mix(in srgb, var(--color-warn) 8%, var(--color-panel)); border: 1px solid color-mix(in srgb, var(--color-warn) 30%, transparent); }
+  .eu-banner b { color: var(--color-fg); }
+  .eu-tone-pass { --tone: var(--color-ok); } .eu-tone-extra_call { --tone: var(--color-warn); }
+  .eu-tone-retry_loop { --tone: var(--color-bad); } .eu-tone-omission { --tone: var(--color-accent); } .eu-tone-other { --tone: var(--color-neutral); }
+  .stks { display: grid; gap: 12px; padding: 18px 20px; }
+  .stk-row { display: grid; grid-template-columns: 170px 1fr; gap: 12px; align-items: center; }
+  .stk-row > span { font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+  .stk { display: flex; height: 26px; border-radius: 7px; overflow: hidden; background: var(--color-subtle); }
+  .stk i { display: flex; align-items: center; justify-content: center; min-width: 0; background: var(--tone); color: #fff;
+    font-style: normal; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; overflow: hidden; }
+  @media (max-width: 560px) { .stk-row { grid-template-columns: 1fr; gap: 4px; } }
+  .eu-findings { margin: 0; padding: 16px 20px 16px 36px; display: grid; gap: 8px; font-size: 13.5px; max-width: 100ch; }
+  .eu-findings b { font-weight: 650; }
+  .t td.cnt { text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; background: color-mix(in srgb, var(--color-ok) var(--h), transparent); }
 </style>
 
 <div class="csx">
@@ -152,12 +169,13 @@
     <button type="button" class="csx-tab" role="tab" id="tab-confusion" aria-controls="confusion" data-tab="confusion">Oracle verdicts</button>
     <button type="button" class="csx-tab" role="tab" id="tab-judge-quality" aria-controls="judge-quality" data-tab="judge-quality">Precision, recall, F1</button>
     <button type="button" class="csx-tab" role="tab" id="tab-corrupt" aria-controls="corrupt" data-tab="corrupt">Corrupt success examples</button>
+    <button type="button" class="csx-tab" role="tab" id="tab-eureka" aria-controls="eureka" data-tab="eureka">Eureca Chat</button>
   </nav>
 
   <section class="csx-sec" id="agents" role="tabpanel" aria-labelledby="tab-agents">
     <div class="sec-head">
       <h2>Agents under test</h2>
-      <p>Each agent targets one kind of tool-calling failure. A baseline case is a direct request; a conflicting case is built to push the agent into that failure. Eureka Chat was developed outside this study and is in beta; its results will be added when they arrive.</p>
+      <p>Each agent targets one kind of tool-calling failure. A baseline case is a direct request; a conflicting case is built to push the agent into that failure. Every number in this dashboard refers to these nine agents; Eureca Chat has its own tab.</p>
     </div>
     <div class="card"><div class="tw" data-draw="agents-table"></div></div>
   </section>
@@ -203,6 +221,15 @@
       <p>For each agent, the run approved by the most judges (then with the highest judge score) among the runs that failed the oracle.</p>
     </div>
     <div class="exs" data-draw="corrupt-cards"></div>
+  </section>
+
+  <section class="csx-sec" id="eureka" role="tabpanel" aria-labelledby="tab-eureka">
+    <div class="sec-head">
+      <h2>Eureca Chat: an exploratory study</h2>
+      <p>A beta university assistant developed outside this study, which answers academic questions by querying the university's database and documents through tools. Ten questions (five clear, five ambiguous) were each run ten times with the three executor models, and a deterministic oracle checked the tool calls against the expected and allowed tools. No LLM judge has scored these runs yet.</p>
+    </div>
+    <p class="eu-banner"><b>Not part of the main results.</b> These runs are kept out of every card, table and count in the other tabs, which refer only to the nine agents of the study. They support the Discussion of the paper.</p>
+    <div data-draw="eureka" style="display: grid; gap: 18px;"></div>
   </section>
 
   <details class="method" id="method">
@@ -681,6 +708,135 @@
     el.replaceChildren(
       ...(cards.length ? cards : [h('p', { class: 'empty', text: 'No corrupt success found in the current results.' })]),
       missing.length ? h('p', { class: 'muted', style: 'margin: 0; font-size: 13px', text: `No corrupt success found for: ${missing.join(', ')}.` }) : '',
+    );
+  });
+
+  // ---------------------------------------------------------------- Eureca Chat (exploratory, own tab)
+  const EU_OUTCOMES = [
+    { id: 'pass', label: 'Pass' },
+    { id: 'extra_call', label: 'Extra call' },
+    { id: 'retry_loop', label: 'Retry loop' },
+    { id: 'omission', label: 'Omission' },
+    { id: 'other', label: 'Other failure' },
+  ];
+  const EU_LABEL = Object.fromEntries(EU_OUTCOMES.map((o) => [o.id, o.label]));
+
+  dash.draw('eureka', (el) => {
+    if (!ready('eureka', 'eureka_info')) return;
+    const rows = dash.data('eureka').data;
+    if (!rows.length) { el.replaceChildren(h('p', { class: 'empty', text: 'No Eureca Chat runs found in eureka_chat/.' })); return; }
+    const info = dash.data('eureka_info').data[0] ?? {};
+    const models = [...new Set(rows.map((r) => r.model))].sort((a, b) => a.localeCompare(b));
+    const count = (pred) => rows.filter(pred).length;
+    const passRate = (pred) => share(count((r) => pred(r) && r.passed), count(pred));
+    const outcomes = EU_OUTCOMES.filter((o) => rows.some((r) => r.outcome === o.id));
+    const n = (o, m) => count((r) => r.outcome === o && (!m || r.model === m));
+
+    // KPIs
+    const kpi = (value, label, alert) => h('div', { class: `kpi${alert ? ' alert' : ''}` }, h('b', { text: value }), h('span', { text: label }));
+    const failures = outcomes.filter((o) => o.id !== 'pass').sort((a, b) => n(b.id) - n(a.id));
+    const kpis = h('div', { class: 'kpis', style: 'margin-top: 0' },
+      kpi(`${count((r) => r.passed)} / ${rows.length}`, `runs passing the oracle (${pct(share(count((r) => r.passed), rows.length), 0)})`),
+      kpi(`${pct(passRate((r) => r.intention === 'clear'), 0)} vs ${pct(passRate((r) => r.intention === 'ambiguous'), 0)}`, 'pass rate, clear vs ambiguous questions'),
+      failures[0] ? kpi(String(n(failures[0].id)), `${failures[0].label.toLowerCase()} runs, the most frequent failure`, true) : null,
+      kpi(String(info.n_tools ?? '–'), `tools (${info.tools_note ?? ''})`));
+
+    // stacked bars per executor
+    const legend = h('div', { class: 'legend' }, outcomes.map((o) => h('span', { class: `eu-tone-${o.id}` }, h('i', { class: 'dot' }), h('b', { text: o.label }), ` ${n(o.id)} runs`)));
+    const bars = h('div', { class: 'card stks' },
+      models.map((m) => {
+        const total = count((r) => r.model === m);
+        return h('div', { class: 'stk-row' }, h('span', { text: m }),
+          h('div', { class: 'stk', role: 'img', 'aria-label': `${m}: ${outcomes.map((o) => `${o.label} ${n(o.id, m)}`).join(', ')}` },
+            outcomes.filter((o) => n(o.id, m)).map((o) => h('i', {
+              class: `eu-tone-${o.id}`, style: `width: ${(100 * n(o.id, m)) / total}%`,
+              title: `${o.label}: ${n(o.id, m)} of ${total}`, text: n(o.id, m) / total >= 0.05 ? n(o.id, m) : '',
+            }))));
+      }));
+
+    // findings (numbers computed from the data)
+    const glmLoops = rows.filter((r) => r.outcome === 'retry_loop');
+    const loopModel = models.map((m) => [m, glmLoops.filter((r) => r.model === m).length]).sort((a, b) => b[1] - a[1])[0];
+    const malformed = glmLoops.filter((r) => r.model === loopModel[0] && r.malformed_call).length;
+    const omissions = rows.filter((r) => r.outcome === 'omission');
+    const clarifications = omissions.filter((r) => r.n_tool_calls === 0).length;
+    const extraBash = rows.filter((r) => r.outcome === 'extra_call' && r.extra_tools.includes('execute_bash')).length;
+    const findings = h('ol', { class: 'card eu-findings' },
+      h('li', {}, h('b', { text: 'Extra tool calls are the most frequent failure' }),
+        ` (${n('extra_call')} runs; ${extraBash} of them call execute_bash where only the database was needed). DeepSeek-V4.1-Flash concentrates ${n('extra_call', 'DeepSeek-V4.1-Flash')} of them.`),
+      h('li', {}, h('b', { text: 'Parameter errors escalate into retry loops' }),
+        ` (${n('retry_loop')} runs, ${loopModel[1]} with ${loopModel[0]}). In ${malformed} of these, the agent called eureca_database with a boolean flag instead of the user's question, got "Informe a consulta desejada", repeated the call until the execution stopped, and the user received a generic error message.`),
+      h('li', {}, h('b', { text: 'Omissions are clarification requests' }),
+        ` (${omissions.length} runs, all with ${[...new Set(omissions.map((r) => r.model))].join(', ')}). In ${clarifications} of them, the agent asked the user to clarify an ambiguous question instead of querying the database: the oracle fails these runs, although asking may be the reasonable behavior.`),
+      h('li', {}, h('b', { text: 'Clear questions also fail' }),
+        `: ${pct(passRate((r) => r.intention === 'clear'), 0)} of the runs of clear questions pass, against ${pct(passRate((r) => r.intention === 'ambiguous'), 0)} of the ambiguous ones. In a real agent, a clear request does not guarantee a single correct way to use the tools.`),
+      h('li', {}, h('b', { text: 'Many failures would be invisible to a response-only judge' }),
+        ': an extra call followed by a correct answer leaves no trace in the final response. Scoring these runs with the LLM judges is future work.'));
+
+    // per question
+    // clear questions first, then ambiguous ones
+    const questions = [...new Map(rows.map((r) => [r.question_id, r])).values()]
+      .sort((a, b) => (a.intention === b.intention ? a.question_id.localeCompare(b.question_id) : a.intention === 'clear' ? -1 : 1));
+    const qTable = h('table', { class: 't' },
+      h('thead', {}, h('tr', {}, h('th', { text: 'Question' }), h('th', { text: 'Expected tools' }),
+        models.map((m) => h('th', { class: 'num jl', text: m })), h('th', { class: 'num jl', text: 'All' }))),
+      h('tbody', {}, questions.map((q) => {
+        const cell = (m) => {
+          const own = rows.filter((r) => r.question_id === q.question_id && (!m || r.model === m));
+          const p = own.filter((r) => r.passed).length;
+          const td = h('td', { class: 'cnt jl', text: `${p}/${own.length}` });
+          td.style.setProperty('--h', `${Math.round(3 + 40 * (own.length ? p / own.length : 0))}%`);
+          return td;
+        };
+        return h('tr', {},
+          h('td', { class: 'query' }, h('span', { class: 'chip id', text: q.question_id }),
+            h('span', { class: `chip${q.intention === 'ambiguous' ? ' warn' : ''}`, text: q.intention }),
+            h('div', { style: 'margin-top: 6px', text: q.question })),
+          h('td', {}, h('div', { class: 'tools' }, q.expected_tools.split(', ').map((t) => h('code', { class: 'tool', text: t }))),
+            q.optional_tools ? h('div', { class: 'muted', style: 'margin-top: 4px; font-size: 12px' }, 'optional: ', q.optional_tools) : null),
+          models.map((m) => cell(m)), cell(null));
+      })));
+
+    // LaTeX figure for the paper
+    const figOutcomes = outcomes.filter((o) => o.id !== 'other');
+    const colors = { pass: 'green!55!black', extra_call: 'orange!85!black', retry_loop: 'red!70!black', omission: 'violet!75!black' };
+    const figure = [
+      '% Preamble: \\usepackage{pgfplots} \\pgfplotsset{compat=1.18}',
+      '\\begin{figure}[t]', '\\centering', '\\begin{tikzpicture}', '\\begin{axis}[',
+      '  ybar stacked, width=\\linewidth, height=5.2cm, bar width=15pt,',
+      '  ymin=0, ymax=100, ylabel={Runs},',
+      `  symbolic x coords={${models.join(',')}}, xtick=data, enlarge x limits=0.25,`,
+      '  tick label style={font=\\scriptsize}, label style={font=\\small},',
+      '  ymajorgrids, grid style={gray!20},',
+      '  nodes near coords, nodes near coords style={font=\\small, color=white},',
+      '  legend style={font=\\small, at={(0.5,1.03)}, anchor=south, legend columns=4, draw=none,',
+      '    /tikz/every even column/.append style={column sep=4pt}},',
+      '  legend image code/.code={\\draw[#1, draw=none] (0cm,-0.1cm) rectangle (0.25cm,0.1cm);},',
+      ']',
+      ...figOutcomes.map((o) => `\\addplot[fill=${colors[o.id]}, point meta=explicit symbolic] coordinates {\n${models.map((m) => {
+        const v = n(o.id, m);
+        return `  (${m},${v}) [${v / count((r) => r.model === m) >= 0.05 ? v : ''}]`;
+      }).join('\n')}\n};`),
+      `\\legend{${figOutcomes.map((o) => o.label).join(', ')}}`,
+      '\\end{axis}', '\\end{tikzpicture}',
+      `\\caption{Deterministic oracle outcomes for Eureca Chat per executor (${count((r) => r.model === models[0])} runs each: ${questions.length} questions $\\times$ ${Math.round(count((r) => r.model === models[0]) / questions.length)} repetitions; totals across executors are reported in the text).}`,
+      '\\label{fig:eureca-chat}', '\\end{figure}',
+    ].join('\n');
+
+    el.replaceChildren(
+      kpis,
+      h('div', { class: 'sec-head' }, h('h2', { text: 'Oracle outcome by executor' }),
+        h('p', { text: 'Each run gets one label: pass, or the failure the oracle found (a retry loop takes precedence over the tools that were called).' })),
+      legend, bars,
+      latexBlock('LaTeX figure for the paper', figure),
+      h('div', { class: 'sec-head' }, h('h2', { text: 'What the runs show' })),
+      findings,
+      h('div', { class: 'sec-head' }, h('h2', { text: 'Pass rate by question' }),
+        h('p', { text: 'Runs passing the oracle out of the runs of each question. "Optional" tools may be called without failing the run.' })),
+      h('div', { class: 'card' }, h('div', { class: 'tw' }, qTable)),
+      h('div', { class: 'card', style: 'padding: 14px 16px' },
+        h('div', { class: 'muted', style: 'font-size: 12.5px; margin-bottom: 6px', text: `Tools available (${info.tools_note ?? ''})` }),
+        h('div', { class: 'tools' }, String(info.tools ?? '').split(', ').map((t) => h('code', { class: 'tool', text: t })))),
     );
   });
 

@@ -59,20 +59,26 @@ AGENTS = [
      "label": "Replacement orders", "failure_focus": "Tool omission", "file_prefix": "results_"},
     {"agent": "wrong_tool_selection", "package": "order_support", "module": "agent.py",
      "label": "Order support", "failure_focus": "Wrong tool selection", "file_prefix": "results_t2_"},
-    # developed outside this study (beta); its results are sent by its authors
-    {"agent": "eureka_chat", "label": "Eureka Chat", "external": True, "status": "External, beta",
-     "failure_focus": None,
-     "tools": [
-         # available to every user
-         "eureca_database", "buscar_fluxograma", "buscar_plano_curso_disciplina",
-         "buscar_grade_curricular_curso", "buscar_calendarios", "execute_bash",
-         # student only
-         "estudante_info", "historico_estudante",
-         # professor only
-         "professor_info",
-     ],
-     "tools_note": "6 shared; 8 for students, 7 for professors, 7 for staff"},
 ]
+
+# Eureca Chat: a beta agent developed outside this study, kept out of every
+# count above and shown in its own tab (exploratory study in the Discussion).
+# Its runs come from eureka_chat/ at the repository root: for each executor,
+# agent_experiment_<model>.jsonl (trace and final response) and
+# tool_evaluation_agent_experiment_<model>.jsonl (deterministic verdict).
+EUREKA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), "eureka_chat")
+EUREKA_MODELS = {"deepseek": "DeepSeek-V4.1-Flash", "GLM": "GLM-5.3-Flash", "gpt-luna": "gpt-6-luna"}
+EUREKA_INTENTIONS = {"clara": "clear", "ambigua": "ambiguous"}
+EUREKA_TOOLS = [
+    # available to every user
+    "eureca_database", "buscar_fluxograma", "buscar_plano_curso_disciplina",
+    "buscar_grade_curricular_curso", "buscar_calendarios", "execute_bash",
+    # student only
+    "estudante_info", "historico_estudante",
+    # professor only
+    "professor_info",
+]
+EUREKA_TOOLS_NOTE = "6 shared; 8 for students, 7 for professors, 7 for staff"
 
 
 def judge_key(model_name):
@@ -185,6 +191,75 @@ def tool_calls_text(tool_calls_info):
     )
 
 
+def eureka_outcome(evaluation):
+    """Oracle outcome of an Eureca Chat run, one label per run."""
+
+    if evaluation["passed"]:
+        return "pass"
+    if evaluation["loop"]:
+        return "retry_loop"
+    if evaluation["missing_tools"]:
+        return "omission"
+    if evaluation["extra_tools"]:
+        return "extra_call"
+    return "other"
+
+
+def build_eureka():
+    """One row per Eureca Chat run, plus the list of input files."""
+
+    rows = []
+    inputs = []
+
+    for suffix, model in EUREKA_MODELS.items():
+
+        agent_path = os.path.join(EUREKA_DIR, f"agent_experiment_{suffix}.jsonl")
+        eval_path = os.path.join(EUREKA_DIR, f"tool_evaluation_agent_experiment_{suffix}.jsonl")
+
+        if not (os.path.exists(agent_path) and os.path.exists(eval_path)):
+            continue
+
+        inputs += [os.path.relpath(p, SRC_DIR) for p in (agent_path, eval_path)]
+        traces = {
+            (t["run_number"], t["question_id"], t["repetition"]): t
+            for t in map(json.loads, open(agent_path, encoding="utf-8"))
+        }
+
+        for e in map(json.loads, open(eval_path, encoding="utf-8")):
+
+            trace = traces.get((e["run_number"], e["question_id"], e["repetition"]), {})
+            calls = [i for i in trace.get("interactions", []) if i.get("kind") == "tool_call"]
+
+            rows.append({
+                "key": f"{model}|{e['question_id']}|{e['repetition']}",
+                "model": model,
+                "question_id": e["question_id"],
+                "intention": EUREKA_INTENTIONS.get(e["intention"], e["intention"]),
+                "question": e["question"],
+                "repetition": e["repetition"],
+                "passed": bool(e["passed"]),
+                "outcome": eureka_outcome(e),
+                "expected_tools": ", ".join(e["expected_tools"]),
+                "optional_tools": ", ".join(e["optional_tools"]),
+                "called_tools": ", ".join(
+                    f"{name} ×{n}" if n > 1 else name for name, n in e["called_tool_counts"].items()
+                ),
+                "n_tool_calls": len(calls),
+                "extra_tools": ", ".join(e["extra_tool_names"]),
+                "missing_tools": ", ".join(e["missing_tools"]),
+                # the database tool called with a flag in place of the user's question
+                "malformed_call": any(
+                    c.get("name") == "eureca_database" and str(c.get("arguments")).strip() in ("", "False", "True", "None")
+                    for c in calls
+                ),
+                "comment": e["comment"],
+                "duration_s": (trace.get("backend") or {}).get("duration_seconds"),
+                "response": ((trace.get("backend") or {}).get("final_response") or "")[:MAX_RESPONSE_CHARS],
+            })
+
+    return rows, inputs
+
+
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -198,20 +273,6 @@ def main():
     inputs = []
 
     for agent in AGENTS:
-
-        if agent.get("external"):
-            # no code or results in this repository yet
-            agent_rows.append({
-                "agent": agent["agent"],
-                "label": agent["label"],
-                "status": agent["status"],
-                "n_tools": len(agent["tools"]) or None,
-                "tools": ", ".join(agent["tools"]),
-                "tools_note": agent.get("tools_note"),
-                "failure_focus": agent["failure_focus"],
-                "n_cases": None,
-            })
-            continue
 
         excluded_cases = EXCLUDED_CASES.get(agent["agent"], set())
         cases = [c for c in load_test_cases(agent["package"]) if case_id_of(c) not in excluded_cases]
@@ -323,6 +384,9 @@ def main():
             # passed by the most judges, then the highest mean judge score
             corrupt_rows.append(max(candidates, key=lambda c: (c[0], c[1]))[2])
 
+    eureka_rows, eureka_inputs = build_eureka()
+    inputs += eureka_inputs
+
     meta = [
         {"label": "build_dashboard_data.py", "value": own_code, "type": "code", "lang": "python"},
         {"label": "Input", "value": "\n".join(inputs) or "no result files yet"},
@@ -334,6 +398,8 @@ def main():
         "runs.json": run_rows,
         "corrupt_examples.json": corrupt_rows,
         "excluded_runs.json": excluded_rows,
+        "eureka.json": eureka_rows,
+        "eureka_info.json": [{"tools": ", ".join(EUREKA_TOOLS), "n_tools": len(EUREKA_TOOLS), "tools_note": EUREKA_TOOLS_NOTE}],
     }
 
     for name, rows in outputs.items():
@@ -355,7 +421,8 @@ def main():
 
     print(
         f"agents: {len(agent_rows)} | verdict rows: {len(run_rows)} | "
-        f"corrupt examples: {len(corrupt_rows)} | excluded runs: {len(excluded_rows)}"
+        f"corrupt examples: {len(corrupt_rows)} | excluded runs: {len(excluded_rows)} | "
+        f"eureca chat runs: {len(eureka_rows)}"
     )
     print("inputs:", *inputs, sep="\n  ")
     print(f"local dashboard: {local_page}")
