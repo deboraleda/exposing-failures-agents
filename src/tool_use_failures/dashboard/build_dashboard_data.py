@@ -215,11 +215,21 @@ def build_eureka():
 
         agent_path = os.path.join(EUREKA_DIR, f"agent_experiment_{suffix}.jsonl")
         eval_path = os.path.join(EUREKA_DIR, f"tool_evaluation_agent_experiment_{suffix}.jsonl")
+        judge_path = os.path.join(EUREKA_DIR, f"judge_evaluation_agent_experiment_{suffix}.jsonl")
 
         if not (os.path.exists(agent_path) and os.path.exists(eval_path)):
             continue
 
         inputs += [os.path.relpath(p, SRC_DIR) for p in (agent_path, eval_path)]
+
+        # judge scores (eureka_judge.py), keyed like the evaluation rows
+        judged = {}
+        if os.path.exists(judge_path):
+            inputs.append(os.path.relpath(judge_path, SRC_DIR))
+            judged = {
+                (j["experiment_id"], j["run_number"]): j
+                for j in map(json.loads, open(judge_path, encoding="utf-8"))
+            }
         traces = {
             (t["run_number"], t["question_id"], t["repetition"]): t
             for t in map(json.loads, open(agent_path, encoding="utf-8"))
@@ -229,6 +239,14 @@ def build_eureka():
 
             trace = traces.get((e["run_number"], e["question_id"], e["repetition"]), {})
             calls = [i for i in trace.get("interactions", []) if i.get("kind") == "tool_call"]
+
+            judge = judged.get((e["experiment_id"], e["run_number"]), {})
+            scores = {k: judge.get(f"deepeval_{k}_score") for k in JUDGE_KEYS}
+            judge_fields = {}
+            for k in JUDGE_KEYS:
+                judge_fields[f"{k}_score"] = scores[k]
+                judge_fields[f"{k}_pass"] = None if scores[k] is None else scores[k] >= JUDGE_PASS_THRESHOLD
+                judge_fields[f"{k}_reason"] = judge.get(f"deepeval_{k}_reason") or ""
 
             rows.append({
                 "key": f"{model}|{e['question_id']}|{e['repetition']}",
@@ -255,6 +273,10 @@ def build_eureka():
                 "comment": e["comment"],
                 "duration_s": (trace.get("backend") or {}).get("duration_seconds"),
                 "response": ((trace.get("backend") or {}).get("final_response") or "")[:MAX_RESPONSE_CHARS],
+                # False when a judge has not scored the run
+                "judged": all(v is not None for v in scores.values()),
+                "judges_approved": sum(bool(judge_fields[f"{k}_pass"]) for k in JUDGE_KEYS),
+                **judge_fields,
             })
 
     return rows, inputs
@@ -399,7 +421,11 @@ def main():
         "corrupt_examples.json": corrupt_rows,
         "excluded_runs.json": excluded_rows,
         "eureka.json": eureka_rows,
-        "eureka_info.json": [{"tools": ", ".join(EUREKA_TOOLS), "n_tools": len(EUREKA_TOOLS), "tools_note": EUREKA_TOOLS_NOTE}],
+        "eureka_info.json": [{
+            "tools": ", ".join(EUREKA_TOOLS), "n_tools": len(EUREKA_TOOLS), "tools_note": EUREKA_TOOLS_NOTE,
+            "judges": [{"key": k, "label": JUDGE_LABELS[k].split("/")[-1]} for k in JUDGE_KEYS],
+            "threshold": JUDGE_PASS_THRESHOLD,
+        }],
     }
 
     for name, rows in outputs.items():
