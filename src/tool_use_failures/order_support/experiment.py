@@ -17,11 +17,11 @@ from tool_use_failures.config import (
 )
 from tool_use_failures.llm_service import get_llm
 
-from tool_use_failures.wrong_tool_selection.agent import create_t2_agent
-from tool_use_failures.wrong_tool_selection.test_cases import TEST_CASES
+from tool_use_failures.order_support.agent import create_t2_agent
+from tool_use_failures.order_support.test_cases import TEST_CASES
 
 
-from tool_use_failures.wrong_tool_selection.deepeval import (
+from tool_use_failures.order_support.deepeval import (
     DEEPEVAL_COLUMNS,
     eval_task_completion,
     summarize_scores,
