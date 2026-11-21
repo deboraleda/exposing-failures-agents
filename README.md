@@ -20,9 +20,6 @@ The implemented agents are:
 
 Most of the agents were inspired by open-source agents. These base agents served only as references: the agents in this repository are **not** reproductions or extensions of them.
 
-- **Multiple tools with selection criteria**: the agent has access to more than one tool and must choose which one to invoke according to the user's request (Travel destination assistant, Essay evaluator or search, Academic triage and Recipe generator).
-- **Dependency between tools**: the agent must invoke more than one tool in a defined sequence (Travel viability and Trip budget and weather).
-
 | Base agent | Inspired agent(s) |
 |---|---|
 | [Travel Planner](https://github.com/NirDiamant/GenAI_Agents/blob/main/all_agents_tutorials/simple_travel_planner_langgraph.ipynb) | Travel destination assistant, Travel viability |
